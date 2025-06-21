@@ -61,7 +61,7 @@ button {
     border-radius: 6px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
     width: fit-content;
     position: relative;
     text-align: center;
@@ -74,8 +74,19 @@ button {
     margin-top: 30px;
 }
 
+button.active {
+  transform: scale(1.15);
+  background-color: #8b1ae8;
+  box-shadow: 0 0 15px rgba(139, 26, 232, 0.5);
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+
 button:hover {
-    background-color: #1f5dd1;
+    background-color: #08204e;
+    transform: scale(1.08); /* ✅ ขยายเล็กน้อย */
+    box-shadow: 0 0 15px rgba(70, 31, 209, 0.6); /* ✅ เพิ่มแสงเงา */
 }
 
 #connectBtn {
@@ -87,19 +98,14 @@ button:hover {
     color: white;
     padding: 14px 28px;
     border: none;
-    border-radius: 50px;
+    border-radius: 10px;
     font-size: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: 0.3s;
 }
 
 #connectBtn:hover {
-    background-color: #34115c;
+    background-color: #157c38;
+    box-shadow: 0 0 10px rgba(38, 240, 88, 0.4);
     transform: scale(1.05);
-}
-
-button.active {
-    transform: scale(1.1);
-    background-color: #1a73e8;
-    box-shadow: 0 0 10px #1a73e8;
 }

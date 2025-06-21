@@ -10,7 +10,7 @@ function typeWriter() {
             document.getElementById("typeText").innerHTML += currentChar;
         }
         index++;
-        setTimeout(typeWriter, 85);
+        setTimeout(typeWriter, 60);
     }
 }
 
