@@ -1,0 +1,19 @@
+.NameTopic {
+    top: 20px;
+    position: relative;
+    display: inline-block;
+    border: 5px solid black;
+    border-radius: 3px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.box-Topic {
+    text-align: center;
+    margin-top: 40px;
+    font-family: "Alegreya", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}

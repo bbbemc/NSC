@@ -1,0 +1,105 @@
+.NameTopic {
+    top: 20px;
+    position: relative;
+    display: inline-block;
+    border: 5px solid black;
+    border-radius: 3px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.box-Topic {
+    text-align: center;
+    margin-top: 40px;
+    font-family: "Alegreya", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+.Topic-About {
+    font-size: 24px;
+    font-family: "Alegreya", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+.Welcome {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 44px;
+}
+
+
+.About-content {
+    border: 5px solid black;
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+    border-radius: 3px;
+
+}
+
+#typeText {
+    line-height: 1.6;
+    font-family: "Alegreya", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+button {
+    background-color: #000000;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: fit-content;
+    position: relative;
+    text-align: center;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* ระยะห่างระหว่างปุ่ม */
+    margin-top: 30px;
+}
+
+button:hover {
+    background-color: #1f5dd1;
+}
+
+#connectBtn {
+     position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999; /* ให้ลอยอยู่บนสุด */
+    background-color: #000000;
+    color: white;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: 0.3s;
+}
+
+#connectBtn:hover {
+    background-color: #34115c;
+    transform: scale(1.05);
+}
+
+button.active {
+    transform: scale(1.1);
+    background-color: #1a73e8;
+    box-shadow: 0 0 10px #1a73e8;
+}
