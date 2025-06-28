@@ -1,111 +1,286 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Alegreya", serif;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.left-side {
+  position: relative;
+  width: 60%;
+  background-color: transparent;
+  color: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.background-shape img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
 .NameTopic {
-    top: 20px;
-    position: relative;
-    display: inline-block;
-    border: 5px solid black;
-    border-radius: 3px;
-    padding: 20px;
-    text-align: center;
-    margin-top: 20px;
+    position: absolute;
+    top: 30px;     /* ระยะห่างจากขอบบน */
+    left: 50px;    /* ระยะห่างจากขอบซ้าย */
+    font-size: 72px;
+    color: aliceblue;
+    z-index: 1;
 }
 
-.box-Topic {
-    text-align: center;
-    margin-top: 40px;
-    font-family: "Alegreya", serif;
-    font-optical-sizing: auto;
-    font-weight: weight;
-    font-style: normal;
+.All-iconleft {
+  display: flex;
+  margin-bottom: 40px;
+  z-index: 1;
+  position: absolute;
+  top: 100px;
+  left: 38%;
+  gap: 0;
 }
 
-.Topic-About {
-    font-size: 24px;
-    font-family: "Alegreya", serif;
-    font-optical-sizing: auto;
-    font-weight: weight;
-    font-style: normal;
+.icon-group {
+  width: 100px;
+  padding-top: 30px;
+  height: auto;
 }
 
-.Welcome {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 44px;
+.icon {
+    padding-top: 80px;
+    width: 60px;
+    height: auto;
 }
 
-
-.About-content {
-    border: 5px solid black;
-    display: block;
-    width: fit-content;
-    margin: 20px auto;
-    padding: 20px;
-    position: relative;
-    text-align: center;
-    border-radius: 3px;
-
+.input-container {
+  position: relative;
+  width: 100%;
 }
 
-#typeText {
-    line-height: 1.6;
-    font-family: "Alegreya", serif;
-    font-optical-sizing: auto;
-    font-weight: weight;
-    font-style: normal;
+.input-container input {
+  width: 100%;
+  padding: 10px 10px 12px 45px;
+  border: none;
+  border-bottom: 1.5px solid black;
+  background: transparent;
+  font-size: 16px;
+  outline: none;
 }
 
-button {
-    background-color: #000000;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: fit-content;
-    position: relative;
-    text-align: center;
+.input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  width: 18px;
+  height: auto;
+  opacity: 0.6;
+}
+
+.Name-Login {
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: stretch;
 }
 
 .button-group {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* ระยะห่างระหว่างปุ่ม */
-    margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
 }
 
-button.active {
-  transform: scale(1.15);
-  background-color: #8b1ae8;
+button {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #575757;
+  transform: scale(1.05);
+}
+
+@keyframes gradientLogin {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gradientConnect {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ปุ่มทั่วไป */
+button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* ปุ่ม Login / Sign Up */
+button.login-signup-active {
+  background: linear-gradient(270deg, #000000, #707070, #dbdbdb);
+  background-size: 400% 400%;
+  animation: gradientLogin 5s ease infinite;
+  transform: scale(1.1);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+/* ปุ่ม Connect */
+button.connect-active {
+  background: linear-gradient(270deg, #000000, #181e5e, #041781);
+  background-size: 600% 600%;
+  animation: gradientConnect 4s ease infinite, pulse 1.2s ease-in-out infinite;
+  color: #fff;
   box-shadow: 0 0 15px rgba(139, 26, 232, 0.5);
   font-weight: bold;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ปุ่ม Connect ตำแหน่ง */
+#connectBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transition: all 0.3s ease;
 }
 
 
-button:hover {
-    background-color: #08204e;
-    transform: scale(1.08); /* ✅ ขยายเล็กน้อย */
-    box-shadow: 0 0 15px rgba(70, 31, 209, 0.6); /* ✅ เพิ่มแสงเงา */
-}
-
 #connectBtn {
-     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 999; /* ให้ลอยอยู่บนสุด */
-    background-color: #000000;
-    color: white;
-    padding: 14px 28px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: 0.3s;
+  position: fixed;       /* ✅ ล็อคตำแหน่งบนหน้าจอ */
+  bottom: 20px;          /* ✅ ห่างจากขอบล่าง 20px */
+  right: 20px;           /* ✅ ห่างจากขอบขวา 20px */
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000;          /* ✅ ให้ลอยอยู่หน้าสุด */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
 }
 
-#connectBtn:hover {
-    background-color: #157c38;
-    box-shadow: 0 0 10px rgba(38, 240, 88, 0.4);
-    transform: scale(1.05);
+.OR {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.purpose-content {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 350px;
+}
+
+.purpose-center {
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.Topic-purpose {
+  font-size: 28px;
+  font-weight: bold;
+  position: relative;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.Topic-purpose::after {
+  content: '';
+  display: block;
+  height: 4px;
+  background: linear-gradient(to right, rgb(255, 255, 255), rgb(0, 0, 0));
+  width: 100%;
+  max-width: 250px;
+  margin-top: 6px;
+  border-radius: 100px;
+  transition: width 1s ease;
+  transform-origin: right;
+}
+
+.purpose-content {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.Topic-purpose:hover::after {
+  width: 0%;
+}
+
+.form-wrapper {
+    padding-top: 60px;
+    padding-left: 80px;
+    max-width: 400px;
 }
