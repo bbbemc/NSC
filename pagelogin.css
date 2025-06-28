@@ -13,7 +13,7 @@
     margin-top: 40px;
     font-family: "Alegreya", serif;
     font-optical-sizing: auto;
-    font-weight: weight;
+    font-weight: normal;
     font-style: normal;
 }
 
@@ -28,7 +28,7 @@
     border-radius: 4px;
     font-family: "Alegreya", serif;
     font-optical-sizing: auto;
-    font-weight: weight;
+    font-weight: normal;
     font-style: normal;
 }
 
@@ -154,7 +154,52 @@ button:hover {
 }
 
 #connectBtn:hover {
-    background-color: #157c38;
-    box-shadow: 1 1 15px rgba(38, 240, 88, 0.4);
+    background-color: #575757;
     transform: scale(1.05);
+}
+
+/* ปุ่ม Login ตอน active */
+.Login.login-active {
+  background: linear-gradient(270deg, #000000, #707070, #dbdbdb);
+  background-size: 400% 400%;
+  animation: gradientLogin 5s ease infinite;
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+  transform: scale(1.1);
+}
+
+/* ปุ่ม Connect ตอน active */
+#connectBtn.connect-active {
+  background: linear-gradient(270deg, #000000, #181e5e, #041781);
+  background-size: 600% 600%;
+  animation: gradientConnect 4s ease infinite, pulse 1.2s ease-in-out infinite;
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+  font-weight: bold;
+}
+
+/* แอนิเมชันไล่สี */
+@keyframes gradientLogin {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gradientConnect {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

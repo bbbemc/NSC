@@ -132,6 +132,14 @@ button:hover {
   transform: scale(1.05);
 }
 
+#connectBtn:hover {
+  background-color: #575757;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+  color: white;
+  cursor: pointer;
+}
+
 @keyframes gradientLogin {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -283,4 +291,76 @@ button.connect-active {
     padding-top: 60px;
     padding-left: 80px;
     max-width: 400px;
+}
+
+
+/* คอมพิวเตอร์หน้าจอใหญ่ */
+@media (min-width: 1025px) {
+  .container {
+    flex-direction: row;
+  }
+  .form-wrapper {
+    max-width: 400px;
+    padding-left: 80px;
+    padding-top: 60px;
+  }
+}
+
+/* แท็บเล็ตแนวนอน + iPad แนวนอน */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    flex-direction: row;
+  }
+  .left-side {
+    width: 50%;
+  }
+  .form-wrapper {
+    max-width: 300px;
+    padding-left: 40px;
+    padding-top: 50px;
+  }
+}
+
+/* มือถือและแท็บเล็ตแนวตั้ง */
+@media (max-width: 767px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-side {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    position: static;
+  }
+
+  .NameTopic {
+    font-size: 42px;
+    position: static;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .All-iconleft {
+    position: static;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .form-wrapper {
+    max-width: 90%;
+    padding: 0 20px;
+  }
+
+  #connectBtn {
+    position: static;
+    margin-top: 30px;
+  }
+
+  .purpose-center {
+    position: static;
+    transform: none;
+    margin-top: 40px;
+  }
 }
