@@ -25,7 +25,7 @@ let connectTimeout = null;       // ตัวเก็บ timeout สำหร�
 loginBtn.onclick = function () {
     if (selectedAction === "login") {
         // กดซ้ำ → เข้าหน้า login.html
-        window.location.href = "login.html";
+        window.location.href = "index.html";
         return;
     }
 
