@@ -1,98 +1,22 @@
-.NameTopic {
-    top: 20px;
-    position: relative;
-    display: inline-block;
-    border: 5px solid black;
-    border-radius: 3px;
-    padding: 20px;
-    text-align: center;
-    margin-top: 20px;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.box-Topic {
-    text-align: center;
-    margin-top: 40px;
-    font-family: "Alegreya", serif;
-    font-optical-sizing: auto;
-    font-weight: weight;
-    font-style: normal;
-}
-
-.Topic_chepter1 {
-    display: flex;
-    justify-content: center;
-}
-
-.Chepter1 {
+#Topic {
+    color: aliceblue;
     font-size: 44px;
-    font-family: "Alegreya", serif;
-    font-optical-sizing: auto;
-    font-weight: weight;
-    font-style: normal;
-    display: inline-block;
-    padding: 10px 10px;
-    border: 5px solid black;
-    position: relative;
-    top: 70px;
 }
 
-.Topic_chepter2 {
-    display: flex;
-    justify-content: center;
+body {
+    overflow-x: hidden;
 }
 
-.Chepter2 {
-    font-size: 44px;
-    font-family: "Alegreya", serif;
-    font-optical-sizing: auto;
-    font-weight: weight;
-    font-style: normal;
-    display: inline-block;
-    padding: 10px 10px;
-    border: 5px solid black;
-    position: relative;
-    top: 120px;
-}
-
-.Topic_chepter3 {
-    display: flex;
-    justify-content: center;
-}
-
-.Chepter3 {
-    font-size: 44px;
-    font-family: "Alegreya", serif;
-    font-optical-sizing: auto;
-    font-weight: weight;
-    font-style: normal;
-    display: inline-block;
-    padding: 10px 10px;
-    border: 5px solid black;
-    position: relative;
-    top: 170px;
-}
-
-.chepter-btn {
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.chepter-btn.active {
-    background-color: #d16308;
-    color: white;
-    transform: scale(1.08);
-    box-shadow: 0 0 10px rgba(231, 127, 29, 0.5);
-}
-
-.logout-icon {
-  font-size: 28px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-left: 20px;
-}
-
-.logout-icon.active {
-  color: red;
-  transform: scale(1.2);
-  text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+.background-shape img {
+  position: absolute;
+  top: -230px;
+  left: 0;
+  object-fit: cover;
+  z-index: -1;
 }

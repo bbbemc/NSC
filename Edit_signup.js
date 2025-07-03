@@ -1,47 +1,101 @@
-// ฟังก์ชันย้อนกลับไปหน้า index
-function goBack() {
-  window.location.href = "index.html";
-}
+// Text พิมพ์ทีละตัว (Typewriter effect)
+const text = "เว็ปนี้มีจุดประสงค์เพื่อใช้ในการศึกษาหาความรู้เเละทดลองการใช้โมเดล \n เพื่อให้เข้าใจเนื้อหามากขึ้น หวังว่าเว็ปนี้จะมีประโยชน์กับทุกคนนะครับ";
+let index = 0;
 
-const loginBtn = document.querySelector(".Login");
+function typeWriter() {
+    if (index < text.length) {
+        const currentChar = text.charAt(index);
+        document.getElementById("typeText").innerHTML += currentChar === "\n" ? "<br>" : currentChar;
+        index++;
+        setTimeout(typeWriter, 60);
+    }
+}
+typeWriter();
+
+// ปุ่มทั้งหมด
+const loginBtn = document.getElementById("loginBtn");
+const signupBtn = document.getElementById("signupBtn");
 const connectBtn = document.getElementById("connectBtn");
 
-let selectedAction = null;
-let connectSelected = false;
+let selectedAction = null;       // เก็บสถานะว่าเลือก login หรือ signup แล้ว
+let connectSelected = false;     // สถานะ confirm connect
+let connectTimeout = null;       // ตัวเก็บ timeout สำหรับ connect
 
-function setLoginActive(active) {
-  if (active) loginBtn.classList.add("login-active");
-  else loginBtn.classList.remove("login-active");
-}
-
-// เมื่อคลิกปุ่ม Sign Up (เหมือนแค่เปลี่ยนสถานะสวยงาม)
+// เมื่อกด Login
 loginBtn.onclick = function () {
-  if (selectedAction === "signup") {
-    // อาจจะลิงก์ไปหน้าสมัครจริง ๆ ถ้าต้องการ
-    return;
-  }
-  selectedAction = "signup";
-  setLoginActive(true);
-  connectSelected = false;
-  connectBtn.textContent = "Connect";
-  connectBtn.classList.remove("connect-active");
+    if (selectedAction === "login") {
+        // กดซ้ำ → เข้าหน้า login.html
+        window.location.href = "index.html";
+        return;
+    }
+
+    selectedAction = "login";
+    loginBtn.classList.add("login-signup-active");
+    signupBtn.classList.remove("login-signup-active");
+
+    // รีเซ็ตสถานะ Connect
+    resetConnect();
 };
 
-// เมื่อคลิก Connect
+// เมื่อกด Sign Up
+signupBtn.onclick = function () {
+    if (selectedAction === "signup") {
+        // กดซ้ำ → เข้าหน้า signup.html
+        window.location.href = "signup.html";
+        return;
+    }
+
+    selectedAction = "signup";
+    signupBtn.classList.add("login-signup-active");
+    loginBtn.classList.remove("login-signup-active");
+
+    // รีเซ็ตสถานะ Connect
+    resetConnect();
+};
+
+// เมื่อกด Connect
 connectBtn.onclick = function () {
-  // กด Connect ได้เลย ไม่ต้องล็อกอิน
-  if (connectSelected) {
-    // ถ้ากดซ้ำ Confirm Connect ให้ลิงก์ไปหน้า index หรือหน้าที่ต้องการ
-    window.location.href = "index.html";
-  } else {
-    connectSelected = true;
-    connectBtn.textContent = "Confirm Connect";
-    connectBtn.classList.add("connect-active");
+    if (!selectedAction) {
+        // ยังไม่ได้เลือก login หรือ signup
+        alert("กรุณากด Login หรือ Sign Up ก่อนจึงจะ Connect ได้ครับ 🙂");
+        return;
+    }
 
-    setTimeout(() => {
-      connectSelected = false;
-      connectBtn.textContent = "Connect";
-      connectBtn.classList.remove("connect-active");
-    }, 5000);
-  }
+    if (connectSelected) {
+        // กด confirm connect ครั้งที่สอง → ไปหน้าตามที่เลือก
+        if (selectedAction === "login") {
+            window.location.href = "login.html";
+        } else if (selectedAction === "signup") {
+            window.location.href = "signup.html";
+        }
+    } else {
+        // กดครั้งแรก → เปลี่ยนสถานะ confirm connect
+        connectSelected = true;
+        connectBtn.classList.add("connect-active");
+        connectBtn.textContent = "Confirm Connect";
+
+        // เคลียร์ Timeout เดิมถ้ามี แล้วตั้งใหม่
+        if (connectTimeout) clearTimeout(connectTimeout);
+        connectTimeout = setTimeout(() => {
+            resetConnect();
+        }, 5000); // รีเซ็ตหลัง 5 วินาที ถ้าไม่กดอีกครั้ง
+    }
 };
+
+// ปิด Connect ชั่วคราวตอนโหลด 1 วินาที (ไม่จำเป็นแต่ช่วย UX)
+connectBtn.disabled = true;
+setTimeout(() => {
+    connectBtn.disabled = false;
+}, 1000);
+
+// ฟังก์ชันรีเซ็ตสถานะ Connect ให้กลับเป็นค่าเริ่มต้น
+function resetConnect() {
+    connectSelected = false;
+    connectBtn.classList.remove("connect-active");
+    connectBtn.textContent = "Connect";
+
+    if (connectTimeout) {
+        clearTimeout(connectTimeout);
+        connectTimeout = null;
+    }
+}

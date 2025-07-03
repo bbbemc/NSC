@@ -5,41 +5,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemical-bonds</title>
-    <link rel="stylesheet" href="pagesignup.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
+
 <body>
-    <div class="box-Topic">
-        <h1 class="NameTopic">Chemical bonds</h1>
+    <div class="container">
+        <div class="left-side">
+
+            <div class="background-shape">
+                <img src="img/Vector 1.svg" alt="background shape">
+            </div>
+
+            <h1 class="NameTopic">CHEMICAL<br>BONDS</h1>
+
+            <div class="All-iconleft">
+                <img src="img/Group 1.svg" alt="icon grop" class="icon-group">
+                <img src="img/Group.svg" alt="icon" class="icon">
+            </div>
+            
+        </div>
+
+                    
+            <div class="form-wrapper">
+                    <p class="Name-Login">Sign Up</p>
+                    <div class="input-container">
+                        <img src="img/Vector.svg" class="input-icon" alt="Email icon">
+                        <input type="text" id="Email" name="Email" placeholder="ENTER YOUR EMAIL" required />
+                    </div>
+                    <div class="input-container">
+                        <img src="img/Vector.svg" class="input-icon" alt="user icon">
+                        <input type="text" id="Username" name="Username" placeholder="ENTER YOUR NAME" required />
+                    </div>
+                    <div class="input-container">
+                        <img src="img/Vector (1).svg" class="input-icon" alt="password icon">
+                        <input type="password" id="Password" name="Password" placeholder="ENTER YOUR PASSWORD" required />
+                    </div>
+
+                    <div class="button-group">
+                        <button id="loginBtn">Login</button>
+                        <p id="choice-login-signup">Already have an acoount?</p>
+                        <button id="signupBtn">Sign Up</button>
+                    </div>
+
+                    <p class="OR">OR</p>
+            </div>
+
+            <div>
+                <button id="connectBtn" class="connectbtn">Connect</button>
+            </div>
+
+                
+        </div>
+
     </div>
 
-    <div class="LoginWrapper">
-        <button class="Login">Sign Up</button>
-    </div>
+    <div class="purpose-center">
+        <div class="Topic-purpose">PURPOSE</div>
+        <div class="purpose-content">
+            <b id="typeText"></b>
+        </div>
 
-    <div class="form-wrapper">
-        <label for="Username">Username</label><br>
-        <input type="text" id="Username" name="Username" placeholder="ENTER YOUR NAME" required minlength="2"
-            maxlength="30">
-        <label for="Username">Password</label><br>
-        <input type="text" id="Password" name="Password" placeholder="ENTER YOUR PASSWORD" required minlength="2"
-            maxlength="30">
-    </div>
-    </div>
-
-    <button class="back-button" onclick="goBack()">
-        <i class="fa-solid fa-person-walking-arrow-loop-left"></i> Back
-    </button>
-
-    <div class="button-group">
-        <button id="connectBtn">Connect</button>
     </div>
 
     <script src="Edit_signup.js"></script>
 </body>
+
 </html>
