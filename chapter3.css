@@ -1,0 +1,72 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  background-color: rgb(107, 102, 102);
+  display: flex;
+  align-items: flex-start;
+  padding: 30px 50px;
+  font-family: 'Alegreya', serif;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+#chapter3 {
+  color: rgb(26, 26, 26);
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#EXAMPLE {
+  color: rgb(233, 19, 19);
+  padding: 10px 20px;
+  border: 2px solid black;
+  border-radius: 4px;
+  background-color: rgb(128, 149, 168);
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 75px;
+}
+
+#POLARITY {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 100px;
+}
+
+.space-exam {
+  position: relative;
+  width: 290px;
+  height: 200px;
+  background-color: transparent;
+  border: 2px solid rgb(226, 218, 218);
+  border-radius: 5px;
+  box-shadow: 9px 8px 5px rgb(59, 59, 59);
+}
+
+/* ตำแหน่งภาพโมเลกุล */
+.space-exam img {
+  position: absolute;
+  width: 16px;
+  height: auto;
+}
+
+#imgO { top: 50px; left: 140px; }
+#img1 { top: 53px; left: 160px; width: 4px; }
+#img2 { top: 45px; left: 155px; width: 4px; }
+#img3 { top: 53px; left: 132px; width: 4px; }
+#img4 { top: 45px; left: 137px; width: 4px; }
+#img5 { top: 70px; left: 85px; width: 58px;}
+#img6 { top: 70px; left: 152px; width: 58px;}
+#img7 { top: 125px; left: 80px; width: 10px;}
+#img8 { top: 125px; left: 205px; width: 10px;}

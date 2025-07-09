@@ -1,385 +1,242 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: "Alegreya", serif;
-  height: 100vh;
-  background-color: #fff;
+    font-family: "Alegreya", serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+
+/* ตัวจัด layout หลัก */
 .container {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  overflow: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
 }
 
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    /* ช่องว่างระหว่าง input แต่ละชุด */
+}
+
+/* ด้านซ้าย */
 .left-side {
-  position: relative;
-  width: 60%;
-  background-color: transparent;
-  color: white;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-}
-
-.background-shape img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
+    flex: 1 1 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .NameTopic {
-    position: absolute;
-    top: 30px;     /* ระยะห่างจากขอบบน */
-    left: 50px;    /* ระยะห่างจากขอบซ้าย */
-    font-size: 72px;
-    color: aliceblue;
+    font-size: 44px;
+    color: rgb(0, 0, 0);
+}
+
+/* ด้านขวา */
+.right-side {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    gap: 10px;
+    margin-left: 5%;
+}
+
+/* หัว Sign Up */
+#Sign-Up {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+/* กล่องฟอร์ม */
+.FORM {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+/* input และไอคอน */
+.FORM input {
+    width: 250px;
+    padding: 5px;
+    border: none;
+    border-bottom: 1.5px solid black;
+    outline: none;
+    text-align: center;
+}
+
+/* ปรับ icon ให้อยู่ติด input ด้วย position */
+.FORM img {
+    position: relative;
+    left: 20px;
+    width: 20px;
+    height: 20px;
     z-index: 1;
 }
 
-.All-iconleft {
-  display: flex;
-  margin-bottom: 40px;
-  z-index: 1;
-  position: absolute;
-  top: 100px;
-  left: 38%;
-  gap: 0;
+/* ปุ่มส่ง */
+.wrapper {
+    margin-top: 30px;
 }
 
-.icon-group {
-  width: 60px;
-  padding-top: 20px;
-  height: auto;
+.button-submit {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: linear-gradient(-45deg, rgb(29, 29, 29), rgb(92, 92, 92), rgb(209, 209, 209));
+    background-size: 300% 300%;
+    transition: all 0.3s ease;
 }
 
-.icon {
-    padding-top: 80px;
-    width: 40px;
-    height: auto;
+.button-submit:hover {
+    transform: scale(1.1);
+    animation: gradientbutton 4s ease infinite;
 }
 
-.input-container {
-  position: relative;
-  width: 100%;
-  height: auto;
+@keyframes gradientbutton {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
-.input-container input {
-  width: 100%;
-  padding: 10px 10px 12px 45px;
-  border: none;
-  border-bottom: 1.5px solid black;
-  background: transparent;
-  font-size: 16px;
-  outline: none;
+/* ข้อความ already */
+#text-Already {
+    margin-top: 15px;
+    font-size: 15px;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-.input-icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 10px;
-  width: 18px;
-  height: auto;
-  opacity: 0.6;
+#text-Already:hover {
+    color: red;
 }
 
-.Name-Login {
-  font-size: 36px;
-  margin-bottom: 20px;
-  text-align: center;
-  width: 100%;
-  font-weight: bold;
+.center-site {
+    width: 100%;
+    margin-top: 20px;
 }
 
-.form-wrapper {
-  width: 100%;
-  max-width: 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: stretch;
-}
-
-.button-group {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  position: relative;
-}
-
-
-#signupBtn {
-  display: flex;
-  position: absolute;
-  padding-left: 70px;
-  padding-right: 70px;
-  font-size: 18px;
-}
-
-#choice-login-signup {
-  display: flex;
-  position: absolute;
-  margin-top: 55px;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-#loginBtn {
-  display: flex;
-  position: absolute;
-  padding-left: 80px;
-  padding-right: 80px;
-  font-size: 18px;
-  margin-top: 100px;
-}
-
-.OR {
-  text-align: center;
-  margin-top: 140px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-
-button {
-  background-color: rgb(0, 0, 0);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  background-color: rgba(230, 183, 30, 0.89);
-  transform: scale(1.05);
-}
-
-#connectBtn:hover {
-  background-color: rgba(61, 189, 29, 0.89);
-  transform: scale(1.05);
-  transition: all 0.3s ease;
-  color: white;
-  cursor: pointer;
-}
-
-@keyframes gradientLogin {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes gradientConnect {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* ปุ่มทั่วไป */
-button {
-  background-color: black;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: scale(1.15);
-}
-
-/* ปุ่ม Login / Sign Up */
-button.login-signup-active {
-  background: linear-gradient(270deg, #000000, #707070, #dbdbdb);
-  background-size: 400% 400%;
-  animation: gradientLogin 5s ease infinite;
-  transform: scale(1.1);
-  color: #fff;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  font-weight: bold;
-}
-
-/* ปุ่ม Connect */
-button.connect-active {
-  background: linear-gradient(270deg, #000000, #181e5e, #041781);
-  background-size: 600% 600%;
-  animation: gradientConnect 4s ease infinite, pulse 1.2s ease-in-out infinite;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(139, 26, 232, 0.5);
-  font-weight: bold;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-
-#connectBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: black;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 14px; /* ✅ ขนาดเล็กลงหน่อยสำหรับมือถือ */
-  cursor: pointer;
-  z-index: 1000;
-  max-width: 90%;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-}
-
-.purpose-content {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 16px;
-  line-height: 1.6;
-  max-width: 350px;
-}
-
-.purpose-center {
-  position: absolute;
-  top: 85%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  margin-bottom: 40px;
-  padding-bottom: 20px;
+.purpose {
+    text-align: center;
+    font-weight: bold;
 }
 
 .Topic-purpose {
-  font-size: 28px;
-  font-weight: bold;
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
 }
 
 .Topic-purpose::after {
-  content: '';
-  display: block;
-  position: absolute;
-  height: 4px;
-  background: linear-gradient(to right, rgb(255, 255, 255), rgb(0, 0, 0));
-  width: 100%;
-  max-width: 250px;
-  margin-top: 6px;
-  border-radius: 100px;
-  transition: width 1.5s ease;
-  bottom: -5px;
+    content: '';
+    display: block;
+    position: absolute;
+    height: 4px;
+    background: linear-gradient(to right, rgb(255, 255, 255), rgb(0, 0, 0));
+    width: 100%;
+    max-width: 250px;
+    margin-top: 6px;
+    border-radius: 100px;
+    transition: width 1.5s ease;
+    bottom: -5px;
+    left: 0;
 }
 
 .Topic-purpose:hover::after {
-  width: 0%;
+    width: 0%;
 }
 
-.purpose-content {
-  font-size: 16px;
-  line-height: 1.6;
-  max-width: 400px;
-  margin-top: 30px;
-}
-
-.form-wrapper {
-    padding-top: 60px;
-    padding-left: 80px;
-    max-width: 400px;
-}
-
-/* คอมพิวเตอร์หน้าจอใหญ่ */
-@media (min-width: 1025px) {
-  .container {
-    flex-direction: row;
-  }
-  .form-wrapper {
-    max-width: 400px;
-    padding-left: 80px;
-    padding-top: 60px;
-  }
-}
-
-/* แท็บเล็ตแนวนอน + iPad แนวนอน */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .container {
-    flex-direction: row;
-  }
-  .left-side {
-    width: 50%;
-  }
-  .form-wrapper {
-    max-width: 300px;
-    padding-left: 40px;
-    padding-top: 50px;
-  }
-}
-
-/* มือถือและแท็บเล็ตแนวตั้ง */
-@media (max-width: 767px) {
-  .container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .left-side {
-    width: 100%;
-    padding: 20px;
-    text-align: center;
-    position: static;
-  }
-
-  .NameTopic {
-    font-size: 42px;
-    position: static;
-    margin-bottom: 20px;
-    color: #333;
-  }
-
-  .All-iconleft {
-    position: static;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .form-wrapper {
+#typeText {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1.6;
+    white-space: pre-line;
+    /* ให้รองรับ \n เป็นขึ้นบรรทัดใหม่ */
+    margin-top: 20px;
+    margin-left: 20px;
     max-width: 90%;
-    padding: 0 20px;
-  }
+}
 
-  #connectBtn {
-    position: static;
-    margin-top: 30px;
-  }
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 20px;
+    }
 
-  .purpose-center {
-    position: static;
-    transform: none;
-    margin-top: 40px;
+    .left-side,
+    .right-side {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+
+    .NameTopic {
+        font-size: 28px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    
+
+}
+
+@media screen and (min-width: 769px) {
+
+    .left-side {
+        justify-content: flex-start;
+        padding-left: 50px;
+    }
+
+    .right-side {
+    margin-left: 5%;
+    /* ปรับได้ตามต้องการ */
+}
+
+.NameTopic {
+    text-align: left;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+
+}
+
+
+@media screen and (max-width: 480px) {
+  .right-side {
+    padding-top: 40px; /* บนอุปกรณ์จอเล็กมาก */
   }
 }
 
+@media screen and (min-width: 768px) and (max-width: 1366px) {}

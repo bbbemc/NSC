@@ -64,7 +64,7 @@ connectBtn.onclick = function () {
     if (connectSelected) {
         // กด confirm connect ครั้งที่สอง → ไปหน้าตามที่เลือก
         if (selectedAction === "login") {
-            window.location.href = "login.html";
+            window.location.href = "index.html";
         } else if (selectedAction === "signup") {
             window.location.href = "signup.html";
         }
