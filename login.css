@@ -9,7 +9,7 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 
@@ -53,16 +53,17 @@ body {
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
+    margin-top: 40px;
     gap: 10px;
     margin-left: 5%;
 }
 
-/* หัว Sign Up */
-#Sign-Up {
+
+#Login {
     text-align: center;
+    justify-content: center;
+    padding-bottom: 15px;
     font-size: 32px;
-    margin-bottom: 20px;
-    margin-top: 40px;
 }
 
 /* กล่องฟอร์ม */
@@ -92,53 +93,53 @@ body {
     z-index: 1;
 }
 
-/* ปุ่มส่ง */
-.wrapper {
-    margin-top: 30px;
-}
-
-.button-Continue {
-    padding: 10px 20px;
+.button-login {
+    width: 200px;
+    padding: 10px 60px;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    background: linear-gradient(-45deg, rgb(29, 29, 29), rgb(92, 92, 92), rgb(209, 209, 209));
+    background: linear-gradient(to right, rgb(29, 29, 29), rgb(92, 92, 92), rgb(209, 209, 209));
     background-size: 300% 300%;
     transition: all 0.3s ease;
-}
-
-.button-Continue:hover {
-    transform: scale(1.1);
-    animation: gradientbutton-Continue 4s ease infinite;
-}
-
-@keyframes gradientbutton-Continue {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* ข้อความ already */
-#text-Already {
-    margin-top: 15px;
-    font-size: 15px;
     text-align: center;
-    width: 100%;
-    cursor: pointer;
-    transition: color 0.3s ease;
+    line-height: 16px;
+    margin-bottom: 20px;
+}
+#text-button {
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-#text-Already:hover {
-    color: red;
+.button-Sign {
+    width: 200px;
+    padding: 10px 60px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: linear-gradient(to left, rgb(29, 29, 29), rgb(92, 92, 92), rgb(209, 209, 209));
+    background-size: 300% 300%;
+    transition: all 0.3s ease;
+    text-align: center;
+    line-height: 16px;
+    margin-bottom: 20px;
+}
+
+.button-Sign:hover {
+    transform: scale(1.1);
+    animation: gradientbutton-Sign 4s ease infinite;
+}
+
+.button-login:hover {
+    transform: scale(1.1);
+    animation: gradientbutton-login 4s ease infinite;
+}
+
+.OR {
+    text-align: center;
+    margin-bottom: 60px;
 }
 
 .center-site {
@@ -187,8 +188,52 @@ body {
     max-width: 90%;
 }
 
-/* Responsive */
-@media screen and (max-width: 768px) {
+/* เพิ่ม class นี้เพื่อให้ปุ่ม Sign Up ดูเด่นเมื่อถูกคลิก */
+.login-signup-active {
+    background: linear-gradient(270deg, #ff0000, #ff8800, #ffee00);
+    background-size: 400% 400%;
+    animation: gradientLogin 5s ease infinite;
+    transform: scale(1.1);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+@keyframes gradientLogin {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gradientbutton-login {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes gradientbutton-Sign {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@media screen and (max-width: 768px) { /* ทรศ */
     .container {
         flex-direction: column;
         gap: 20px;
@@ -211,7 +256,7 @@ body {
 
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 769px) { /* คอม */
 
     .left-side {
         justify-content: flex-start;
@@ -234,7 +279,7 @@ body {
 
 
 @media screen and (max-width: 480px) {
-  .right-side {
+  .right-side { 
     padding-top: 40px; /* บนอุปกรณ์จอเล็กมาก */
   }
 }

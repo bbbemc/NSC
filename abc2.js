@@ -1,5 +1,6 @@
-// Text พิมพ์ทีละตัว (Typewriter effect)
-const text = "เว็ปนี้มีจุดประสงค์เพื่อใช้ในการศึกษาหาความรู้เเละทดลองการใช้โมเดล \n เพื่อให้เข้าใจเนื้อหามากขึ้น หวังว่าเว็ปนี้จะมีประโยชน์กับทุกคนนะครับ";
+
+// Typewriter Effect
+const text = "เว็ปนี้มีจุดประสงค์เพื่อใช้ในการศึกษาหาความรู้เเละทดลองการใช้โมเดล \nเพื่อให้เข้าใจเนื้อหามากขึ้น หวังว่าเว็ปนี้จะมีประโยชน์กับทุกคนนะครับ";
 let index = 0;
 
 function typeWriter() {
@@ -11,3 +12,24 @@ function typeWriter() {
     }
 }
 typeWriter();
+
+// ปุ่ม Sign Up
+const signupBtn = document.querySelector(".button-Sign");
+let signupClicked = false;
+
+signupBtn.onclick = function () {
+    if (signupClicked) {
+        // กดรอบสอง → ลิงก์ไปหน้า signup.html
+        window.location.href = "sign.html";
+    } else {
+        // กดรอบแรก → ทำให้ปุ่มเด่น
+        signupClicked = true;
+        signupBtn.classList.add("login-signup-active");
+
+        // รีเซ็ตถ้าไม่กดซ้ำภายใน 5 วิ
+        setTimeout(() => {
+            signupClicked = false;
+            signupBtn.classList.remove("login-signup-active");
+        }, 6000);
+    }
+};
