@@ -12,90 +12,23 @@ function typeWriter() {
 }
 typeWriter();
 
-// ปุ่มทั้งหมด
-const loginBtn = document.getElementById("loginBtn");
-const signupBtn = document.getElementById("signupBtn");
-const connectBtn = document.getElementById("connectBtn");
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleIcons = document.querySelectorAll(".toggle-password");
 
-let selectedAction = null;       // เก็บสถานะว่าเลือก login หรือ signup แล้ว
-let connectSelected = false;     // สถานะ confirm connect
-let connectTimeout = null;       // ตัวเก็บ timeout สำหรับ connect
+    toggleIcons.forEach(icon => {
+        icon.addEventListener("click", function () {
+            const targetId = this.getAttribute("data-target");
+            const input = document.getElementById(targetId);
 
-// เมื่อกด Login
-loginBtn.onclick = function () {
-    if (selectedAction === "login") {
-        // กดซ้ำ → เข้าหน้า login.html
-        window.location.href = "index.html";
-        return;
-    }
+            if (!input) return; // ถ้า id ผิดหรือหาไม่เจอ
 
-    selectedAction = "login";
-    loginBtn.classList.add("login-signup-active");
-    signupBtn.classList.remove("login-signup-active");
+            const isPassword = input.getAttribute("type") === "password";
 
-    // รีเซ็ตสถานะ Connect
-    resetConnect();
-};
+            input.setAttribute("type", isPassword ? "text" : "password");
 
-// เมื่อกด Sign Up
-signupBtn.onclick = function () {
-    if (selectedAction === "signup") {
-        // กดซ้ำ → เข้าหน้า signup.html
-        window.location.href = "signup.html";
-        return;
-    }
-
-    selectedAction = "signup";
-    signupBtn.classList.add("login-signup-active");
-    loginBtn.classList.remove("login-signup-active");
-
-    // รีเซ็ตสถานะ Connect
-    resetConnect();
-};
-
-// เมื่อกด Connect
-connectBtn.onclick = function () {
-    if (!selectedAction) {
-        // ยังไม่ได้เลือก login หรือ signup
-        alert("กรุณากด Login หรือ Sign Up ก่อนจึงจะ Connect ได้ครับ 🙂");
-        return;
-    }
-
-    if (connectSelected) {
-        // กด confirm connect ครั้งที่สอง → ไปหน้าตามที่เลือก
-        if (selectedAction === "login") {
-            window.location.href = "index.html";
-        } else if (selectedAction === "signup") {
-            window.location.href = "signup.html";
-        }
-    } else {
-        // กดครั้งแรก → เปลี่ยนสถานะ confirm connect
-        connectSelected = true;
-        connectBtn.classList.add("connect-active");
-        connectBtn.textContent = "Confirm Connect";
-
-        // เคลียร์ Timeout เดิมถ้ามี แล้วตั้งใหม่
-        if (connectTimeout) clearTimeout(connectTimeout);
-        connectTimeout = setTimeout(() => {
-            resetConnect();
-        }, 5000); // รีเซ็ตหลัง 5 วินาที ถ้าไม่กดอีกครั้ง
-    }
-};
-
-// ปิด Connect ชั่วคราวตอนโหลด 1 วินาที (ไม่จำเป็นแต่ช่วย UX)
-connectBtn.disabled = true;
-setTimeout(() => {
-    connectBtn.disabled = false;
-}, 1000);
-
-// ฟังก์ชันรีเซ็ตสถานะ Connect ให้กลับเป็นค่าเริ่มต้น
-function resetConnect() {
-    connectSelected = false;
-    connectBtn.classList.remove("connect-active");
-    connectBtn.textContent = "Connect";
-
-    if (connectTimeout) {
-        clearTimeout(connectTimeout);
-        connectTimeout = null;
-    }
-}
+            // เปลี่ยน icon ลูกตา
+            this.classList.toggle("fa-eye");
+            this.classList.toggle("fa-eye-slash");
+        });
+    });
+});

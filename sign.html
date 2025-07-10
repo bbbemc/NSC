@@ -3,13 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemical-bonds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ฟอนต์ -->
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <!-- ✅ Font Awesome (แก้แล้ว) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
+    
+    <!-- สไตล์หลัก -->
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
 </head>
 
 <body>
@@ -35,12 +39,14 @@
                 <div class="input-group">
                     <img src="img/Vector (1).svg" class="icon-password" alt="password icon">
                     <input type="password" id="Password" name="Password" placeholder="ENTER YOUR PASSWORD" required />
+                    <i class="fa-solid fa-eye toggle-password" data-target="Password"></i>
                 </div>
 
                 <div class="input-group">
                     <img src="img/Vector (1).svg" class="icon-password" alt="password icon">
                     <input type="password" id="ConfirmPassword" name="ConfirmPassword"
                         placeholder="CONFIRM YOUR PASSWORD" required />
+                    <i class="fa-solid fa-eye toggle-password" data-target="ConfirmPassword"></i>
                 </div>
                 <p id="text-Already">Already have an acoount?</p>
             </div>
@@ -51,14 +57,14 @@
             </div>
 
             <div class="center-site">
-            <div class="purpose">
-                <p class="Topic-purpose">PURPOSE</p>
-                <p id="typeText"></p>
+                <div class="purpose">
+                    <p class="Topic-purpose">PURPOSE</p>
+                    <p id="typeText"></p>
+                </div>
             </div>
-        </div>
 
-        
-    <script src="abc2.js"></script>
+
+            <script src="abc.js"></script>
 </body>
 
 </html>

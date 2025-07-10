@@ -76,12 +76,15 @@ body {
 
 /* input และไอคอน */
 .FORM input {
-    width: 250px;
-    padding: 5px;
+    width: 280px;
+    padding: 10px 40px 10px 40px;
+    /* padding บน-ล่าง 10px, ซ้าย 40px เผื่อไอคอน */
+    font-size: 16px;
     border: none;
     border-bottom: 1.5px solid black;
     outline: none;
-    text-align: center;
+    text-align: left;
+    background: transparent;
 }
 
 /* ปรับ icon ให้อยู่ติด input ด้วย position */
@@ -91,6 +94,11 @@ body {
     width: 20px;
     height: 20px;
     z-index: 1;
+}
+
+.FORM input[type="password"] {
+    padding-right: 40px;
+    /* เผื่อพื้นที่ให้ไอคอนตา */
 }
 
 .button-login {
@@ -110,6 +118,12 @@ body {
 #text-button {
     margin-bottom: 20px;
     text-align: center;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#text-button:hover {
+    color: #ff0000;
 }
 
 .button-Sign {
@@ -199,6 +213,29 @@ body {
     font-weight: bold;
 }
 
+input::-ms-reveal,  /* สำหรับ Microsoft Edge */
+input::-webkit-credentials-auto-fill-button, /* ป้องกันบางฟอร์ม */
+input::-webkit-password-toggle-button {
+    display: none;
+}
+
+input[type="password"] {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* ตำแหน่งลูกตาเอง */
+#togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #333;
+    font-size: 16px;
+    z-index: 2;
+}
+
 @keyframes gradientLogin {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -284,4 +321,8 @@ body {
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1366px) {}
+@media screen and (min-width: 768px) and (max-width: 1366px) {
+    .right-side {
+        padding-top: 30px;
+    }
+}
