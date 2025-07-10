@@ -10,8 +10,46 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    cursor: none;
 }
 
+.background {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: grid;
+  gap: 1px;
+  z-index: -1;
+  background-color: #181818;
+}
+
+.background .block {
+  width: 25px;
+  height: 25px;
+  background-color: #282828;
+}
+
+/* เราจะใช้ pseudo-element ::before เป็นเลเยอร์ซ้อนสร้างแสงไฮไลต์ */
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  background: radial-gradient(circle 80px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(29, 236, 132, 0.884), transparent 80%);
+  transition: background 0.1s ease;
+}
+
+.highlight {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 80%);
+  mix-blend-mode: screen;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
 
 /* ตัวจัด layout หลัก */
 .container {
@@ -24,6 +62,31 @@ body {
     width: 100%;
     max-width: 1200px;
     padding: 20px;
+}
+
+.shiny-text {
+    display: inline-block;
+    background: linear-gradient(90deg, #000000, rgb(51, 51, 51), rgb(92, 92, 92), #6b6b6b, rgb(177, 177, 177), rgb(61, 96, 209), rgb(97, 42, 168), #47167e);
+    background-size: 300% 100%;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shinyMove 10s linear infinite;
+}
+
+@keyframes shinyMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .input-group {
@@ -43,7 +106,6 @@ body {
 
 .NameTopic {
     font-size: 44px;
-    color: rgb(0, 0, 0);
 }
 
 /* ด้านขวา */
@@ -56,6 +118,7 @@ body {
     margin-top: 40px;
     gap: 10px;
     margin-left: 5%;
+    color: rgb(221, 221, 221);
 }
 
 
@@ -79,9 +142,10 @@ body {
     width: 280px;
     padding: 10px 40px 10px 40px;
     /* padding บน-ล่าง 10px, ซ้าย 40px เผื่อไอคอน */
+    color: #d4d4d4;
     font-size: 16px;
     border: none;
-    border-bottom: 1.5px solid black;
+    border-bottom: 1.5px solid rgb(255, 255, 255);
     outline: none;
     text-align: left;
     background: transparent;
@@ -105,7 +169,7 @@ body {
     width: 200px;
     padding: 10px 60px;
     color: white;
-    border: none;
+    border: 1.5px solid #d4d4d4;
     border-radius: 4px;
     cursor: pointer;
     background: linear-gradient(to right, rgb(29, 29, 29), rgb(92, 92, 92), rgb(209, 209, 209));
@@ -115,6 +179,7 @@ body {
     line-height: 16px;
     margin-bottom: 20px;
 }
+
 #text-button {
     margin-bottom: 20px;
     text-align: center;
@@ -130,7 +195,7 @@ body {
     width: 200px;
     padding: 10px 60px;
     color: white;
-    border: none;
+    border: 1.5px solid #d4d4d4;
     border-radius: 4px;
     cursor: pointer;
     background: linear-gradient(to left, rgb(29, 29, 29), rgb(92, 92, 92), rgb(209, 209, 209));
@@ -213,8 +278,10 @@ body {
     font-weight: bold;
 }
 
-input::-ms-reveal,  /* สำหรับ Microsoft Edge */
-input::-webkit-credentials-auto-fill-button, /* ป้องกันบางฟอร์ม */
+input::-ms-reveal,
+/* สำหรับ Microsoft Edge */
+input::-webkit-credentials-auto-fill-button,
+/* ป้องกันบางฟอร์ม */
 input::-webkit-password-toggle-button {
     display: none;
 }
@@ -231,15 +298,23 @@ input[type="password"] {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #333;
+    color: #d4d4d4;
     font-size: 16px;
     z-index: 2;
 }
 
 @keyframes gradientLogin {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 @keyframes gradientbutton-login {
@@ -270,7 +345,9 @@ input[type="password"] {
     }
 }
 
-@media screen and (max-width: 768px) { /* ทรศ */
+@media screen and (max-width: 768px) {
+
+    /* ทรศ */
     .container {
         flex-direction: column;
         gap: 20px;
@@ -289,11 +366,12 @@ input[type="password"] {
         left: 20px;
     }
 
-    
+
 
 }
 
-@media screen and (min-width: 769px) { /* คอม */
+@media screen and (min-width: 769px) {
+    /* คอม */
 
     .left-side {
         justify-content: flex-start;
@@ -301,28 +379,40 @@ input[type="password"] {
     }
 
     .right-side {
-    margin-left: 5%;
-    /* ปรับได้ตามต้องการ */
-}
+        margin-left: 5%;
+        /* ปรับได้ตามต้องการ */
+    }
 
-.NameTopic {
-    text-align: left;
-    position: absolute;
-    top: 40px;
-    left: 40px;
-}
+    .NameTopic {
+        text-align: left;
+        position: absolute;
+        top: 40px;
+        left: 40px;
+    }
 
 }
 
 
 @media screen and (max-width: 480px) {
-  .right-side { 
-    padding-top: 40px; /* บนอุปกรณ์จอเล็กมาก */
-  }
+    .right-side {
+        padding-top: 40px;
+        /* บนอุปกรณ์จอเล็กมาก */
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1366px) {
     .right-side {
         padding-top: 30px;
     }
+}
+
+.glow-letter {
+    display: inline-block;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* เมื่อเมาส์อยู่ในรัศมี: เปลี่ยนสี + ขยายเล็กน้อย */
+.hover-glow {
+    color: rgba(29, 236, 132, 0.884);
+    transform: scale(1.2);
 }

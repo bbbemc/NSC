@@ -1,0 +1,97 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Alegreya", serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.left-side {
+    flex: 1 1 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Name-Topic {
+    font-size: 44px;
+        
+}
+
+
+
+
+@media screen and (max-width: 768px) { /* ทรศ */
+    .container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .left-side,
+    .right-side {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+
+    .NameTopic {
+        font-size: 28px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    
+
+}
+
+@media screen and (min-width: 769px) { /* คอม */
+
+    .left-side {
+        justify-content: flex-start;
+        padding-left: 50px;
+    }
+
+    .right-side {
+    margin-left: 5%;
+    /* ปรับได้ตามต้องการ */
+}
+
+.NameTopic {
+    text-align: left;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+
+}
+
+
+@media screen and (max-width: 480px) {
+  .right-side { 
+    padding-top: 40px; /* บนอุปกรณ์จอเล็กมาก */
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1366px) {
+    .right-side {
+        padding-top: 30px;
+    }
+}

@@ -6,10 +6,28 @@
 
 body {
     font-family: "Alegreya", serif;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #181818;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background-grid {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: grid;
+  gap: 1px;
+  z-index: -1;
+  background-color: #181818;
+}
+
+.background-grid .block {
+  width: 25px;
+  height: 25px;
+  background-color: #282828;
 }
 
 
@@ -25,6 +43,32 @@ body {
     max-width: 1200px;
     padding: 20px;
 }
+
+.shiny-text {
+    display: inline-block;
+    background: linear-gradient(90deg, #000000, rgb(51, 51, 51), rgb(92, 92, 92), #6b6b6b, rgb(177, 177, 177), rgb(61, 96, 209), rgb(97, 42, 168), #47167e);
+    background-size: 300% 100%;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shinyMove 10s linear infinite;
+}
+
+@keyframes shinyMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 
 .input-group {
     position: relative;
@@ -54,6 +98,7 @@ body {
     padding-top: 20px;
     gap: 10px;
     margin-left: 5%;
+    color: #d4d4d4;
 }
 
 /* หัว Sign Up */
@@ -79,10 +124,11 @@ body {
     /* padding บน-ล่าง 10px, ซ้าย 40px เผื่อไอคอน */
     font-size: 16px;
     border: none;
-    border-bottom: 1.5px solid black;
+    border-bottom: 1.5px solid rgb(255, 255, 255);
     outline: none;
     text-align: left;
     background: transparent;
+    color: #d4d4d4;
 }
 
 /* ปรับ icon ให้อยู่ติด input ด้วย position */
@@ -93,7 +139,6 @@ body {
     transform: translateY(-50%);
     width: 20px;
     height: 20px;
-    opacity: 0.7;
     pointer-events: none;
     /* ป้องกันการบัง input */
 }
@@ -112,17 +157,17 @@ body {
 .button-Continue {
     padding: 10px 20px;
     color: white;
-    border: none;
+    border: 1.5px solid #d4d4d4;
     border-radius: 4px;
     cursor: pointer;
-    background: linear-gradient(-45deg, rgb(29, 29, 29), rgb(92, 92, 92), rgb(209, 209, 209));
+    background: linear-gradient(to right, rgb(29, 29, 29), rgb(70, 70, 70), rgb(87, 87, 87), rgb(209, 209, 209));
     background-size: 300% 300%;
     transition: all 0.3s ease;
 }
 
 .button-Continue:hover {
     transform: scale(1.1);
-    animation: gradientbutton-Continue 4s ease infinite;
+    animation: gradientbutton-Continue 8s ease infinite;
 }
 
 @keyframes gradientbutton-Continue {
@@ -219,7 +264,7 @@ input[type="ConfirmPassword"] {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #000;
+    color: #d4d4d4;
     font-size: 18px;
     z-index: 2;
 }
