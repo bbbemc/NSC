@@ -1,135 +1,180 @@
-const text = "เว็ปนี้มีจุดประสงค์เพื่อใช้ในการศึกษาหาความรู้เเละทดลองการใช้โมเดล  \nเพื่อให้เข้าใจเนื้อหามากขึ้น หวังว่าเว็ปนี้จะมีประโยชน์กับทุกคนนะครับ";
-let index = 0;
+/* =========================================
+   login.js  (แก้ไขชื่อคลาสพื้นหลัง → .background‑grid)
+   ========================================= */
+(() => {
+  'use strict';
 
-function typeWriter(callback) {
-  if (index < text.length) {
-    const currentChar = text.charAt(index);
-    document.getElementById("typeText").innerHTML += currentChar === "\n" ? "<br>&nbsp;&nbsp;&nbsp;&nbsp;" : currentChar;
-    index++;
-    setTimeout(() => typeWriter(callback), 60);
-  } else {
-    if (typeof callback === "function") callback();
-  }
-}
+  /* ---------- 1. Type‑writer ---------- */
+  const text =
+    'เว็ปนี้มีจุดประสงค์เพื่อใช้ในการศึกษาหาความรู้เเละทดลองการใช้โมเดล\nเพื่อให้เข้าใจเนื้อหามากขึ้น หวังว่าเว็ปนี้จะมีประโยชน์กับทุกคนนะครับ';
+  let index = 0;
+  let typeTextEl; // จะผูกค่าหลัง DOM พร้อม
 
-const backgroundGrid = document.querySelector('.background');
-const blockSize = 25;
-const gapSize = 1;
-let cols, rows;
-let blocks = [];
-
-function createGridBlocks() {
-  cols = Math.ceil(window.innerWidth / (blockSize + gapSize));
-  rows = Math.ceil(window.innerHeight / (blockSize + gapSize));
-
-  backgroundGrid.style.gridTemplateColumns = `repeat(${cols}, ${blockSize}px)`;
-  backgroundGrid.style.gridAutoRows = `${blockSize}px`;
-  backgroundGrid.innerHTML = '';
-  blocks = [];
-
-  for (let i = 0; i < cols * rows; i++) {
-    const block = document.createElement('div');
-    block.classList.add('block');
-    backgroundGrid.appendChild(block);
-    blocks.push(block);
-
-    if (window.innerWidth >= 1024) {
-      // มีเมาส์: ใช้ hover
-      block.addEventListener('mouseenter', () => highlightBlocksAround(i));
-      block.addEventListener('mouseleave', resetBlocks);
+  function typeWriter(done) {
+    if (index < text.length) {
+      const ch = text.charAt(index);
+      typeTextEl.innerHTML +=
+        ch === '\n' ? '<br>&nbsp;&nbsp;&nbsp;&nbsp;' : ch;
+      index++;
+      setTimeout(() => typeWriter(done), 60);
+    } else if (done) {
+      done();
     }
   }
-}
 
-function highlightBlocksAround(centerIndex) {
-  const centerRow = Math.floor(centerIndex / cols);
-  const centerCol = centerIndex % cols;
-  const radius = 1;
-
-  blocks.forEach((block, index) => {
-    const row = Math.floor(index / cols);
-    const col = index % cols;
-
-    if (Math.abs(row - centerRow) <= radius && Math.abs(col - centerCol) <= radius) {
-      block.classList.add('hovered');
-    } else {
-      block.classList.remove('hovered');
-    }
-  });
-}
-
-function resetBlocks() {
-  blocks.forEach(block => block.classList.remove('hovered'));
-}
-
-function wrapLettersIn(selector) {
-  document.querySelectorAll(selector).forEach(el => {
-    const text = el.textContent;
-    el.innerHTML = "";
-    for (let char of text) {
-      const span = document.createElement("span");
-      span.classList.add("glow-letter");
-      span.textContent = char;
-      el.appendChild(span);
-    }
-  });
-}
-
-const togglePassword = document.getElementById("togglePassword");
-const password = document.getElementById("Password");
-
-togglePassword.addEventListener("click", function () {
-  const isPassword = password.getAttribute("type") === "password";
-  password.setAttribute("type", isPassword ? "text" : "password");
-  this.classList.toggle("fa-eye");
-  this.classList.toggle("fa-eye-slash");
-});
-
-const signupBtn = document.querySelector(".button-Sign");
-let signupClicked = false;
-
-signupBtn.onclick = function () {
-  if (signupClicked) {
-    window.location.href = "sign.html";
-  } else {
-    signupClicked = true;
-    signupBtn.classList.add("login-signup-active");
-    setTimeout(() => {
-      signupClicked = false;
-      signupBtn.classList.remove("login-signup-active");
-    }, 6000);
+  /* ---------- 2. ห่ออักษรด้วย span.glow-letter ---------- */
+  function wrapLettersIn(selector) {
+    document.querySelectorAll(selector).forEach((el) => {
+      const chars = [...el.textContent];
+      el.textContent = '';
+      chars.forEach((c) => {
+        const span = document.createElement('span');
+        span.classList.add('glow-letter');
+        span.textContent = c;
+        el.appendChild(span);
+      });
+    });
   }
-};
 
-window.addEventListener("mousemove", (e) => {
-  const mx = e.clientX;
-  const my = e.clientY;
-  const radius = 10;
+  /* ---------- 3. พื้นหลังกริด ---------- */
+  const backgroundGrid = document.querySelector('.background-grid'); // ★ เปลี่ยนให้ตรง HTML
+  const blockSize = 25;
+  const gapSize   = 1;
+  let cols, rows, blocks = [];
 
-  document.querySelectorAll(".glow-letter").forEach(span => {
-    const rect = span.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dist = Math.hypot(mx - cx, my - cy);
-    if (dist <= radius) {
-      span.classList.add("hover-glow");
-    } else {
-      span.classList.remove("hover-glow");
+  function createGridBlocks() {
+    if (!backgroundGrid) return;
+
+    cols = Math.ceil(window.innerWidth  / (blockSize + gapSize));
+    rows = Math.ceil(window.innerHeight / (blockSize + gapSize));
+
+    backgroundGrid.style.gridTemplateColumns = `repeat(${cols}, ${blockSize}px)`;
+    backgroundGrid.style.gridAutoRows       = `${blockSize}px`;
+    backgroundGrid.innerHTML = '';
+    blocks = [];
+
+    for (let i = 0; i < cols * rows; i++) {
+      const block = document.createElement('div');
+      block.classList.add('block');
+      backgroundGrid.appendChild(block);
+      blocks.push(block);
+    }
+  }
+
+  function setupMouseGridHighlight() {
+  let isMouseDown = false;
+
+  window.addEventListener('mousedown', (e) => {
+    if (e.button === 1) { // เมาส์กลาง
+      e.preventDefault();  // ป้องกัน scroll ล้อกลางขึ้น (ถ้าต้องการ)
+      blocks.forEach((b) => b.classList.remove('hovered', 'locked')); // ลบทั้งหมด
+    } else if (e.button === 0) { // เมาส์ซ้าย
+      isMouseDown = true;
     }
   });
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-  createGridBlocks();
+  window.addEventListener('mouseup', (e) => {
+    if (e.button === 0) {
+      isMouseDown = false;
+    }
+  });
 
-  window.addEventListener('resize', () => {
+  window.addEventListener('mousemove', (e) => {
+    const col = Math.floor(e.clientX / (blockSize + gapSize));
+    const row = Math.floor(e.clientY / (blockSize + gapSize));
+
+    for (let r = row; r <= row + 1; r++) {
+      for (let c = col; c <= col + 1; c++) {
+        if (r < 0 || r >= rows || c < 0 || c >= cols) continue;
+        const i = r * cols + c;
+        const block = blocks[i];
+        if (!block) continue;
+
+        block.classList.add('hovered');
+
+        if (isMouseDown) {
+          block.classList.add('locked'); // คลิกซ้ายค้าง: วาดล็อกไว้
+        } else {
+          setTimeout(() => block.classList.remove('hovered'), 200); // ไม่คลิก: ดับใน 200ms
+        }
+      }
+    }
+  });
+
+  // **ลบอันนี้ไปเลย ถ้าอยากให้คลิกขวาเมนูเด้ง**
+  // window.addEventListener('contextmenu', (e) => {
+  //   e.preventDefault();
+  // });
+}
+
+  /* ---------- 4. เอฟเฟกต์อักษรเรืองแสงตามเมาส์ ---------- */
+  function setupGlowLettersHover() {
+    window.addEventListener('mousemove', (e) => {
+      const { clientX: mx, clientY: my } = e;
+      const radius = 10;
+      document.querySelectorAll('.glow-letter').forEach((span) => {
+        const rect = span.getBoundingClientRect();
+        const cx = rect.left + rect.width  / 2;
+        const cy = rect.top  + rect.height / 2;
+        const dist = Math.hypot(mx - cx, my - cy);
+        span.classList.toggle('hover-glow', dist <= radius);
+      });
+    });
+  }
+
+  /* ---------- 5. แสดง/ซ่อนรหัสผ่าน ---------- */
+  function setupTogglePassword() {
+    const toggle = document.getElementById('togglePassword');
+    if (!toggle) return;
+    const pwd = document.getElementById('Password');
+
+    toggle.addEventListener('click', () => {
+      if (!pwd) return;
+      const isPwd = pwd.type === 'password';
+      pwd.type = isPwd ? 'text' : 'password';
+      toggle.classList.toggle('fa-eye');
+      toggle.classList.toggle('fa-eye-slash');
+    });
+  }
+
+  /* ---------- 6. ปุ่ม Sign Up ---------- */
+  function setupSignupButton() {
+    const signupBtn = document.querySelector('.button-Sign');
+    if (!signupBtn) return;
+
+    let clickedOnce = false;
+    signupBtn.addEventListener('click', () => {
+      if (clickedOnce) {
+        window.location.href = 'sign.html';
+      } else {
+        clickedOnce = true;
+        signupBtn.classList.add('login-signup-active');
+        setTimeout(() => {
+          clickedOnce = false;
+          signupBtn.classList.remove('login-signup-active');
+        }, 600); // ปรับระยะเวลาแอนิเมชันได้ตามใจ
+      }
+    });
+  }
+
+  /* ---------- 7. เริ่มทำงานเมื่อ DOM พร้อม ---------- */
+  document.addEventListener('DOMContentLoaded', () => {
+    typeTextEl = document.getElementById('typeText');
+
     createGridBlocks();
+    setupMouseGridHighlight();
+    window.addEventListener('resize', createGridBlocks);
+
+    setupTogglePassword();
+    setupGlowLettersHover();
+    setupSignupButton();
+
+    typeWriter(() => {
+      // หลังพิมพ์จบค่อยใส่ span ให้ทุกตัวอักษร
+      wrapLettersIn('#Login');
+      wrapLettersIn('.Topic-purpose');
+      wrapLettersIn('#loginBtn');
+      wrapLettersIn('.button-Sign');
+    });
   });
-
-  typeWriter();
-
-  wrapLettersIn("#Login");
-  wrapLettersIn(".Topic-purpose");
-  wrapLettersIn("h1");
-  wrapLettersIn("button");
-});
+})();

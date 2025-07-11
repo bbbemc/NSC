@@ -12,7 +12,7 @@ body {
     align-items: flex-start;
 }
 
-.background {
+.background-grid {
     position: fixed;
     top: 0;
     left: 0;
@@ -26,7 +26,7 @@ body {
     z-index: -1;
 }
 
-.background::before {
+.background-grid::before {
     content: "";
     position: absolute;
     top: 0;
@@ -40,7 +40,7 @@ body {
     transition: background 0.1s ease;
 }
 
-.background .block {
+.background-grid .block {
     width: 25px;
     height: 25px;
     background-color: #282828;
@@ -78,7 +78,7 @@ body {
 
 .shiny-text {
     display: inline-block;
-    background: linear-gradient(90deg, #000000, rgb(51, 51, 51), rgb(92, 92, 92), #6b6b6b, rgb(177, 177, 177), rgb(61, 96, 209), rgb(97, 42, 168), #47167e);
+    background: linear-gradient(90deg, #383838, rgb(131, 131, 131), rgb(177, 177, 177), rgb(61, 96, 209), rgb(97, 42, 168), #47167e);
     background-size: 300% 100%;
     color: transparent;
     background-clip: text;
@@ -190,6 +190,7 @@ body {
     text-align: center;
     line-height: 16px;
     margin-bottom: 20px;
+    font-size: 16px;
 }
 
 #text-button {
@@ -200,7 +201,7 @@ body {
 }
 
 #text-button:hover {
-    color: #ff0000;
+    color: #07eff7;
 }
 
 .button-Sign {
@@ -216,6 +217,7 @@ body {
     text-align: center;
     line-height: 16px;
     margin-bottom: 20px;
+    font-size: 16px;
 }
 
 .button-Sign:hover {
@@ -315,6 +317,22 @@ input[type="password"] {
     z-index: 2;
 }
 
+
+.glow-letter {
+  transition: color 0.3s ease;
+  display: inline-block;
+  color: white;
+  cursor: default;
+  white-space: pre;
+}
+.glow-letter.hover-glow {
+    color: #ffbd06;
+  text-shadow: 0 0 10px #f77b07;
+  transform: scale(1.2);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+
 @keyframes gradientLogin {
     0% {
         background-position: 0% 50%;
@@ -403,7 +421,7 @@ input[type="password"] {
     }
 
     .hover-glow {
-        color: rgba(29, 236, 132, 0.884);
+        color: rgba(248, 205, 15, 0.959);
         transform: scale(1.2);
     }
 
@@ -424,9 +442,3 @@ input[type="password"] {
     }
 }
 
-.glow-letter {
-    display: inline-block;
-    transition: color 0.2s ease, transform 0.2s ease;
-}
-
-/* เมื่อเมาส์อยู่ในรัศมี: เปลี่ยนสี + ขยายเล็กน้อย */

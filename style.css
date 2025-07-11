@@ -15,6 +15,7 @@ body {
     align-items: center;
 }
 
+
 .background-grid {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -195,7 +196,7 @@ body {
 }
 
 #text-Already:hover {
-    color: red;
+    color: #07eff7;
 }
 
 .center-site {
@@ -268,6 +269,36 @@ input[type="ConfirmPassword"] {
     font-size: 18px;
     z-index: 2;
 }
+
+.glow-letter {
+  transition: color 0.3s ease;
+  display: inline-block;
+  color: white;
+  cursor: default;
+  white-space: pre;
+}
+.glow-letter.hover-glow {
+    color: #ffbd06;
+  text-shadow: 0 0 10px #f77b07;
+  transform: scale(1.2);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.background-grid .block {
+  width: 25px;
+  height: 25px;
+  background-color: #282828;
+  transition: background-color 0.2s ease;
+  pointer-events: none;
+}
+
+.background-grid .block.locked {
+    background-color: #b83d3d;; /* หรือสีอื่นที่คุณต้องการ */
+}
+
+.background-grid .block.hovered {
+  background-color: #b83d3d;
+}
+
 
 /* Responsive */
 @media screen and (max-width: 768px) {
