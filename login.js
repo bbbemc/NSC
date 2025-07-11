@@ -139,23 +139,19 @@
 
   /* ---------- 6. ปุ่ม Sign Up ---------- */
   function setupSignupButton() {
-    const signupBtn = document.querySelector('.button-Sign');
-    if (!signupBtn) return;
+  const signupBtn = document.querySelector('.button-Sign');
+  if (!signupBtn) return;
 
-    let clickedOnce = false;
-    signupBtn.addEventListener('click', () => {
-      if (clickedOnce) {
-        window.location.href = 'sign.html';
-      } else {
-        clickedOnce = true;
-        signupBtn.classList.add('login-signup-active');
-        setTimeout(() => {
-          clickedOnce = false;
-          signupBtn.classList.remove('login-signup-active');
-        }, 600); // ปรับระยะเวลาแอนิเมชันได้ตามใจ
-      }
-    });
-  }
+  let clickedOnce = false;
+  signupBtn.addEventListener('click', () => {
+    if (clickedOnce) {
+      window.location.href = 'sign.html';
+    } else {
+      clickedOnce = true;
+      signupBtn.classList.add('login-signup-active');
+    }
+  });
+}
 
   /* ---------- 7. เริ่มทำงานเมื่อ DOM พร้อม ---------- */
   document.addEventListener('DOMContentLoaded', () => {
