@@ -1,0 +1,2431 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CHEMICAL BONDS ARENA — เกมควิซพันธะเคมีสุดเร้าใจ</title>
+    <meta name="description"
+        content="เกมควิซพันธะเคมีสำหรับฝึกและทดสอบความรู้ พร้อมระบบ Streak/Power-ups/Leaderboard ในไฟล์เดียว" />
+    <link rel="icon" type="image/png" href="img/Logoweb.png">
+    <style>
+        /* =========================================================================
+            CSS: Reset & Base Styles
+            - This section sets up the basic visual foundation for the entire game.
+            - The `:root` selector defines custom CSS properties (variables) for colors, spacing, and shadows.
+            ========================================================================= */
+        :root {
+            --bg: #0b1020;
+            --bg2: #111836;
+            --panel: #0f1530;
+            --text: #e9f1ff;
+            --muted: #a9b5d6;
+            --primary: #5eead4;
+            /* teal */
+            --secondary: #60a5fa;
+            /* blue */
+            --accent: #f472b6;
+            /* pink */
+            --warn: #f59e0b;
+            --danger: #ef4444;
+            /* red */
+            --success: #22c55e;
+            /* green */
+            --shadow: 0 12px 30px rgba(0, 0, 0, .35);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+            background: radial-gradient(1200px 800px at 20% 0%, #0f213a 0%, #0b1020 60%, #080b16 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            line-height: 1.65;
+            letter-spacing: .2px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            transition: background 0.5s ease-in-out;
+        }
+
+        /* Themes */
+        .theme-sunset {
+            --bg: #1c142c;
+            --bg2: #261f43;
+            --panel: #31294a;
+            --text: #f7e0d3;
+            --muted: #d0b9c9;
+            --primary: #ffc482;
+            --secondary: #d37a7a;
+            --accent: #ff8b6a;
+            --warn: #f8c14f;
+            --danger: #d9534f;
+            --success: #70a168;
+            background: radial-gradient(1200px 800px at 80% 100%, #3e2849 0%, #1c142c 60%, #171124 100%);
+            background-attachment: fixed;
+        }
+
+        .theme-forest {
+            --bg: #0d1a10;
+            --bg2: #152718;
+            --panel: #1a2e1d;
+            --text: #e9ffea;
+            --muted: #a2c2a2;
+            --primary: #94d3a2;
+            --secondary: #6cb88a;
+            --accent: #ffc482;
+            --warn: #f5c76e;
+            --danger: #d9534f;
+            --success: #44a64f;
+            background: radial-gradient(1200px 800px at 50% 50%, #1f4223 0%, #0d1a10 60%, #0a110a 100%);
+            background-attachment: fixed;
+        }
+
+        /* =========================================================================
+            Layout Containers & Header
+            - These styles define the main structure of the page, including the header.
+            - The `.wrap` class centers the content and provides padding.
+            ========================================================================= */
+        .wrap {
+            max-width: 1100px;
+            margin-inline: auto;
+            padding: 24px;
+        }
+
+        header.site {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 20px;
+            background: white;
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .brand .logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: conic-gradient(from 180deg, var(--secondary), var(--accent), var(--primary));
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, .1) inset;
+            animation: rotateLogo 10s linear infinite;
+        }
+
+        @keyframes rotateLogo {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .brand h1 {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            margin: 0;
+            color: rgb(50, 50, 163);
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            margin-top: -4px;
+            color: rgb(50, 50, 163);
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .toolbar a.btn {
+            text-decoration: none;
+        }
+
+        /* General Button Styling */
+        .btn {
+            appearance: none;
+            border: 0;
+            cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: #172042;
+            color: var(--text);
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: transform .08s ease, background .2s ease, opacity .2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: #04121a;
+        }
+
+        .btn.primary:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--primary), var(--accent));
+        }
+
+        .btn.ghost {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, .12);
+            color: #111836;
+        }
+
+        .btn.warn {
+            background: linear-gradient(135deg, #f59e0b22, #f59e0b55);
+            border: 1px solid #f59e0b66;
+            color: #111836;
+        }
+
+        .btn.danger {
+            background: linear-gradient(135deg, #ef444433, #ef444455);
+            border: 1px solid #ef444466;
+        }
+
+        /* New animated buttons */
+        .btn.pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+            }
+
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        /* =========================================================================
+            Panels & Sections
+            - This defines the layout of the main game area and sidebars.
+            - The `.grid` layout is responsive, stacking on smaller screens.
+            ========================================================================= */
+        .grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+            grid-template-columns: 1.2fr .8fr;
+        }
+
+        .panel {
+            background: linear-gradient(180deg, #0b132b, #0a1226);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 18px 18px 22px;
+            transition: all 0.3s ease;
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            font-size: 1.1rem
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        /* =========================================================================
+            Start Screen & Mode Select
+            - Styles for the main menu and game mode selection.
+            - Includes animations for visual flair.
+            ========================================================================= */
+        .start {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 30px;
+            border-radius: var(--radius);
+            text-align: center;
+            background: linear-gradient(160deg, rgba(94, 234, 212, .09), transparent 40%),
+                radial-gradient(800px 600px at 70% 0%, rgba(96, 165, 250, .08), transparent);
+            border: 1px dashed rgba(255, 255, 255, .12);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .falling-element {
+            position: absolute;
+            top: -20px;
+            font-size: 20px;
+            color: var(--primary);
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 0;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .start .features {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            width: 100%;
+            max-width: 680px;
+            margin-top: 6px
+        }
+
+        .chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .04);
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        .chip i {
+            font-style: normal;
+            color: var(--primary)
+        }
+
+        .mode-select {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .mode-select .btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            animation: slideInRight 0.5s ease forwards;
+        }
+
+        .mode-select .btn small {
+            display: block;
+            font-weight: normal;
+            opacity: 0.7;
+            margin-top: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* =========================================================================
+            Quiz Area
+            - Main game UI for the quiz, including question card and answers.
+            ========================================================================= */
+        .question-card {
+            border-radius: 16px;
+            padding: 18px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
+            position: relative;
+            animation: slideInTop 0.5s ease;
+        }
+
+        .question-text {
+            font-size: clamp(1rem, 3vw, 1.15rem);
+            margin: 0
+        }
+
+        #btnBackToMenu {
+            color: #0b132b;
+        }
+
+        .meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            color: var(--muted);
+            font-size: .92rem;
+            margin-top: 6px;
+            position: relative;
+        }
+
+        .answers {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .answer {
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .02);
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform .05s ease, background .2s ease, border .2s ease, opacity .2s ease;
+            animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+        }
+
+        .answer:hover {
+            background: rgba(255, 255, 255, .06);
+        }
+
+        .answer:active {
+            transform: translateY(1px);
+        }
+
+        .answer.correct {
+            background: linear-gradient(135deg, #22c55e33, #22c55e11);
+            border-color: #22c55e;
+            animation: pulseCorrect 1s infinite;
+        }
+
+        .answer.wrong {
+            background: linear-gradient(135deg, #ef444433, #ef444411);
+            border-color: #ef4444;
+            animation: shake 0.5s;
+        }
+
+        /* Keyframes for animations */
+        @keyframes pulseCorrect {
+            0% {
+                box-shadow: 0 0 0 0 var(--success);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-5px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(5px);
+            }
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInTop {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* =========================================================================
+            HUD (Heads-Up Display)
+            - This section styles the game information panels like timer, score, etc.
+            ========================================================================= */
+        .hud {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .bar-wrap {
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .06);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .1);
+            position: relative;
+        }
+
+        #confirmCancel {
+            color: blanchedalmond;
+            /* เปลี่ยนเป็นสีแดง */
+        }
+
+        .bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            transition: width .2s ease;
+        }
+
+        .bar.low-time {
+            animation: pulseBar 1s infinite;
+        }
+
+        @keyframes pulseBar {
+            0% {
+                transform: scaleX(1);
+            }
+
+            50% {
+                transform: scaleX(1.05);
+            }
+
+            100% {
+                transform: scaleX(1);
+            }
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .timer .tick {
+            font-variant-numeric: tabular-nums;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--primary);
+        }
+
+        .lifelines {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .lifeline {
+            padding: 8px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .14);
+            background: rgba(255, 255, 255, .04);
+            color: #ffffff;
+            /* Adjusted to white for better visibility */
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lifeline:hover {
+            transform: scale(1.05);
+        }
+
+        .lifeline[disabled] {
+            opacity: .45;
+            cursor: not-allowed;
+            background: rgba(255, 255, 255, .01);
+            transform: none;
+            border-color: rgba(255, 255, 255, .08);
+        }
+
+        .lifeline-icon {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .lifeline-label {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.75rem;
+        }
+
+        .lifeline-5050 {
+            color: #f472b6;
+        }
+
+        .lifeline-hint {
+            color: #60a5fa;
+        }
+
+        .lifeline-freeze {
+            color: #5eead4;
+        }
+
+        .lifeline-skip {
+            color: #fff;
+        }
+
+        .lifeline-timewarp {
+            color: #ffc482;
+        }
+
+        .lifeline-pointmult {
+            color: #f59e0b;
+        }
+
+        .streak {
+            margin-top: 6px;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 5px rgba(244, 114, 182, 0.5);
+            transition: transform 0.2s ease;
+        }
+
+        .streak.pop {
+            animation: popUp 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .modal-head .btn.ghost[data-close] {
+            color: #FF6347 !important;
+            /* เปลี่ยนสีตัวอักษรเป็นสีส้มแดง */
+        }
+
+        @keyframes popUp {
+            from {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        /* =========================================================================
+            Sidebar Panels
+            - Styles for the achievement and log sidebars.
+            ========================================================================= */
+        .stat {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .stat strong {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .leader {
+            display: grid;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .leader .row {
+            display: grid;
+            grid-template-columns: 1.2fr .5fr .5fr;
+            gap: 8px;
+            background: rgba(255, 255, 255, .04);
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .leader .row.header {
+            background: rgba(255, 255, 255, .1);
+            font-weight: bold;
+        }
+
+        .leader.main-leaderboard .row.header {
+            grid-template-columns: 0.2fr 1.2fr 0.5fr;
+        }
+
+        .leader.main-leaderboard .row {
+            grid-template-columns: 0.2fr 1.2fr 0.5fr;
+        }
+
+
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .04);
+            margin-bottom: 8px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .achievement-item.unlocked {
+            opacity: 1;
+            background: var(--primary);
+            color: var(--bg2);
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .achievement-item.unlocked .muted {
+            color: var(--bg);
+        }
+
+        .achievement-item span:first-child {
+            font-size: 1.5em;
+        }
+
+        .achievement-item .muted {
+            font-size: 0.8em;
+        }
+
+
+        /* =========================================================================
+            Modals (Dialogs)
+            - Styles for pop-up windows like settings, help, and game over screens.
+            ========================================================================= */
+        dialog {
+            border: 1px solid rgba(255, 255, 255, .16);
+            background: #0a1226;
+            color: var(--text);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 0;
+            max-width: 720px;
+            width: clamp(320px, 80vw, 720px);
+            animation: fadeInScale 0.3s ease;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-head {
+            padding: 16px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-body {
+            padding: 18px;
+        }
+
+        /* =========================================================================
+            Pause UI
+            - Overlay for when the game is paused.
+            ========================================================================= */
+        .pause-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .pause-overlay.active {
+            display: flex;
+        }
+
+        .pause-overlay h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .quiz-mode-ui {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* =========================================================================
+            Responsive Design
+            - Adjustments for smaller screens, ensuring the layout is mobile-friendly.
+            ========================================================================= */
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wrap {
+                padding: 12px;
+            }
+
+            header.site {
+                flex-direction: column;
+                padding: 12px;
+                text-align: center;
+            }
+
+            .toolbar {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: nowrap;
+            }
+
+            .btn {
+                flex: 1;
+                font-size: 0.9em;
+                padding: 8px;
+            }
+
+            .brand {
+                justify-content: center;
+            }
+
+            .start .features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .toolbar {
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                flex: none;
+                width: calc(50% - 4px);
+            }
+        }
+
+        .answer.eliminated {
+            opacity: 0.3 !important;
+            pointer-events: none !important;
+            filter: grayscale(60%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="site">
+            <div class="brand">
+                <div class="logo" aria-hidden="true"></div>
+                <div>
+                    <h1>CHEMICAL BONDS ARENA</h1>
+                    <small>เกมควิซพันธะเคมี: เร็ว ดุเดือด สนุก มีพาวเวอร์อัป 🎮</small>
+                </div>
+            </div>
+            <div class="toolbar">
+                <a href="CH1.html" class="btn">Learning</a>
+                <a href="chapter2.html" class="btn">Workspace</a>
+                <button class="btn ghost" id="btnPause" style="display:none;">หยุดเกม</button>
+                <button class="btn danger" id="btnBackToMenu" style="display:none;">กลับเมนู</button>
+                <button class="btn ghost" id="btnSettings">ตั้งค่า</button>
+                <button class="btn ghost" id="btnHelp">วิธีเล่น</button>
+                <button class="btn warn" id="btnReset">รีเซ็ตข้อมูล</button>
+            </div>
+        </header>
+
+        <section class="panel start" id="startPanel">
+            <p>ยินดีต้อนรับสู่ <strong>Chemical Bonds Arena</strong> — สนามแข่งขันตอบคำถามเคมีที่ผสมความรู้กับความมันส์!
+                เก็บคอมโบ สะสมพาวเวอร์อัป สู้กับเวลา และไต่
+                อันดับลีดเดอร์บอร์ด 🧪⚡</p>
+            <div class="features">
+                <div class="chip"><i>⚡</i> สถานะ + ตัวคูณคะแนน</div>
+                <div class="chip"><i>🧠</i> 50/50, Hint, Freeze, Skip</div>
+                <div class="chip"><i>🎵</i> ดนตรี/เสียงเอฟเฟกต์</div>
+                <div class="chip"><i>🏆</i> ถ้วยรางวัล & สถิติสะสม</div>
+                <div class="chip"><i>👾</i> ธีมสีใหม่ๆ</div>
+            </div>
+            <div class="mode-select" id="modeSelectPanel">
+                <h2>เลือกโหมดเกม</h2>
+                <button class="btn primary" id="startTimedQuiz">
+                    โหมดควิซจับเวลา
+                    <small>ตอบคำถามเคมีให้เร็วที่สุดเพื่อสะสมคะแนน</small>
+                </button>
+                <button class="btn primary" id="startChapter3Quiz" onclick="window.location.href='tutorial.html'">
+                    โหมดธรรมดา
+                    <small>ตอบคำถามทั่วไป</small>
+                </button>
+            </div>
+            <div id="startButtons">
+                <button class="btn primary pulse" id="startNow">เริ่มทันที</button>
+                <button class="btn" id="openLeaderboard">ดูอันดับ</button>
+            </div>
+            <small class="muted">Welcome
+            </small>
+        </section>
+
+        <div class="grid" id="gameGrid" style="display:none">
+            <section class="panel" style="position:relative;">
+                <div class="pause-overlay" id="pauseOverlay">
+                    <div>
+                        <h2>เกมหยุดชั่วคราว</h2>
+                        <p>กดปุ่ม <strong>เล่นต่อ</strong> เพื่อไปต่อ</p>
+                        <button class="btn primary" id="btnResume">เล่นต่อ</button>
+                    </div>
+                </div>
+
+                <div id="quizModeUI" class="quiz-mode-ui">
+                    <div id="combo-message"></div>
+                    <div class="question-card">
+                        <p class="question-text" id="qText">…</p>
+                        <div class="meta">
+                            <span>หมวด: <strong id="qTopic">พันธะ</strong></span>
+                            <span>ระดับ: <strong id="qLevel">1</strong></span>
+                            <span>ข้อที่ <strong id="qIndex">1</strong>/<span id="qTotal">1</span></span>
+                        </div>
+                        <div class="answers" id="answers"></div>
+                    </div>
+                </div>
+
+                <div class="hud">
+                    <div class="panel">
+                        <div class="timer">
+                            <div>⏳ เวลา: <span class="tick" id="time">30.0</span>s</div>
+                            <div>คะแนน: <strong id="score">0</strong></div>
+                        </div>
+                        <div class="bar-wrap" aria-label="แถบเวลาที่ลดลง">
+                            <div class="bar" id="timeBar" style="width:100%"></div>
+                        </div>
+                        <div id="quizHudDetails">
+                            <div class="streak">คอมโบ: <strong id="streak">0</strong> ✖ ตัวคูณ <strong
+                                    id="mult">1.00x</strong></div>
+                            <div class="lifelines">
+                                <button class="lifeline" id="ll5050" title="ตัดตัวเลือกออก 2 ตัว">50/50</button>
+                                <button class="lifeline" id="llHint" title="ใบ้คำ">Hint</button>
+                                <button class="lifeline" id="llFreeze" title="หยุดเวลา 5 วิ">Freeze</button>
+                                <button class="lifeline" id="llSkip" title="ข้ามคำถาม">Skip</button>
+                                <button class="lifeline" id="llTimeWarp" title="เพิ่มเวลา">Time Warp</button>
+                                <button class="lifeline" id="llPointMult" title="ตัวคูณคะแนน">2X Points</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="stat"><span>ระดับเลเวล</span> <strong id="level">1</strong></div>
+                        <div class="stat"><span>เหลือคำถามในด่าน</span> <strong id="remain">0</strong></div>
+                        <div class="stat"><span>ตอบถูกทั้งหมด</span> <strong id="correct">0</strong></div>
+                        <div class="stat"><span>ตอบผิดทั้งหมด</span> <strong id="wrong">0</strong></div>
+                        <!-- <div class="stat"><span>อันดับสูงสุด (ออฟไลน์)</span> <strong id="best">0</strong></div> -->
+                        <div class="leader" id="leaderMini"></div>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="panel">
+                <h2>🏆 ความสำเร็จ</h2>
+                <div id="achievements"></div>
+                <h2 style="margin-top:18px">📝 บันทึกเหตุการณ์</h2>
+                <div id="log"
+                    style="height:220px;overflow:auto;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px;background:rgba(255,255,255,.03)">
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <dialog id="dlgHelp">
+        <div class="modal-head"><strong>วิธีเล่น</strong><button class="btn ghost" data-close>ปิด</button></div>
+        <div class="modal-body">
+            <ol>
+                <li>กด <strong>เริ่มเกมใหม่</strong> เพื่อเลือกโหมดเกมที่คุณต้องการ</li>
+                <li><strong>โหมดควิซ:</strong> มีเวลาจำกัดในการตอบคำถามแต่ละข้อ, ตอบถูกติดต่อกันจะเพิ่มคอมโบ/ตัวคูณคะแนน
+                </li>
+                <li>ใช้พาวเวอร์อัป: <code>50/50</code> <code>Hint</code> <code>Freeze</code> <code>Skip</code>
+                    ได้อย่างละ 1
+                    ครั้งต่อรอบ (เฉพาะโหมดควิซ)</li>
+                <li>เก็บคะแนน สร้างสถิติ และติดอันดับใน <strong>Leaderboard</strong></li>
+                <li>ปุ่มลัดคีย์บอร์ด: <kbd>1</kbd>–<kbd>4</kbd> เลือกคำตอบ, <kbd>H</kbd> Hint, <kbd>F</kbd> Freeze,
+                    <kbd>S</kbd>
+                    Skip, <kbd>X</kbd> 50/50, <kbd>P</kbd> หยุดเกม (เฉพาะโหมดควิซ)
+                </li>
+            </ol>
+        </div>
+    </dialog>
+
+    <dialog id="dlgSettings">
+        <div class="modal-head"><strong>ตั้งค่า</strong><button class="btn ghost" data-close>ปิด</button></div>
+        <div class="modal-body">
+            <div class="stat"><label>เสียงดนตรี</label><input type="range" min="0" max="1" step="0.01" id="volMusic">
+            </div>
+            <div class="stat"><label>เสียงเอฟเฟกต์</label><input type="range" min="0" max="1" step="0.01" id="volSfx">
+            </div>
+            <div class="stat"><label>ธีมสี</label>
+                <select id="theme">
+                    <option value="classic">Classic</option>
+                    <option value="sunset">Sunset</option>
+                    <option value="forest">Forest</option>
+                </select>
+            </div>
+            <div class="stat"><label>ระดับเริ่มต้น</label>
+                <select id="startLevel">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+            <p class="muted">ขอให้สนุกกับการเล่นตอบคำถาม :3</p>
+        </div>
+    </dialog>
+
+    <dialog id="dlgLeaderboard">
+        <div class="modal-head"><strong>Leaderboard</strong><button class="btn ghost" data-close>ปิด</button>
+        </div>
+        <div class="modal-body">
+            <div class="leader main-leaderboard" id="leaderBoard"></div>
+        </div>
+    </dialog>
+
+    <dialog id="dlgGameover">
+        <div class="modal-head"><strong>จบเกม</strong><button class="btn ghost" data-close>ปิด</button></div>
+        <div class="modal-body">
+            <p id="finalSummary">สรุปผล…</p>
+            <div class="stat"><span>คะแนนรวม</span><strong id="finalScore">0</strong></div>
+            <div class="stat"><span>เวลาที่เหลือ</span><strong id="finalTime">0.0s</strong></div>
+            <div class="stat"><span>คอมโบสูงสุด</span><strong id="finalBestStreak">0</strong></div>
+            <div class="stat"><span>ตอบถูก</span><strong id="finalCorrect">0</strong></div>
+            <div class="stat"><span>ตอบผิด</span><strong id="finalWrong">0</strong></div>
+            <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+                <input id="playerName" placeholder="ใส่ชื่อสำหรับบันทึกอันดับ"
+                    style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:#0c1430;color:var(--text)" />
+                <button class="btn primary" id="saveScore">บันทึกคะแนน</button>
+                <button class="btn" id="playAgain">เล่นอีกครั้ง</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="dlgNextLevel">
+        <div class="modal-head"><strong>ผ่านด่าน!</strong></div>
+        <div class="modal-body" style="text-align:center;">
+            <p id="nextLevelSummary">สรุปผลด่านที่แล้ว...</p>
+            <div class="stat"><span>คะแนนด่านนี้</span><strong id="levelScore">0</strong></div>
+            <div class="stat"><span>คอมโบสูงสุด</span><strong id="levelBestStreak">0</strong></div>
+            <div class="stat"><span>ตอบถูก</span><strong id="levelCorrect">0</strong></div>
+            <div style="margin-top: 20px;">
+                <button class="btn primary" id="btnContinue">ไปต่อด่านต่อไป</button>
+                <button class="btn" id="btnEndGame">พอแค่นี้</button>
+                <div id="achievements"></div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Custom Dialog for Alert/Info -->
+    <dialog id="customAlertDialog" class="alert-dialog">
+        <div class="modal-head">
+            <strong id="alertTitle"></strong>
+            <button class="btn ghost" data-close>ปิด</button>
+        </div>
+        <div class="modal-body">
+            <p id="alertMessage"></p>
+        </div>
+    </dialog>
+
+    <!-- Custom Dialog for Confirm -->
+    <dialog id="customConfirmDialog" class="alert-dialog">
+        <div class="modal-head">
+            <strong id="confirmTitle"></strong>
+        </div>
+        <div class="modal-body">
+            <p id="confirmMessage"></p>
+            <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn ghost" id="confirmCancel">ยกเลิก</button>
+                <button class="btn danger" id="confirmOk">ยืนยัน</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Audio Elements -->
+    <audio id="bgm" src="Nebula - The Grey Room _ Density & Time.mp3" preload="auto"></audio>
+    <audio id="sfxRight" src="data:audio/mp3;base64,//uQZAAAAAAAAAAA..." preload="auto"></audio>
+    <audio id="sfxWrong" src="data:audio/mp3;base64,//uQZAAAAAAAAAAA..." preload="auto"></audio>
+    <audio id="sfxTick" src="data:audio/mp3;base64,//uQZAAAAAAAAAAA..." preload="auto"></audio>
+    <audio id="sfxTimeWarp" src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAA..." preload="auto"></audio>
+    <audio id="sfxPowerup" src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAA..." preload="auto"></audio>
+
+
+    <script>
+        // =========================================================================
+        // JavaScript: Chemical Bonds Arena — Game Logic (Enhanced Version)
+        // - This is the core logic of the game, managing state, UI, and game flow.
+        // - Enhanced with new features, animations, and responsive design logic.
+        // =========================================================================
+
+        // ---------- Utilities ----------
+        const $ = sel => document.querySelector(sel);
+        const $$ = sel => Array.from(document.querySelectorAll(sel));
+        const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+        const pretty = n => n.toLocaleString('th-TH');
+        const rnd = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+        const shuffle = arr => {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]]
+            }
+            return arr
+        };
+
+        // ---------- Game Data (Questions) ----------
+        // This array holds all the quiz questions, their answer choices, and metadata.
+        // The `level` property is used to group questions for each stage.
+        const baseQuestions = [
+            // Level 1 questions
+            { q: "พันธะไอออนิก (Ionic bond) เกิดจาก…", choices: ["การแบ่งปันอิเล็กตรอน", "การถ่ายโอนอิเล็กตรอน", "แรงวานเดอร์วาลส์", "แรงลอนดอน"], answer: 1, topic: "Ionic", level: 1, hint: "ลองนึกภาพการซื้อ-ขายแลกเปลี่ยนสินค้าแบบเด็ดขาด ไม่มีการแบ่งปัน" },
+            { q: "พันธะโคเวเลนต์ (Covalent bond) คือ", choices: ["แลกเปลี่ยนอิเล็กตรอน", "แบ่งปันอิเล็กตรอน", "แรงดึงดูดระหว่างไอออน", "แรงดึงดูดระหว่างขั้วถาวร"], answer: 1, topic: "Covalent", level: 1, hint: "พันธะนี้เหมือนกับการที่เพื่อนสนิทแบ่งของเล่นกันเล่น" },
+            { q: "ขั้วของพันธะโคเวเลนต์ขึ้นกับ", choices: ["จำนวนโปรตอน", "ความต่าง EN", "เลขมวล", "พลังงานไอออไนเซชัน"], answer: 1, topic: "Polarity", level: 1, hint: "ลองดูว่าอะตอมไหนดึงดูด 'แรงกว่า' กัน" },
+            { q: "พันธะไฮโดรเจนพบเด่นชัดใน", choices: ["NaCl", "H2O", "CO2", "CH4"], answer: 1, topic: "H-bond", level: 1, hint: "โมเลกุลนี้เป็นต้นเหตุที่ทำให้จมน้ำไม่ได้และเป็นสารสำคัญของสิ่งมีชีวิต" },
+            { q: "โลหะให้/รับอิเล็กตรอนกับอโลหะเพื่อสร้าง", choices: ["ไอออนบวก/ลบ", "ไอโซโทป", "ไอโซเมอร์", "เรโซแนนซ์"], answer: 0, topic: "Ionic", level: 1, hint: "เมื่อธาตุหนึ่งมีแต่ให้ อีกธาตุมีแต่รับ พวกมันจะสร้างตัวตนใหม่ที่ตรงข้ามกัน" },
+            { q: "สารใดมีพันธะโลหะ?", choices: ["NaCl", "H2S", "Fe", "CO2"], answer: 2, topic: "Bond type", level: 1, hint: "Fe = เหล็ก" },
+            { q: "การแตกตัวของสารประกอบไอออนิกเรียกว่าอะไร?", choices: ["การหลอมเหลว", "การระเหิด", "พลังงานพันธะ", "พลังงานแลตทิซ"], answer: 3, topic: "Ionic", level: 1, hint: "พลังงานที่ทำให้อะตอมในโครงสร้างผลึกแยกจากกัน" },
+            { q: "โมเลกุลของก๊าซเฉื่อยมีการจัดเรียงอิเล็กตรอนอย่างไร?", choices: ["มีอิเล็กตรอนวงนอก 8 ตัว", "มีอิเล็กตรอนวงนอก 2 ตัว", "เป็นไปตามกฎออกเทต", "ถูกทุกข้อ"], answer: 3, topic: "Noble Gas", level: 1, hint: "ก๊าซเฉื่อยส่วนใหญ่เสถียรเพราะมีอิเล็กตรอนวงนอกเต็ม" },
+            { q: "สารประกอบใดมีพันธะโคเวเลนต์?", choices: ["KCl", "HBr", "CaF2", "LiCl"], answer: 1, topic: "Covalent", level: 1, hint: "พันธะที่เกิดจากอโลหะกับอโลหะ" },
+            { q: "โมเลกุลใดไม่มีขั้ว?", choices: ["NH3", "H2O", "CO2", "HCl"], answer: 2, topic: "Polarity", level: 1, hint: "รูปร่างโมเลกุลสมมาตร ทำให้โมเมนต์หักล้างกันหมด" },
+            { q: "ธาตุที่มีค่า EN สูงที่สุดคือ?", choices: ["O", "N", "F", "Cl"], answer: 2, topic: "EN", level: 1, hint: "ธาตุที่อยู่บนสุดขวาของตารางธาตุ (ยกเว้นก๊าซเฉื่อย)" },
+            { q: "สารที่อยู่ในรูปโครงผลึกร่างตาข่ายมีจุดเดือดสูงที่สุดคือ?", choices: ["NaCl", "SiO2", "CH4", "H2"], answer: 1, topic: "Structure", level: 1, hint: "เป็นสารที่มีโครงสร้างขนาดใหญ่และแข็งแรงมาก" },
+            { q: "พันธะซิกมา (σ-bond) คือ", choices: ["พันธะเดี่ยว", "พันธะที่คู่", "พันธะที่สาม", "พันธะที่ไม่มีในโมเลกุล"], answer: 0, topic: "Hybridization", level: 1, hint: "ทุกพันธะเดี่ยวคือพันธะนี้" },
+            { q: "ข้อใดเป็นพันธะภายในโมเลกุลทั้งหมด?", choices: ["พันธะโคเวเลนต์, พันธะไฮโดรเจน", "พันธะไอออนิก, พันธะโลหะ", "พันธะโคเวเลนต์, พันธะไอออนิก", "แรงลอนดอน, แรงระหว่างขั้ว"], answer: 2, topic: "Bond type", level: 1, hint: "ต้องเป็นแรงที่ยึดอะตอมเข้าด้วยกันเป็นโมเลกุล" },
+            { q: "การละลายของ NaCl ในน้ำเกิดจากแรงใด?", choices: ["พันธะไฮโดรเจน", "แรงไอออน-ไดโพล", "แรงไดโพล-ไดโพล", "แรงลอนดอน"], answer: 1, topic: "IMF", level: 1, hint: "เกิดจากแรงดึงดูดระหว่างไอออนของเกลือกับโมเลกุลน้ำ" },
+
+            // Level 2 questions
+            { q: "พันธะโลหะ (Metallic bond) อธิบายได้ว่า", choices: ["ทะเลอิเล็กตรอนล้อมไอออนโลหะบวก", "การแบ่งปันอิเล็กตรอนแบบเจาะจง", "แรงระหว่างขั้วถาวร", "แรงลอนดอนชั่วขณะ"], answer: 0, topic: "Metallic", level: 2, hint: "ลองนึกถึงฝูงปลาอิเล็กตรอนที่ว่ายวนอยู่รอบๆ โขดหินไอออน" },
+            { q: "โมเลกุลใดมีโมเมนต์ไดโพลเป็นศูนย์?", choices: ["H2O", "NH3", "CO2", "HF"], answer: 2, topic: "Geometry", level: 2, hint: "โมเลกุลนี้ดูสมมาตรมาก เหมือนไม้บรรทัดตรงๆ" },
+            { q: "ระยะพันธะสั้นลงเมื่อ", choices: ["ลำดับพันธะสูงขึ้น", "ลำดับพันธะต่ำลง", "อะตอมใหญ่ขึ้น", "มีอิเล็กตรอนคู่โดดเดี่ยวมากขึ้น"], answer: 0, topic: "Bond order", level: 2, hint: "พันธะสามสั้นกว่าพันธะคู่ ซึ่งสั้นกว่าพันธะเดี่ยว" },
+            { q: "แรงลอนดอน (London dispersion) เกี่ยวข้องกับ", choices: ["ไอออน", "ขั้วถาวร", "ไดโพลชั่วขณะ", "ไฮโดรเจน"], answer: 2, topic: "IMF", level: 2, hint: "แรงนี้เป็นแรงที่อ่อนแอที่สุด เกิดจากความบังเอิญ" },
+            { q: "สารใดจุดเดือดสูงจากพันธะไฮโดรเจน", choices: ["H2S", "H2Se", "H2Te", "H2O"], answer: 3, topic: "H-bond", level: 2, hint: "สารที่คนดื่มกันบ่อยๆ" },
+            { q: "ก๊าซเฉื่อย (Noble gas) มีพันธะประเภทใด?", choices: ["ไม่มีพันธะ", "ไอออนิก", "โคเวเลนต์", "พันธะโลหะ"], answer: 0, topic: "Bond type", level: 3, hint: "มันเป็นพวกที่ชอบอยู่คนเดียว ไม่ผูกมัดกับใคร" },
+            { q: "พลังงานแลตทิซ (Lattice Energy) เป็นการวัดความแข็งแรงของพันธะใด?", choices: ["พันธะโคเวเลนต์", "พันธะไอออนิก", "พันธะโลหะ", "พันธะไฮโดรเจน"], answer: 1, topic: "Lattice", level: 3, hint: "เกี่ยวข้องกับการแตกตัวของเกลือแกง" },
+            { q: "คาร์บอนไดออกไซด์ (CO2) มีรูปร่างโมเลกุลแบบใด?", choices: ["สามเหลี่ยมแบนราบ", "เชิงเส้น", "รูปตัว V", "พีระมิดฐานสามเหลี่ยม"], answer: 1, topic: "Geometry", level: 3, hint: "เป็นก๊าซที่เราหายใจออก รูปร่างจึงต้องเป็นแบบเรียบๆ ไม่ซับซ้อน" },
+            { q: "แรงดึงดูดระหว่างขั้ว (Dipole-dipole force) พบในสารใด?", choices: ["CH4", "H2", "HCl", "N2"], answer: 2, topic: "IMF", level: 2, hint: "โมเลกุลนี้มีสองขั้วชัดเจน เหมือนขั้วแม่เหล็ก" },
+            { q: "พันธะคู่ (Double bond) ประกอบด้วยพันธะซิกมาและไพร์กี่พันธะ?", choices: ["1 ซิกมา, 1 ไพร์", "2 ซิกมา, 1 ไพร์", "1 ซิกมา, 2 ไพร์", "2 ซิกมา, 2 ไพร์"], answer: 0, topic: "Hybridization", level: 4, hint: "พันธะแรกเป็นซิกมาเสมอ" },
+            { q: "การผสมพันธุ์ออร์บิทัล (Hybridization) แบบ sp3 มีรูปร่างโมเลกุลแบบใด?", choices: ["เชิงเส้น", "สามเหลี่ยมแบนราบ", "ทรงสี่หน้า", "พีระมิดฐานสามเหลี่ยม"], answer: 2, topic: "Hybridization", level: 4, hint: "4 กลุ่มอิเล็กตรอนรอบอะตอมกลาง" },
+            { q: "สารประกอบใดมีพันธะโลหะ?", choices: ["NaCl", "H2S", "Fe", "CO2"], answer: 2, topic: "Bond type", level: 1, hint: "Fe = เหล็ก" },
+            { q: "พลังงานพันธะ (Bond Energy) คือพลังงานที่ใช้เพื่อ?", choices: ["สร้างพันธะ", "สลายพันธะ", "ทำให้สารเป็นไอออน", "ทำให้สารเป็นของแข็ง"], answer: 1, topic: "Bond", level: 2, hint: "ใช้เพื่อทำลายแรงยึดเหนี่ยวระหว่างอะตอม" },
+            { q: "รูปร่างโมเลกุลของ NH3 คือ?", choices: ["สามเหลี่ยมแบนราบ", "ทรงสี่หน้า", "เชิงเส้น", "พีระมิดฐานสามเหลี่ยม"], answer: 3, topic: "Geometry", level: 2, hint: "อะตอม N มีอิเล็กตรอนคู่โดดเดี่ยว 1 คู่" },
+            { q: "สารใดมีพันธะไฮโดรเจนระหว่างโมเลกุล?", choices: ["CH4", "C2H6", "CH3OH", "H2S"], answer: 2, topic: "H-bond", level: 2, hint: "โมเลกุลนี้มีหมู่ OH ซึ่งมีพันธะไฮโดรเจน" },
+        ];
+
+        const advancedQuestions = [
+            // Level 3 questions
+            { q: "โมเลกุลของ $BF_3$ มีรูปร่างแบบใด?", choices: ["เชิงเส้น", "สามเหลี่ยมแบนราบ", "พีระมิดฐานสามเหลี่ยม", "ทรงสี่หน้า"], answer: 1, topic: "Structure", level: 3, hint: "อะตอมกลาง B มี 3 กลุ่มอิเล็กตรอนและไม่มีคู่โดดเดี่ยว" },
+            { q: "โมเลกุลของ $CH_4$ มีรูปร่างแบบใด?", choices: ["ทรงสี่หน้า", "พีระมิดฐานสามเหลี่ยม", "รูปตัว V", "สามเหลี่ยมแบนราบ"], answer: 0, topic: "Structure", level: 3, hint: "อะตอมกลาง C มี 4 กลุ่มอิเล็กตรอนและไม่มีคู่โดดเดี่ยว" },
+            { q: "ในโมเลกุลของ $H_2O$ มุมพันธะมีค่าประมาณเท่าใด?", choices: ["$180^\circ$", "$120^\circ$", "$109.5^\circ$", "$104.5^\circ$"], answer: 3, topic: "Structure", level: 3, hint: "อะตอมกลาง O มีอิเล็กตรอนคู่โดดเดี่ยว 2 คู่" },
+            { q: "สารใดมีโครงสร้างแบบไอออนิก?", choices: ["$CO_2$", "$NaCl$", "$CH_4$", "$H_2O$"], answer: 1, topic: "Structure", level: 3, hint: "สารประกอบที่เกิดจากโลหะกับอโลหะ" },
+            { q: "พันธะระหว่างโมเลกุลที่แข็งแรงที่สุดคือ?", choices: ["พันธะไฮโดรเจน", "แรงดึงดูดระหว่างขั้ว", "แรงลอนดอน", "พันธะโคเวเลนต์"], answer: 0, topic: "IMF", level: 3, hint: "พบในโมเลกุลที่มี H จับกับ F, O, N" },
+            { q: "การผสมออร์บิทัล (Hybridization) แบบ sp2 พบในโมเลกุลใด?", choices: ["$CH_4$", "$NH_3$", "$BF_3$", "$CO_2$"], answer: 2, topic: "Hybridization", level: 3, hint: "รูปร่างโมเลกุลเป็นสามเหลี่ยมแบนราบ" },
+            { q: "จำนวนอิเล็กตรอนคู่โดดเดี่ยว (Lone pairs) บนอะตอมกลางของโมเลกุล $NH_3$ คือ?", choices: ["0", "1", "2", "3"], answer: 1, topic: "Structure", level: 3, hint: "ไนโตรเจนมีเวเลนซ์อิเล็กตรอน 5 ตัว และสร้าง 3 พันธะ" },
+            { q: "รูปร่างโมเลกุลของ $PCl_5$ คือ?", choices: ["ทรงสี่หน้า", "พีระมิดคู่ฐานสามเหลี่ยม", "สามเหลี่ยมแบนราบ", "เชิงเส้น"], answer: 1, topic: "Structure", level: 4, hint: "ฟอสฟอรัสมีอิเล็กตรอนรอบอะตอมกลาง 5 กลุ่ม" },
+            { q: "มุมพันธะของโมเลกุล $BeCl_2$ คือ?", choices: ["$104.5^\circ$", "$109.5^\circ$", "$120^\circ$", "$180^\circ$"], answer: 3, topic: "Structure", level: 4, hint: "อะตอมกลางมี 2 กลุ่มอิเล็กตรอนและไม่มีคู่โดดเดี่ยว" },
+        ];
+
+        const elements = [
+            { sym: "H", en: 2.20, valence: 1, lonePairs: 0, color: "#92a8d1" }, { sym: "C", en: 2.55, valence: 4, lonePairs: 0, color: "#323232" }, { sym: "N", en: 3.04, valence: 3, lonePairs: 1, color: "#1b998b" }, { sym: "O", en: 3.44, valence: 2, lonePairs: 2, color: "#ffc288" }, { sym: "F", en: 3.98, valence: 1, lonePairs: 3, color: "#ff6f69" }, { sym: "Cl", en: 3.16, valence: 1, lonePairs: 3, color: "#c6b4ce" }, { sym: "S", en: 2.58, valence: 2, lonePairs: 2, color: "#b9e28c" }, { sym: "P", en: 2.19, valence: 3, lonePairs: 1, color: "#f7d794" }, { sym: "Si", en: 1.90, valence: 4, lonePairs: 0, color: "#b3cde0" }, { sym: "B", en: 2.04, valence: 3, lonePairs: 0, color: "#f9e0a2" }
+        ];
+
+        function genENQuestions() {
+            const out = [];
+            const buckets = {
+                "ไอออนิก": [],
+                "โคเวเลนต์มีขั้ว": [],
+                "โคเวเลนต์ไม่มีขั้ว": []
+            };
+
+            for (let i = 0; i < elements.length; i++) {
+                for (let j = i + 1; j < elements.length; j++) {
+                    const a = elements[i], b = elements[j];
+                    const diff = Math.abs(a.en - b.en);
+
+                    let kind = diff > 1.7 ? "ไอออนิก"
+                        : diff > 0.9 ? "โคเวเลนต์มีขั้ว"
+                            : diff > 0.2 ? "โคเวเลนต์มีขั้ว"
+                                : "โคเวเลนต์ไม่มีขั้ว";
+
+                    let level = diff > 1.7 ? 3 :
+                        diff > 0.9 ? 3 :
+                            diff > 0.2 ? 2 : 1;
+
+                    buckets[kind].push({
+                        q: `หากจับคู่ ${a.sym}-${b.sym} ความต่าง EN ≈ ${diff.toFixed(2)} แนวโน้มพันธะคืออะไร?`,
+                        choices: ["ไอออนิก", "โคเวเลนต์มีขั้ว", "โคเวเลนต์ไม่มีขั้ว", "โลหะ"],
+                        answer: ["ไอออนิก", "โคเวเลนต์มีขั้ว", "โคเวเลนต์ไม่มีขั้ว"].indexOf(kind),
+                        topic: "EN",
+                        level,
+                        hint: "อิงความต่าง EN"
+                    });
+                }
+            }
+
+            // 🔹 สุ่มเลือกจำนวนที่พอดีจากแต่ละ bucket
+            function pickSome(arr, n) {
+                return arr.sort(() => Math.random() - 0.5).slice(0, n);
+            }
+
+            out.push(...pickSome(buckets["ไอออนิก"], 10));
+            out.push(...pickSome(buckets["โคเวเลนต์มีขั้ว"], 10));
+            out.push(...pickSome(buckets["โคเวเลนต์ไม่มีขั้ว"], 10));
+
+            return out;
+        }
+
+
+        const autoQuestions = genENQuestions();
+        const allQuestions = shuffle(baseQuestions.concat(autoQuestions).concat(advancedQuestions));
+
+        const achievements = [
+            { id: 'first_blood', name: 'First Blood', description: 'ตอบคำถามข้อแรกถูก', condition: state => state.correct >= 1 },
+            { id: 'streak_5', name: 'Hot Streak', description: 'ตอบถูกต่อเนื่อง 5 ข้อ', condition: state => state.bestStreak >= 5 },
+            { id: 'time_master', name: 'Time Master', description: 'จบเกมด้วยคะแนนเกิน 10,000', condition: state => state.score >= 10000 },
+            { id: 'perfect_round', name: 'Perfect Round', description: 'ตอบถูก 10 ข้อติดกันโดยไม่ผิดเลย', condition: state => state.bestStreak >= 10 },
+            { id: 'chem_wiz', name: 'Chem Wiz', description: 'ผ่านเลเวล 5', condition: state => state.level >= 5 },
+        ];
+
+        const helpIntros = {
+            '5050': 'ตัดตัวเลือกออก 2 ตัวที่ผิด ช่วยให้คุณมีโอกาสเลือกถูกมากขึ้น',
+            'hint': 'ใบ้คำที่เกี่ยวข้องกับคำตอบ ช่วยให้คุณคิดออก',
+            'freeze': 'หยุดเวลาชั่วคราว 5 วินาที ให้คุณมีเวลาคิดมากขึ้น',
+            'skip': 'ข้ามคำถามนี้ไปเลย ถ้าคุณไม่แน่ใจ',
+            'timeWarp': 'เพิ่มเวลา 10 วินาที ให้คุณมีเวลาคิดมากขึ้น',
+            'pointMult': 'เพิ่มตัวคูณคะแนนเป็น 2 เท่าสำหรับคำถามถัดไป'
+        }
+
+        const KEY = {
+            SETTINGS: 'cba_settings',
+            LEADER: 'cba_leader',
+            BEST: 'cba_best',
+            ACHIEVEMENTS: 'cba_achievements',
+            TUTORIAL: 'cba_tutorial'
+        };
+
+        const settings = (() => {
+            const def = { music: 0.35, sfx: 0.8, theme: 'classic', startLevel: 1 };
+            try {
+                return Object.assign(def, JSON.parse(localStorage.getItem(KEY.SETTINGS) || '{}'));
+            } catch {
+                return def
+            }
+        })();
+
+        document.body.classList.toggle('theme-sunset', settings.theme === 'sunset');
+        document.body.classList.toggle('theme-forest', settings.theme === 'forest');
+
+        const state = {
+            running: false,
+            paused: false,
+            mode: 'quiz',
+            level: settings.startLevel || 1,
+            baseTime: 22,
+            time: 0,
+            timerId: null,
+            index: 0,
+            score: 0,
+            mult: 1,
+            streak: 0,
+            bestStreak: 0,
+            correct: 0,
+            wrong: 0,
+            lifelines: { '5050': 1, 'hint': 1, 'freeze': 1, 'skip': 1, 'timeWarp': 1, 'pointMult': 1 },
+            answered: false,
+            achievements: loadAchievements(),
+            activePowerup: null,
+            tutorialShown: loadTutorialState(),
+            userId: localStorage.getItem('cba_user_id') || Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+        };
+
+        async function syncAchievementsFromServer() {
+            try {
+                const userId = state.userId || localStorage.getItem('cba_user_id');
+                if (!userId) return;
+                const res = await fetch('api/get_achievements.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId })
+                });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (Array.isArray(data)) {
+                    data.forEach(item => {
+                        const key = (typeof item === 'string') ? item : (item.key || item.achievement_key);
+                        if (key) state.achievements[key] = true;
+                    });
+                    saveAchievements();
+                    updateAchievementsUI();
+                }
+            } catch (err) {
+                console.warn('syncAchievementsFromServer failed', err);
+            }
+        }
+
+        // แล้วค่อยเรียก
+        localStorage.setItem('cba_user_id', state.userId);
+        syncAchievementsFromServer();
+
+
+        const getUI = () => {
+            const uiElements = {
+                wrap: $('.wrap'),
+                startPanel: $('#startPanel'),
+                modeSelectPanel: $('#modeSelectPanel'),
+                startButtons: $('#startButtons'),
+                gameGrid: $('#gameGrid'),
+                btnPause: $('#btnPause'),
+                btnResume: $('#btnResume'),
+                btnBackToMenu: $('#btnBackToMenu'),
+                btnSettings: $('#btnSettings'),
+                btnHelp: $('#btnHelp'),
+                btnReset: $('#btnReset'),
+                startNow: $('#startNow'),
+                startTimedQuiz: $('#startTimedQuiz'),
+                startChapter3Quiz: $('#startChapter3Quiz'),
+                pauseOverlay: $('#pauseOverlay'),
+                quizModeUI: $('#quizModeUI'),
+                qText: $('#qText'),
+                qTopic: $('#qTopic'),
+                qLevel: $('#qLevel'),
+                qIndex: $('#qIndex'),
+                qTotal: $('#qTotal'),
+                answers: $('#answers'),
+                time: $('#time'),
+                timeBar: $('#timeBar'),
+                score: $('#score'),
+                streak: $('#streak'),
+                mult: $('#mult'),
+                level: $('#level'),
+                remain: $('#remain'),
+                correct: $('#correct'),
+                wrong: $('#wrong'),
+                best: $('#best'),
+                log: $('#log'),
+                ll5050: $('#ll5050'),
+                llHint: $('#llHint'),
+                llFreeze: $('#llFreeze'),
+                llSkip: $('#llSkip'),
+                llTimeWarp: $('#llTimeWarp'),
+                llPointMult: $('#llPointMult'),
+                dlgHelp: $('#dlgHelp'),
+                dlgSettings: $('#dlgSettings'),
+                dlgLeaderboard: $('#dlgLeaderboard'),
+                dlgGameover: $('#dlgGameover'),
+                finalSummary: $('#finalSummary'),
+                finalScore: $('#finalScore'),
+                finalTime: $('#finalTime'),
+                finalBestStreak: $('#finalBestStreak'),
+                finalCorrect: $('#finalCorrect'),
+                finalWrong: $('#finalWrong'),
+                playerName: $('#playerName'),
+                saveScore: $('#saveScore'),
+                playAgain: $('#playAgain'),
+                leaderMini: $('#leaderMini'),
+                dlgNextLevel: $('#dlgNextLevel'),
+                nextLevelSummary: $('#nextLevelSummary'),
+                levelScore: $('#levelScore'),
+                levelBestStreak: $('#levelBestStreak'),
+                levelCorrect: $('#levelCorrect'),
+                btnContinue: $('#btnContinue'),
+                btnEndGame: $('#btnEndGame'),
+                comboMessage: $('#combo-message'),
+                achievementsPanel: $('#achievements'),
+                customAlertDialog: $('#customAlertDialog'),
+                alertTitle: $('#alertTitle'),
+                alertMessage: $('#alertMessage'),
+                customConfirmDialog: $('#customConfirmDialog'),
+                confirmTitle: $('#confirmTitle'),
+                confirmMessage: $('#confirmMessage'),
+                confirmCancel: $('#confirmCancel'),
+                confirmOk: $('#confirmOk'),
+            };
+            return new Proxy(uiElements, {
+                get: (target, name) => target[name] || document.getElementById(name)
+            });
+        };
+        const ui = getUI();
+
+        (function attachNormalModeRedirect() {
+            // ถ้ามาแบบ UI object (ui) ชัดเจน ให้ใช้ selector ที่ตรงกับ UI ของคุณ
+            const trySelectors = [
+                '#normalModeBtn',        // ปุ่มที่มี id
+                '.mode-normal',          // ปุ่มที่มี class
+                'button[data-mode="normal"]',
+                'a.mode-normal',
+                'a[href="#normal"]'
+            ];
+
+            for (const sel of trySelectors) {
+                const el = document.querySelector(sel);
+                if (el) {
+                    el.addEventListener('click', (ev) => {
+                        ev.preventDefault();
+                        window.location.href = 'tutorial.html';
+                    });
+                    return;
+                }
+            }
+
+
+            // safer: select the specific "โหมดธรรมดา" element without catching the Quiz button
+            let target = null;
+            const byId = document.getElementById('startChapter3Quiz');
+            if (byId && ((byId.innerText || byId.value || '').includes('ธรรมดา') || (byId.dataset && byId.dataset.mode === 'normal'))) {
+                target = byId;
+            } else {
+                const candidates = Array.from(document.querySelectorAll('button, a, input[type="button"], label'));
+                for (const el of candidates) {
+                    const text = (el.innerText || el.value || '').trim();
+                    if (!text) continue;
+                    if (text.includes('โหมดธรรมดา') || /\bธรรมดา\b/.test(text)) {
+                        if (!(/\bควิซ\b/.test(text) || /\bQuiz\b/.test(text))) {
+                            target = el;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (target) {
+                try { target.removeAttribute && target.removeAttribute('onclick'); } catch (e) { }
+                try { target.onclick = null; } catch (e) { }
+                const clone = target.cloneNode(true);
+                target.parentNode.replaceChild(clone, target);
+                clone.addEventListener('click', ev => {
+                    ev.preventDefault();
+                    window.location.href = 'tutorial.html';
+                });
+            }
+        })();
+
+        // ===== เพิ่มตรงนี้ =====
+        document.getElementById("saveScore").addEventListener("click", async () => {
+            const name = document.getElementById("playerName").value.trim() || "Player";
+            const score = state.score;
+            const correct = state.correct;
+            const userId = state.userId; // ถูกเซ็ตไว้ใน localStorage ตั้งแต่ต้นเกม
+
+            try {
+                const res = await fetch("api/save_score.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: userId, name, score, correct })
+                });
+                const data = await res.json();
+                if (data.status === "success") {
+                    alert("บันทึกคะแนนเรียบร้อย!");
+                } else {
+                    alert("ผิดพลาด: " + data.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("เชื่อมต่อเซิร์ฟเวอร์ไม่ได้");
+            }
+        });
+        // ========================
+
+        async function loadLeaderboard() {
+            try {
+                const res = await fetch("api/get_leader.php");
+                const data = await res.json();
+
+                ui.leaderBoard.innerHTML = "";
+                // สร้าง header แถวแรก
+                const header = document.createElement("div");
+                header.className = "row header";
+                header.innerHTML = `
+                <span>อันดับ</span>
+                <span>ชื่อผู้เล่น</span>
+                <span>คะแนน</span>
+                <span>วันที่</span>
+            `;
+                ui.leaderBoard.appendChild(header);
+
+                // เติมข้อมูลแต่ละอันดับ
+                data.forEach((row, idx) => {
+                    const div = document.createElement("div");
+                    div.className = "row";
+                    div.innerHTML = `
+                    <span>${idx + 1}</span>
+                    <span>${row.name}</span>
+                    <span>${row.score}</span>
+                    <span>${row.date}</span>
+                `;
+                    ui.leaderBoard.appendChild(div);
+                });
+            } catch (err) {
+                console.error(err);
+                ui.leaderBoard.innerHTML = "<p>โหลดอันดับไม่สำเร็จ</p>";
+            }
+        }
+
+
+
+        // ---------- Audio ----------
+        const audios = {
+            bgm: $('#bgm'),
+            sfxRight: $('#sfxRight'),
+            sfxWrong: $('#sfxWrong'),
+            sfxTick: $('#sfxTick'),
+            sfxTimeWarp: $('#sfxTimeWarp'),
+            sfxPowerup: $('#sfxPowerup'),
+        };
+
+        function playSfx(audioElement) {
+            if (audioElement && settings.sfx > 0) {
+                audioElement.volume = settings.sfx;
+                audioElement.currentTime = 0;
+                audioElement.play();
+            }
+        }
+        function playBgm() {
+            if (audios.bgm && settings.music > 0) {
+                audios.bgm.volume = settings.music;
+                audios.bgm.play();
+            }
+        }
+
+        function stopBgm() {
+            if (audios.bgm) {
+                audios.bgm.pause();
+            }
+        }
+
+        // ---------- API Functions and Fallbacks ----------
+        const isOnline = window.location.protocol.startsWith('http');
+
+        function getLocalLeaderboard() {
+            try {
+                return JSON.parse(localStorage.getItem(KEY.LEADER) || '[]');
+            } catch {
+                return []
+            }
+        }
+
+        function saveLocalLeaderboard(data) {
+            localStorage.setItem(KEY.LEADER, JSON.stringify(data));
+        }
+
+        // This function will attempt to save score to the online database via PHP backend.
+        // It's a key part of the fix to get scores to appear on the leaderboard correctly.
+        async function saveOnlineLeaderboardEntry(name, score, correct) {
+            if (!isOnline) {
+                console.warn('Offline: Skipping online leaderboard save.');
+                return;
+            }
+
+            try {
+                // ดึงค่า name, score, userId, correct จาก state / หน้าเพจ
+                const name = state.name || document.getElementById('playerName')?.value || 'Player';
+                const score = state.score;
+                const correct = state.correct || state.correct_answers || 0;
+                const userId = state.userId || localStorage.getItem('userId') || null;
+
+                // ดึง email จาก localStorage หรือ input (ถ้าไม่มีจะ prompt ให้กรอก)
+                let email = localStorage.getItem('email') || document.getElementById('email')?.value || '';
+                if (!email) {
+                    email = window.prompt('กรุณาใส่อีเมลเพื่อบันทึกคะแนน (จะใช้เป็นบัญชีเดียวต่ออีเมล):', '');
+                    if (email) {
+                        // ถ้ากรอก ให้เก็บไว้ใน localStorage เพื่อรอบหน้าไม่ต้องกรอกอีก
+                        localStorage.setItem('email', email);
+                    } else {
+                        // ถ้า user ยกเลิก/ไม่กรอก ให้ยกเลิกการบันทึก
+                        log('⚠️ ยกเลิกการบันทึก: ต้องการอีเมลเพื่อบันทึกคะแนน');
+                        throw new Error('Email required for leaderboard');
+                    }
+                }
+
+                const payload = {
+                    name: name,
+                    score: score,
+                    userId: userId,
+                    correct_answers: correct,
+                    email: email
+                };
+
+                const response = await fetch('api/submit_score.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Server responded with an error');
+                }
+                const result = await response.json();
+                if (result.status === 'success') {
+                    log(`🎉 บันทึกคะแนนออนไลน์สำเร็จ: ${name} ได้ ${score}`);
+                    updateLeaderboardUI(); // Refresh leaderboard after successful save
+                } else {
+                    console.error('API Error:', result.message);
+                    log(`⚠️ บันทึกคะแนนออนไลน์ไม่สำเร็จ: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Failed to save score online:', error);
+                log(`⚠️ บันทึกคะแนนออนไลน์ไม่สำเร็จ: ${error.message}`);
+            }
+        }
+
+        async function getOnlineLeaderboard() {
+            if (isOnline) {
+                try {
+                    const response = await fetch('api/get_leaderboard.php');
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch online leaderboard');
+                    }
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error('Error fetching online leaderboard:', error);
+                    return getLocalLeaderboard(); // Fallback to local storage
+                }
+            } else {
+                return getLocalLeaderboard(); // Use local storage if not on a server
+            }
+        }
+
+        function saveLocalLeaderboardEntry(name, score, correct) {
+            let leaderboard = getLocalLeaderboard();
+            const existing = leaderboard.find(entry => entry.userId === state.userId);
+            if (existing) {
+                if (score > existing.score) {
+                    existing.score = score;
+                    existing.name = name;
+                    existing.date = new Date().toISOString();
+                    existing.correct = correct;
+                }
+            } else {
+                leaderboard.push({
+                    userId: state.userId,
+                    name: name,
+                    score: score,
+                    date: new Date().toISOString(),
+                    correct: correct
+                });
+            }
+            saveLocalLeaderboard(leaderboard);
+            updateLeaderboardUI();
+        }
+
+        // ---------- Game Logic Functions ----------
+        function saveSettings() {
+            localStorage.setItem(KEY.SETTINGS, JSON.stringify(settings));
+        }
+
+        function saveBestScore(score) {
+            if (score > (localStorage.getItem(KEY.BEST) || 0)) {
+                localStorage.setItem(KEY.BEST, score);
+                if (ui.best) ui.best.textContent = pretty(score);
+            }
+        }
+
+        async function loadAchievements() {
+            try {
+                const userId = state.userId || localStorage.getItem('cba_user_id');
+                if (userId) {
+                    try {
+                        const res = await fetch('api/get_achievements.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ user_id: userId })
+                        });
+                        if (res.ok) {
+                            const data = await res.json();
+                            // data คาดว่าเป็น array ของ { key: 'first_blood', unlocked: 1, ... } หรือ array ของ string key
+                            const out = {};
+                            if (Array.isArray(data)) {
+                                data.forEach(item => {
+                                    const key = (typeof item === 'string') ? item : (item.key || item.achievement_key);
+                                    if (key) out[key] = true;
+                                });
+                                return out;
+                            }
+                        }
+                    } catch (err) {
+                        console.warn('get_achievements fetch failed:', err);
+                    }
+                }
+                // fallback: localStorage (เดิม)
+                return JSON.parse(localStorage.getItem(KEY.ACHIEVEMENTS) || '{}');
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveAchievements() {
+            localStorage.setItem(KEY.ACHIEVEMENTS, JSON.stringify(state.achievements));
+        }
+
+        function loadTutorialState() {
+            try {
+                return JSON.parse(localStorage.getItem(KEY.TUTORIAL) || '{}');
+            } catch {
+                return {}
+            }
+        }
+
+        function saveTutorialState() {
+            localStorage.setItem(KEY.TUTORIAL, JSON.stringify(state.tutorialShown));
+        }
+
+        async function checkAchievements() {
+            for (const ach of achievements) {
+                try {
+                    if (!state.achievements[ach.id] && ach.condition(state)) {
+                        state.achievements[ach.id] = true;
+                        log(`🏆 ปลดล็อกความสำเร็จ: ${ach.name}`);
+                        showAlertDialog('ปลดล็อกความสำเร็จ!', `คุณได้รับรางวัล "${ach.name}" แล้ว!`);
+                        saveAchievements();
+                        updateAchievementsUI();
+
+                        // ส่งไป server
+                        (async () => {
+                            try {
+                                const userId = state.userId || localStorage.getItem('cba_user_id');
+                                if (!userId) return;
+                                await fetch('api/save_achievement.php', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        user_id: userId,
+                                        achievement_key: ach.id,
+                                        name: ach.name
+                                    })
+                                });
+                            } catch (err) {
+                                console.warn('Failed to save achievement to server:', err);
+                            }
+                        })();
+                    }
+                } catch (err) {
+                    console.error('checkAchievements error for', ach && ach.id, err);
+                }
+            }
+        }
+
+        async function updateLeaderboardUI() {
+            const leaderboard = await getOnlineLeaderboard();
+            if (ui.leaderMini) ui.leaderMini.innerHTML = '';
+            if (ui.leaderBoard) ui.leaderBoard.innerHTML = '';
+
+            const renderLeaderboard = (board, container) => {
+                if (container) {
+                    const headerRow = document.createElement('div');
+                    headerRow.classList.add('row', 'header');
+                    headerRow.innerHTML = `<span>อันดับ</span><span>ชื่อ</span><span>คะแนน</span>`;
+                    container.appendChild(headerRow);
+                }
+
+                board.forEach((entry, i) => {
+                    const row = document.createElement('div');
+                    row.classList.add('row');
+                    const name = entry.nickname || entry.name || entry.user_name || 'Guest';
+                    const score = (entry.score !== null && entry.score !== undefined && !isNaN(entry.score)) ? pretty(entry.score) : 'N/A';
+                    const correct_answers = entry.correct_answers ? `(${entry.correct_answers} ข้อ)` : '';
+                    const date = entry.date ? new Date(entry.date).toLocaleDateString() : 'N/A';
+
+                    row.innerHTML = `<span>${i + 1}.</span><span>${name}</span><span>${score} ${correct_answers}</span>`;
+                    if (container) container.appendChild(row);
+                });
+            };
+
+            if (ui.leaderMini) {
+                renderLeaderboard(leaderboard.slice(0, 5), ui.leaderMini);
+            }
+            if (ui.leaderBoard) {
+                renderLeaderboard(leaderboard, ui.leaderBoard);
+            }
+        }
+
+
+        function updateAchievementsUI() {
+            if (!ui.achievementsPanel) return;
+            ui.achievementsPanel.innerHTML = '';
+            achievements.forEach(ach => {
+                const isUnlocked = state.achievements[ach.id];
+                const item = document.createElement('div');
+                item.classList.add('achievement-item');
+                if (isUnlocked) {
+                    item.classList.add('unlocked');
+                }
+                item.innerHTML = `
+                        <span>${isUnlocked ? '✅' : '🔒'}</span>
+                        <div>
+                            <strong>${ach.name}</strong>
+                            <p class="muted">${ach.description}</p>
+                        </div>
+                    `;
+                if (ui.achievementsPanel) ui.achievementsPanel.appendChild(item);
+            });
+        }
+
+        function updateUI() {
+            if (state.mode === 'quiz') {
+                if (ui.time) ui.time.textContent = state.time.toFixed(1);
+                const timeRatio = (state.time / state.baseTime);
+                if (ui.timeBar) {
+                    ui.timeBar.style.width = `${clamp(timeRatio, 0, 1) * 100}%`;
+                    if (timeRatio < 0.25 && timeRatio > 0.1) {
+                        ui.timeBar.classList.add('low-time');
+                    } else {
+                        ui.timeBar.classList.remove('low-time');
+                    }
+                }
+                if (ui.score) ui.score.textContent = pretty(state.score);
+                if (ui.streak) {
+                    if (state.streak > 0) {
+                        ui.streak.classList.add('pop');
+                        ui.streak.addEventListener('animationend', () => ui.streak.classList.remove('pop'), { once: true });
+                    }
+                    ui.streak.textContent = state.streak;
+                }
+                if (ui.mult) ui.mult.textContent = `${state.mult.toFixed(2)}x`;
+                if (ui.level) ui.level.textContent = state.level;
+                const currentLevelQuestions = allQuestions.filter(q => q.level === state.level);
+                if (ui.remain) ui.remain.textContent = currentLevelQuestions.length - state.index;
+                if (ui.correct) ui.correct.textContent = state.correct;
+                if (ui.wrong) ui.wrong.textContent = state.wrong;
+
+                // *** Removed offline score display ***
+                // if (ui.best) ui.best.textContent = pretty(localStorage.getItem(KEY.BEST) || 0);
+
+                if (ui.ll5050) ui.ll5050.disabled = state.lifelines['5050'] <= 0;
+                if (ui.llHint) ui.llHint.disabled = state.lifelines['hint'] <= 0;
+                if (ui.llFreeze) ui.llFreeze.disabled = state.lifelines['freeze'] <= 0;
+                if (ui.llSkip) ui.llSkip.disabled = state.lifelines['skip'] <= 0;
+                if (ui.llTimeWarp) ui.llTimeWarp.disabled = state.lifelines['timeWarp'] <= 0;
+                if (ui.llPointMult) ui.llPointMult.disabled = state.lifelines['pointMult'] <= 0 || state.activePowerup === 'pointMult';
+
+                if (state.activePowerup === 'pointMult') {
+                    if (ui.llPointMult) ui.llPointMult.classList.add('pulse');
+                } else {
+                    if (ui.llPointMult) ui.llPointMult.classList.remove('pulse');
+                }
+            }
+        }
+
+        function showUI(mode) {
+            if (ui.startPanel) ui.startPanel.style.display = 'none';
+            if (ui.gameGrid) ui.gameGrid.style.display = 'grid';
+            if (ui.btnPause) ui.btnPause.style.display = 'inline-block';
+            if (ui.btnBackToMenu) ui.btnBackToMenu.style.display = 'inline-block';
+            if (ui.startTimedQuiz) ui.startTimedQuiz.disabled = false;
+            if (ui.quizModeUI) ui.quizModeUI.style.display = 'block';
+            if ($('#quizHudDetails')) $('#quizHudDetails').style.display = 'block';
+        }
+
+        function showStartMenu() {
+            clearInterval(state.timerId);
+            state.running = false;
+            state.paused = false;
+            if (ui.startPanel) ui.startPanel.style.display = 'flex';
+            if (ui.gameGrid) ui.gameGrid.style.display = 'none';
+            if (ui.btnPause) ui.btnPause.style.display = 'none';
+            if (ui.btnBackToMenu) ui.btnBackToMenu.style.display = 'none';
+            if (ui.modeSelectPanel) ui.modeSelectPanel.style.display = 'flex';
+            if (ui.startButtons) ui.startButtons.style.display = 'flex';
+            updateLeaderboardUI();
+            updateAchievementsUI();
+            startFallingAnimation();
+            stopBgm();
+        }
+
+        function newGame() {
+            state.running = true;
+            state.paused = false;
+            state.time = state.baseTime;
+            state.index = 0;
+            state.score = 0;
+            state.mult = 1;
+            state.streak = 0;
+            state.bestStreak = 0;
+            state.correct = 0;
+            state.wrong = 0;
+            state.lifelines = { '5050': 1, 'hint': 1, 'freeze': 1, 'skip': 1, 'timeWarp': 1, 'pointMult': 1 };
+            state.answered = false;
+            state.activePowerup = null;
+            if (ui.log) ui.log.innerHTML = '';
+            showUI('quiz');
+            nextQuizQuestion();
+            playBgm();
+            stopFallingAnimation();
+        }
+
+        function nextQuizQuestion() {
+            state.answered = false;
+            state.time = state.baseTime;
+            const currentLevelQuestions = allQuestions.filter(q => q.level === state.level);
+            if (state.index >= currentLevelQuestions.length) {
+                showNextLevelModal();
+                return;
+            }
+
+            const currentQ = currentLevelQuestions[state.index];
+            if (ui.qText) ui.qText.textContent = currentQ.q;
+            if (ui.qTopic) ui.qTopic.textContent = currentQ.topic;
+            if (ui.qLevel) ui.qLevel.textContent = state.level;
+            if (ui.qIndex) ui.qIndex.textContent = state.index + 1;
+            if (ui.qTotal) ui.qTotal.textContent = currentLevelQuestions.length;
+
+            if (ui.answers) ui.answers.innerHTML = '';
+            const shuffledChoices = shuffle([...currentQ.choices]);
+            shuffledChoices.forEach((choice, i) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.classList.add('answer');
+                answerDiv.textContent = choice;
+                answerDiv.dataset.index = currentQ.choices.indexOf(choice);
+                answerDiv.addEventListener('click', (ev) => {
+                    if (answerDiv.classList.contains('eliminated')) return;
+                    handleAnswer(parseInt(answerDiv.dataset.index));
+                });
+                if (ui.answers) ui.answers.appendChild(answerDiv);
+            });
+
+            startTimer();
+            updateUI();
+        }
+
+        function pauseGame() {
+            if (!state.running || state.paused) return;
+            state.paused = true;
+            clearInterval(state.timerId);
+            if (ui.pauseOverlay) ui.pauseOverlay.classList.add('active');
+            stopBgm();
+        }
+
+        function resumeGame() {
+            if (!state.running || !state.paused) return;
+            state.paused = false;
+            startTimer();
+            if (ui.pauseOverlay) ui.pauseOverlay.classList.remove('active');
+            playBgm();
+        }
+
+        function startTimer() {
+            if (state.timerId) clearInterval(state.timerId);
+            state.timerId = setInterval(() => {
+                if (state.time > 0) {
+                    state.time -= 0.1;
+                    updateUI();
+                } else {
+                    gameOver();
+                }
+            }, 100);
+        }
+
+        function log(text) {
+            const p = document.createElement('p');
+            p.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+            if (ui.log) ui.log.prepend(p);
+        }
+
+        function handleAnswer(choiceIndex) {
+            if (state.answered) return;
+            state.answered = true;
+            const currentLevelQuestions = allQuestions.filter(q => q.level === state.level);
+            const currentQ = currentLevelQuestions[state.index];
+            const answerDiv = Array.from(ui.answers.children).find(el => parseInt(el.dataset.index) === choiceIndex);
+
+            clearInterval(state.timerId);
+
+            if (choiceIndex === currentQ.answer) {
+                playSfx(audios.sfxRight);
+                if (answerDiv) answerDiv.classList.add('correct');
+                state.score += Math.floor(100 * state.mult);
+                state.streak++;
+                state.mult = 1 + (state.streak * 0.1);
+                state.correct++;
+                log(`✅ ถูกต้อง! "${currentQ.q}"`);
+            } else {
+                playSfx(audios.sfxWrong);
+                if (answerDiv) answerDiv.classList.add('wrong');
+                const correctDiv = Array.from(ui.answers.children).find(el => parseInt(el.dataset.index) === currentQ.answer);
+                if (correctDiv) correctDiv.classList.add('correct');
+                state.streak = 0;
+                state.mult = 1;
+                state.wrong++;
+                log(`❌ ผิด! คำตอบคือ "${correctDiv ? correctDiv.textContent : ''}"`);
+            }
+            state.bestStreak = Math.max(state.bestStreak, state.streak);
+            // saveBestScore(state.score); // Removed, as we now save to online leaderboard
+            updateUI();
+            checkAchievements();
+
+            if (state.activePowerup === 'pointMult') {
+                state.mult = state.mult / 2;
+                state.activePowerup = null;
+                updateUI();
+            }
+
+            setTimeout(() => {
+                state.index++;
+                nextQuizQuestion();
+            }, 1500);
+        }
+
+        function showNextLevelModal() {
+            clearInterval(state.timerId);
+            state.running = false;
+            if (ui.nextLevelSummary) ui.nextLevelSummary.textContent = `คุณทำคะแนนได้ ${pretty(state.score)} คะแนน`;
+            if (ui.levelScore) ui.levelScore.textContent = pretty(state.score);
+            if (ui.levelBestStreak) ui.levelBestStreak.textContent = state.bestStreak;
+            if (ui.levelCorrect) ui.levelCorrect.textContent = state.correct;
+            if (ui.dlgNextLevel) ui.dlgNextLevel.showModal();
+            pauseGame();
+        }
+
+        function continueNextLevel() {
+            state.level++;
+            state.index = 0;
+            state.time = state.baseTime;
+            state.running = true;
+            state.answered = false;
+            if (ui.dlgNextLevel) ui.dlgNextLevel.close();
+            nextQuizQuestion();
+            resumeGame();
+        }
+
+        function endGame() {
+            if (ui.dlgNextLevel) ui.dlgNextLevel.close();
+            gameOver();
+        }
+
+        function gameOver() {
+            clearInterval(state.timerId);
+            state.running = false;
+            showGameoverModal();
+            stopBgm();
+        }
+
+        function showGameoverModal() {
+            const summary = `คุณตอบถูก ${state.correct} ข้อ และผิด ${state.wrong} ข้อ`;
+            if (ui.finalSummary) ui.finalSummary.textContent = summary;
+            if (ui.finalScore) ui.finalScore.textContent = pretty(state.score);
+            if (ui.finalTime) ui.finalTime.textContent = `${state.time.toFixed(1)}s`;
+            if (ui.finalBestStreak) ui.finalBestStreak.textContent = state.bestStreak;
+            if (ui.finalCorrect) ui.finalCorrect.textContent = state.correct;
+            if (ui.finalWrong) ui.finalWrong.textContent = state.wrong;
+            if (ui.dlgGameover) ui.dlgGameover.showModal();
+            pauseGame();
+        }
+
+        function saveScore() {
+            const playerName = ui.playerName.value.trim() || 'นิรนาม';
+            if (playerName) {
+                const scoreToSave = state.score;
+                const correctAnswers = state.correct;
+                saveOnlineLeaderboardEntry(playerName, scoreToSave, correctAnswers);
+                if (ui.dlgGameover) ui.dlgGameover.close();
+                showStartMenu();
+            }
+        }
+
+
+        // New Lifeline Functions
+        function handleLifeline(type) {
+            if (state.lifelines[type] <= 0 || state.answered) {
+                showAlertDialog('ไม่สามารถใช้ได้', 'คุณไม่มีตัวช่วยนี้เหลือแล้ว หรือกำลังอยู่ในระหว่างตอบคำถาม');
+                return;
+            }
+
+            if (!state.tutorialShown[type]) {
+                const introMessage = helpIntros[type];
+                showAlertDialog(type, introMessage);
+                state.tutorialShown[type] = true;
+                saveTutorialState();
+                return;
+            }
+
+            state.lifelines[type]--;
+            playSfx(audios.sfxPowerup);
+            log(`🌟 ใช้ตัวช่วย: ${type}`);
+
+            const currentLevelQuestions = allQuestions.filter(q => q.level === state.level);
+            const currentQ = currentLevelQuestions[state.index];
+            switch (type) {
+                case '5050':
+                    // หาองค์ประกอบ answer ที่ไม่ใช่คำตอบถูก และยังไม่ถูกกำจัด
+                    const wrongAnswers = Array.from(ui.answers.children)
+                        .filter(el => parseInt(el.dataset.index) !== currentQ.answer && !el.classList.contains('eliminated'));
+                    // สุ่มเลือก 2 ตัวแล้วทำเครื่องหมายว่า eliminated (ไม่สามารถคลิกได้ และจางลง)
+                    shuffle(wrongAnswers).slice(0, 2).forEach(el => {
+                        el.classList.add('eliminated');
+                        el.style.pointerEvents = 'none';
+                        el.style.opacity = '0.3';
+                        el.setAttribute('aria-disabled', 'true');
+                    });
+                    break;
+                case 'hint':
+                    showAlertDialog('คำใบ้', currentQ.hint);
+                    break;
+                case 'freeze':
+                    clearInterval(state.timerId);
+                    log('⏳ เวลาถูกหยุดชั่วคราว!');
+                    setTimeout(() => {
+                        startTimer();
+                        log('▶ เวลาเดินต่อแล้ว!');
+                    }, 5000);
+                    break;
+                case 'skip':
+                    clearInterval(state.timerId);
+                    state.index++;
+                    nextQuizQuestion();
+                    break;
+                case 'timeWarp':
+                    playSfx(audios.sfxTimeWarp);
+                    state.time += 10;
+                    if (state.time > state.baseTime) {
+                        state.time = state.baseTime;
+                    }
+                    updateUI();
+                    break;
+                case 'pointMult':
+                    state.mult *= 2;
+                    state.activePowerup = 'pointMult';
+                    log('⚡ ตัวคูณคะแนน 2x ถูกเปิดใช้งานสำหรับคำถามถัดไป!');
+                    updateUI();
+                    break;
+            }
+            updateUI();
+        }
+
+        function showAlertDialog(title, message, isConfirm = false, onConfirm = null) {
+            // ถ้าเป็น confirm dialog
+            if (isConfirm && ui.customConfirmDialog) {
+                if (ui.confirmTitle) ui.confirmTitle.textContent = title;
+                if (ui.confirmMessage) ui.confirmMessage.textContent = message;
+
+                // จำสถานะก่อนหน้า (ว่าเกมกำลังรันอยู่จริงไหม)
+                const wasRunning = !!(state.running && !state.paused);
+                if (wasRunning) pauseGame(); // pause ก่อนแสดง dialog
+
+                // แสดง dialog
+                ui.customConfirmDialog.showModal();
+
+                const handleConfirm = () => {
+                    if (onConfirm) onConfirm();
+                    if (ui.customConfirmDialog) ui.customConfirmDialog.close();
+                    // ถ้าเราเป็นคน pause มันก่อนหน้า ให้ resume หลังปิด
+                    if (wasRunning) resumeGame();
+                };
+
+                const handleCancel = () => {
+                    if (ui.customConfirmDialog) ui.customConfirmDialog.close();
+                    if (wasRunning) resumeGame();
+                };
+
+                const confirmOkBtn = ui.customConfirmDialog ? ui.customConfirmDialog.querySelector('#confirmOk') : null;
+                const confirmCancelBtn = ui.customConfirmDialog ? ui.customConfirmDialog.querySelector('#confirmCancel') : null;
+
+                if (confirmOkBtn) {
+                    const oldConfirmOk = confirmOkBtn.cloneNode(true);
+                    confirmOkBtn.parentNode.replaceChild(oldConfirmOk, confirmOkBtn);
+                    oldConfirmOk.addEventListener('click', handleConfirm, { once: true });
+                }
+
+                if (confirmCancelBtn) {
+                    const oldConfirmCancel = confirmCancelBtn.cloneNode(true);
+                    confirmCancelBtn.parentNode.replaceChild(oldConfirmCancel, confirmCancelBtn);
+                    oldConfirmCancel.addEventListener('click', handleCancel, { once: true });
+                }
+
+                // ถ้าเป็น alert dialog ธรรมดา
+            } else if (ui.customAlertDialog) {
+                if (ui.alertTitle) ui.alertTitle.textContent = title;
+                if (ui.alertMessage) ui.alertMessage.textContent = message;
+
+                // จำสถานะก่อนหน้า (ว่าเกมกำลังรันอยู่จริงไหม)
+                const wasRunning = !!(state.running && !state.paused);
+                if (wasRunning) pauseGame(); // pause ก่อนแสดง dialog
+
+                // แสดง alert
+                ui.customAlertDialog.showModal();
+
+                const closeBtn = ui.customAlertDialog.querySelector('[data-close]');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        if (ui.customAlertDialog) ui.customAlertDialog.close();
+                        // คืนการทำงานเฉพาะถ้าเราเป็นคน pause มันก่อนหน้า
+                        if (wasRunning) {
+                            // ถ้ามีตัวแปรเวลาเช็คว่าหมดหรือยังก่อน resume
+                            const remaining = (state && typeof state.time === 'number') ? state.time : 1;
+                            if (remaining > 0) resumeGame();
+                        }
+                    }, { once: true });
+                }
+            }
+        }
+
+
+        // Animated particles for the main menu, adding a dynamic feel.
+        function createFallingElement(content) {
+            const el = document.createElement('div');
+            el.classList.add('falling-element');
+            el.textContent = content;
+            el.style.left = `${Math.random() * 100}vw`;
+            el.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            el.style.animationDelay = `${Math.random() * 5}s`;
+            if (ui.startPanel) ui.startPanel.appendChild(el);
+
+            el.addEventListener('animationend', () => el.remove());
+            return el;
+        }
+
+        let fallingElementInterval;
+        let fallingElementCount = 0;
+        const maxFallingElements = 10;
+
+        function startFallingAnimation() {
+            stopFallingAnimation();
+            const elementsToFall = ['C', 'H', 'O', 'N', 'F', 'Cl', 'B', 'P'];
+            fallingElementInterval = setInterval(() => {
+                if (state.running || fallingElementCount >= maxFallingElements) return;
+                const randomIndex = Math.floor(Math.random() * elementsToFall.length);
+                const newElement = createFallingElement(elementsToFall[randomIndex]);
+                fallingElementCount++;
+                newElement.addEventListener('animationend', () => fallingElementCount--);
+            }, 1000);
+        }
+
+        function stopFallingAnimation() {
+            clearInterval(fallingElementInterval);
+            $$('.falling-element').forEach(el => el.remove());
+            fallingElementCount = 0;
+        }
+
+        // window.addEventListener('load', () => {
+        //     updateLeaderboardUI();
+        //     updateAchievementsUI();
+        //     startFallingAnimation();
+
+        //     if (ui.startNow) {
+        //         ui.startNow.addEventListener('click', () => {
+        //             state.mode = 'quiz';
+        //             newGame();
+        //             stopFallingAnimation();
+        //         });
+        //     }
+        //     if (ui.startTimedQuiz) {
+        //         ui.startTimedQuiz.addEventListener('click', () => {
+        //             state.mode = 'quiz';
+        //             newGame();
+        //             stopFallingAnimation();
+        //         });
+        //     }
+        window.addEventListener('load', () => {
+            updateLeaderboardUI();
+            updateAchievementsUI();
+            startFallingAnimation();
+
+            // สร้างตัวแปรมาควบคุมการเล่นเพลงแค่ครั้งแรก
+            let isBgmPlayed = false;
+
+            const firstInteractionHandler = () => {
+                if (!isBgmPlayed) {
+                    playBgm();
+                    isBgmPlayed = true;
+                }
+            };
+
+            if (ui.startNow) {
+                ui.startNow.addEventListener('click', () => {
+                    firstInteractionHandler(); // เพิ่มคำสั่งนี้
+                    state.mode = 'quiz';
+                    newGame();
+                    stopFallingAnimation();
+                });
+            }
+            if (ui.startTimedQuiz) {
+                ui.startTimedQuiz.addEventListener('click', () => {
+                    firstInteractionHandler(); // เพิ่มคำสั่งนี้
+                    state.mode = 'quiz';
+                    newGame();
+                    stopFallingAnimation();
+                });
+            }
+    // จบบบ
+
+            if (ui.startChapter3Quiz) {
+                ui.startChapter3Quiz.addEventListener('click', () => {
+                    window.location.href = 'chapter3.html';
+                });
+            }
+            if (ui.btnPause) ui.btnPause.addEventListener('click', pauseGame);
+            if (ui.btnResume) ui.btnResume.addEventListener('click', resumeGame);
+            if (ui.btnBackToMenu) ui.btnBackToMenu.addEventListener('click', showStartMenu);
+
+            if (ui.btnSettings) ui.btnSettings.addEventListener('click', () => {
+                if (ui.dlgSettings) ui.dlgSettings.showModal();
+                pauseGame();
+            });
+            if (ui.btnHelp) ui.btnHelp.addEventListener('click', () => {
+                if (ui.dlgHelp) ui.dlgHelp.showModal();
+                pauseGame();
+            });
+            if (ui.btnReset) ui.btnReset.addEventListener('click', () => {
+                showAlertDialog(
+                    'ยืนยันการลบข้อมูล',
+                    'กลับไปใช้การตั้งค่าเริ่มต้น',
+                    true,
+                    () => {
+                        localStorage.clear();
+                        showAlertDialog('สำเร็จ', 'ข้อมูลถูกรีเซ็ตแล้ว กรุณารีเฟรชหน้าเว็บ');
+                        setTimeout(() => window.location.reload(), 2000);
+                    }
+                );
+            });
+
+            if (ui.ll5050) ui.ll5050.addEventListener('click', () => handleLifeline('5050'));
+            if (ui.llHint) ui.llHint.addEventListener('click', () => handleLifeline('hint'));
+            if (ui.llFreeze) ui.llFreeze.addEventListener('click', () => handleLifeline('freeze'));
+            if (ui.llSkip) ui.llSkip.addEventListener('click', () => handleLifeline('skip'));
+            if (ui.llTimeWarp) ui.llTimeWarp.addEventListener('click', () => handleLifeline('timeWarp'));
+            if (ui.llPointMult) ui.llPointMult.addEventListener('click', () => handleLifeline('pointMult'));
+
+            if (ui.saveScore) ui.saveScore.addEventListener('click', saveScore);
+            if (ui.playAgain) ui.playAgain.addEventListener('click', () => {
+                if (ui.dlgGameover) ui.dlgGameover.close();
+                showStartMenu();
+            });
+            if (ui.openLeaderboard) ui.openLeaderboard.addEventListener('click', () => {
+                if (ui.dlgLeaderboard) ui.dlgLeaderboard.showModal();
+                pauseGame();
+            });
+
+            if (ui.btnContinue) ui.btnContinue.addEventListener('click', continueNextLevel);
+            if (ui.btnEndGame) ui.btnEndGame.addEventListener('click', endGame);
+
+            $$('dialog button[data-close]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const dialog = e.target.closest('dialog');
+                    if (dialog) dialog.close();
+                    if (!state.running && !state.paused) {
+                    } else if (dialog && dialog.id !== 'customAlertDialog' && dialog.id !== 'customConfirmDialog') {
+                        resumeGame();
+                    }
+                });
+            });
+
+            if (ui.volMusic) ui.volMusic.addEventListener('input', e => {
+                settings.music = e.target.value;
+                if (audios.bgm) audios.bgm.volume = settings.music;
+                saveSettings();
+            });
+            if (ui.volSfx) ui.volSfx.addEventListener('input', e => {
+                settings.sfx = e.target.value;
+                saveSettings();
+            });
+            if (ui.theme) ui.theme.addEventListener('change', e => {
+                settings.theme = e.target.value;
+                document.body.classList.remove('theme-classic', 'theme-sunset', 'theme-forest');
+                document.body.classList.add(`theme-${settings.theme}`);
+                saveSettings();
+            });
+            if (ui.startLevel) ui.startLevel.addEventListener('change', e => {
+                settings.startLevel = parseInt(e.target.value);
+                saveSettings();
+            });
+
+            document.addEventListener('keydown', e => {
+                if (state.mode !== 'quiz' || !state.running || state.paused) return;
+                const key = e.key.toLowerCase();
+                if (key >= '1' && key <= '4' && !state.answered) {
+                    const choiceIndex = parseInt(key) - 1;
+                    const targetAnswer = ui.answers.children[choiceIndex];
+                    if (targetAnswer) {
+                        handleAnswer(parseInt(targetAnswer.dataset.index));
+                    }
+                } else if (key === 'p') {
+                    pauseGame();
+                } else if (key === 'x') {
+                    handleLifeline('5050');
+                } else if (key === 'h') {
+                    handleLifeline('hint');
+                } else if (key === 'f') {
+                    handleLifeline('freeze');
+                } else if (key === 's') {
+                    handleLifeline('skip');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html

@@ -1,0 +1,501 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Alegreya", serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.background-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 25px); /* grid */
+    grid-auto-rows: 25px;
+    gap: 1px;
+    background-color: #181818;
+    z-index: -1;
+}
+
+.background-grid::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    /* ลบ background radial-gradient ออก */
+    /* background: radial-gradient(circle 80px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(29, 236, 132, 0.884), transparent 80%); */
+    background: none;
+    transition: background 0.1s ease;
+}
+
+.background-grid .block {
+    width: 25px;
+    height: 25px;
+    background-color: #282828;
+}
+.block.hovered {
+    background-color: rgba(29, 236, 132, 0.884);
+    transition: background-color 0.2s ease;
+}
+
+.highlight {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 80%);
+    mix-blend-mode: screen;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+/* ตัวจัด layout หลัก */
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.shiny-text {
+    display: inline-block;
+    background: linear-gradient(34deg, #fcfcfc, rgb(255, 255, 255), rgb(255, 255, 255), rgb(233, 210, 76), rgb(255, 255, 255), rgb(255, 255, 255), #ffffff);
+    background-size: 300% 100%;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shinyMove 8s linear infinite;
+}
+
+@keyframes shinyMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    /* ช่องว่างระหว่าง input แต่ละชุด */
+}
+
+/* ด้านซ้าย */
+.left-side {
+    flex: 1 1 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.NameTopic {
+    font-size: 44px;
+}
+
+/* ด้านขวา */
+.right-side {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    margin-top: 5px;
+    gap: 10px;
+    color: rgb(221, 221, 221);
+}
+
+
+#Login {
+    text-align: center;
+    justify-content: center;
+    padding-bottom: 15px;
+    font-size: 32px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+
+/* กล่องฟอร์ม */
+.FORM {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+/* input และไอคอน */
+.FORM input {
+    width: 280px;
+    padding: 10px 40px 10px 40px;
+    /* padding บน-ล่าง 10px, ซ้าย 40px เผื่อไอคอน */
+    color: #d4d4d4;
+    font-size: 16px;
+    border: none;
+    border-bottom: 1.5px solid rgb(255, 255, 255);
+    outline: none;
+    text-align: left;
+    background: transparent;
+}
+
+/* ปรับ icon ให้อยู่ติด input ด้วย position */
+.FORM img {
+    position: relative;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    z-index: 1;
+}
+
+.FORM input[type="password"] {
+    padding-right: 40px;
+    /* เผื่อพื้นที่ให้ไอคอนตา */
+}
+
+.button-login {
+    width: 200px;
+    padding: 10px 60px;
+    color: white;
+    border: 1.5px solid #d4d4d4;
+    border-radius: 4px;
+    cursor: pointer;
+    background: linear-gradient(to right, rgb(29, 29, 29), rgb(92, 92, 92), rgb(209, 209, 209));
+    background-size: 300% 300%;
+    transition: all 0.3s ease;
+    text-align: center;
+    line-height: 16px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+#text-button {
+    margin-bottom: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#text-button:hover {
+    color: #07eff7;
+}
+
+.button-Sign {
+    width: 200px;
+    padding: 10px 60px;
+    color: white;
+    border: 1.5px solid #d4d4d4;
+    border-radius: 4px;
+    cursor: pointer;
+    background: linear-gradient(to left, rgb(29, 29, 29), rgb(92, 92, 92), rgb(209, 209, 209));
+    background-size: 300% 300%;
+    transition: all 0.3s ease;
+    text-align: center;
+    line-height: 16px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.button-Sign:hover {
+    transform: scale(1.1);
+    animation: gradientbutton-Sign 4s ease infinite;
+}
+
+.button-login:active {
+    box-shadow: 2px 2px 0 2px black, inset 2px 2px 6px;
+    transform: scale(0.96) translateY(2px);
+    animation: gradientbutton-login 4s ease infinite;
+}
+
+
+.center-site {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.purpose {
+    text-align: center;
+    font-weight: bold;
+}
+
+.Topic-purpose {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.Topic-purpose::after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 4px;
+    background: linear-gradient(to right, rgb(255, 255, 255), rgb(0, 0, 0));
+    width: 100%;
+    max-width: 250px;
+    margin-top: 6px;
+    border-radius: 100px;
+    transition: width 1.5s ease;
+    bottom: -5px;
+    left: 0;
+}
+
+.Topic-purpose:hover::after {
+    width: 0%;
+}
+
+#typeText {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1.6;
+    white-space: pre-line;
+    /* ให้รองรับ \n เป็นขึ้นบรรทัดใหม่ */
+    margin-top: 20px;
+    margin-left: 20px;
+    max-width: 90%;
+}
+
+/* เพิ่ม class นี้เพื่อให้ปุ่ม Sign Up ดูเด่นเมื่อถูกคลิก */
+.login-signup-active {
+    background: linear-gradient(270deg, #ff0000, #ff8800, #ffee00);
+    background-size: 400% 400%;
+    animation: gradientLogin 5s ease infinite;
+    transform: scale(1.1);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+input::-ms-reveal,
+/* สำหรับ Microsoft Edge */
+input::-webkit-credentials-auto-fill-button,
+/* ป้องกันบางฟอร์ม */
+input::-webkit-password-toggle-button {
+    display: none;
+}
+
+input[type="password"] {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* ตำแหน่งลูกตาเอง */
+#togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #d4d4d4;
+    font-size: 16px;
+    z-index: 2;
+}
+
+
+.glow-letter {
+  transition: color 0.3s ease;
+  display: inline-block;
+  color: white;
+  cursor: default;
+  white-space: pre;
+}
+.glow-letter.hover-glow {
+    color: #ffbd06;
+  text-shadow: 0 0 10px #f77b07;
+  transform: scale(1.2);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+
+@keyframes gradientLogin {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes gradientbutton-login {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes gradientbutton-Sign {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    /* ทรศ */
+    .container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .left-side,
+    .right-side {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+
+    .NameTopic {
+        font-size: 28px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    
+
+}
+
+@media screen and (min-width: 769px) {
+    /* คอม */
+
+    .left-side {
+        justify-content: flex-start;
+        padding-left: 50px;
+    }
+
+    .right-side {
+        margin-left: 5%;
+        /* ปรับได้ตามต้องการ */
+    }
+
+    .NameTopic {
+        text-align: left;
+        position: absolute;
+        top: 40px;
+        left: 40px;
+    }
+
+    .hover-glow {
+        color: rgba(248, 205, 15, 0.959);
+        transform: scale(1.2);
+    }
+
+}
+
+
+@media screen and (max-width: 480px) {
+    .right-side {
+        padding-top: 40px;
+        /* บนอุปกรณ์จอเล็กมาก */
+    }
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 1366px) {
+    .right-side {
+        padding-top: 30px;
+    }
+}
+
+/* ส่วนของ Toast Notification */
+/* ส่วนของ Toast Notification */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;  /* ✅ เปลี่ยนเป็น column */
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.toast {
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    animation: fade-in 0.5s ease-out forwards, fade-out 0.5s ease-in 4.5s forwards;
+    transition: transform 0.3s ease;
+}
+
+.toast.success {
+    background-color: #28a745;
+}
+
+.toast.error {
+    background-color: #dc3545;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* ✅ กล่องแจ้งเตือนจะเริ่มจากตำแหน่งต่ำกว่าปกติ 20px */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);    /* ✅ แล้วเลื่อนขึ้นมาที่ตำแหน่งปกติ */
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);    /* ✅ กล่องแจ้งเตือนจะอยู่ที่ตำแหน่งปกติ */
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px); /* ✅ แล้วเลื่อนขึ้นไปด้านบน 20px แล้วหายไป */
+    }
+}
+

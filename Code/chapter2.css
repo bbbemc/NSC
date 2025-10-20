@@ -1,0 +1,323 @@
+/* 1. ให้ html/body เต็มพื้นที่ แก้ปัญหาความสูงไม่เต็มบนมือถือ */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Alegreya', serif;
+}
+
+/* ฟอนต์และโครงสร้างพื้นฐาน */
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #000000;
+}
+
+#tab_menu {
+    margin-left: 3.5vh;
+    padding: 0px;
+    background-color: #ffffff;
+}
+
+#text {
+    margin: 0;
+    color: #000000;
+}
+
+/*
+#text a {
+    color: inherit;          /* ใช้สีเดียวกับตัว h1 
+    text-decoration: none;   /* เอาเส้นใต้ลิงก์ออก 
+    cursor: pointer;         /* เปลี่ยน cursor เมื่อชี้ 
+}
+*/
+
+#logo {
+    margin-top: 1.2vh;
+    margin-left: 0.5vw;
+    width: 25px;
+    height: 25px;
+}
+
+#opentab {
+    margin: 0;
+    padding: 0;
+    width: 40px;
+}
+
+#state {
+    margin-top: 1.3vh;
+    transform: translateX(1.5vw);
+    line-height: 1.5;
+    font-weight: bold;
+}
+
+#container_2 {
+    display: flex;
+    justify-content: left;
+    padding: 2px;
+    background-color: #ffffff;
+    flex-flow: row wrap;
+}
+
+@media (max-width: 1432px) {
+    #state {
+        margin-left: 0vh;
+    }
+}
+
+
+#description {
+    clear: both;
+    padding: 1em;
+}
+
+
+#composer {
+    width: 50vw;
+    height: 91.5vh;
+    background: linear-gradient(to left, #ffffff, #ffffff, #ffffff);
+    animation: gradientShift 20s ease infinite;
+}
+
+#chemViewer {
+    width: 50vw;
+    height: 93vh;
+    background-color: #2b2b2b;
+}
+
+#page2D {
+    width: 50vw;
+    height: 93vh;
+    background: linear-gradient(to left, #070717, #2D1744, #050510);
+    animation: gradientShift 20s ease infinite;
+}
+
+#page3D {
+    width: 50vw;
+    height: 93vh;
+    background-color: #2b2b2b;
+}
+
+#container {
+    background-color: #2b2b2b;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: left;
+}
+
+/* ถ้าหน้าจอกว้างน้อยกว่า 1000px */
+@media (max-width: 1000px) {
+
+    #composer,
+    #chemViewer,
+    #page2D,
+    #page3D {
+        width: 100vw;
+        /* เต็มจอ */
+        height: 46vh;
+        /* แบ่งครึ่งแนวตั้ง */
+    }
+}
+
+/* ความสูงน้อกยว่า 5000px: จอแนวตั้ง */
+@media (min-height: 5000px) {
+
+    #chemViewer,
+    #page3D {
+        height: calc(100vh - 44vh);
+        /* เต็มจอแนวตั้ง */
+    }
+}
+
+header {
+    background-color: #1a237e;
+    color: white;
+    padding: 1em;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#tools {
+    padding: 1em;
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#state {
+    font-weight: bold;
+    background-size: 300% 300%;
+    background: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255));
+
+}
+
+/* Keyframes สำหรับไล่สี */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#btnGen,
+#btnTerminate {
+    padding: 0.5em 1.5em;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(to right, rgb(15, 15, 15), rgb(115, 114, 114), rgb(81, 78, 78));
+    animation: gradientShift 4s ease infinite;
+    cursor: pointer;
+    background-size: 300% 300%;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+#btnTerminate:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+.panel {
+    background: white;
+    padding: 1em;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 850px;
+}
+
+.panel h2 {
+    margin-top: 0;
+    font-size: 1.25em;
+    color: #0d47a1;
+}
+
+
+@media (max-width: 400px) {
+    #workspace {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #composer,
+    #chemViewer {
+        width: 100vw;
+        height: 45vh;
+        /* ให้แต่ละตัวครึ่งจอ (บวก padding นิดหน่อย) */
+        float: none;
+    }
+}
+
+
+/* 1. พ่อ-แม่ <li> ต้องเป็น relative */
+li {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. สไตล์ลิงก์ของเมนูหลัก (MORE !) */
+li>a {
+    display: block;
+    padding: 0.5em 1em;
+    background: #ffffff;
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 3. ซ่อน dropdown เมนูย่อย (opacity+visibility) */
+li>ul.dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    background: #ffffff;
+    padding: 0.5em 0;
+    margin: 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    min-width: 160px;
+    z-index: 1000;
+
+    opacity: 0;
+    visibility: hidden;
+
+    /* ปรับ transition:
+     - opacity 0.2s จะ fade in/out
+     - visibility จะรอ 3s ก่อนซ่อนจริง */
+    transition:
+        opacity 0.2s ease-in-out 0s,
+        visibility 0s linear 3s;
+}
+
+/* 4. เมื่อ hover ให้แสดง dropdown ทันที */
+li:hover>ul.dropdown {
+    opacity: 1;
+    visibility: visible;
+
+    /* รีเซ็ต delay ทั้งคู่ (show ทันที ไม่มีหน่วง) */
+    transition-delay: 0s, 0s;
+}
+
+/* 5. สไตล์ลิงก์ใน dropdown */
+li>ul.dropdown li a {
+    display: block;
+    padding: 0.5em 1em;
+    color: #000000;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/* 6. เว้นระยะระหว่างไอเท็ม */
+li>ul.dropdown li+li {
+    margin-top: 0.25em;
+    border-top: 1px solid #eee;
+}
+
+/* 7. เอฟเฟ็กต์โฮเวอร์ในเมนูย่อย */
+li>ul.dropdown li a:hover {
+    background: #f5f5f5;
+}
+
+#profile_img {
+    width: 50px;
+    height: 40px;
+}
+
+
+#text_more {
+    margin: 0;
+    padding: 0;
+    font-size: 23px;
+}
+
+#right {
+    margin-left: auto;
+    display: flex;
+    /* ถ้าใน #right มีไอเท็มหลายตัวอยากจัดเป็นแถว ใช้ flex */
+    align-items: center;
+    /* จัดให้เนื้อหาใน #right ชิดกลางแนวตั้ง */
+    gap: 1em;
+    /* ช่องว่างระหว่าง spawn กับ profile_view */
+}
+
+#spawn {
+    z-index: 20;
+}

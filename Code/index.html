@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chemical-bonds</title>
+  <link rel="stylesheet" href="login.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="img/Logoweb.png">
+</head>
+
+<body>
+  <div class="background-grid"></div>
+  <div class="container">
+    <div class="left-side">
+      <p class="NameTopic shiny-text">Automatic Chemical<br>Bond</p>
+    </div>
+
+    <div class="right-side">
+      <p id="Login">Login</p>
+      <form action="login.php" method="POST" id="login-form">
+        <div class="FORM">
+          <div class="input-group">
+            <img src="img/icon-body.svg" class="icon-User" alt="user icon" />
+            <input type="email" id="email" name="email" placeholder="ENTER YOUR EMAIL" required />
+          </div>
+          <div class="input-group" style="position: relative;">
+            <img src="img/icon-log.svg" class="icon-password" alt="password icon" />
+            <input type="password" id="Password" name="Password" placeholder="ENTER YOUR PASSWORD" required />
+            <i class="fa-solid fa-eye" id="togglePassword"></i>
+          </div>
+        </div>
+
+        <div class="All-button">
+          <button class="button-login" id="login-button">Login</button>
+          <div class="text-button"></div>
+          <button class="button-Sign" id="signupBtn">Sign Up</button>
+        </div>
+      </form>
+
+      <div class="center-site">
+        <div class="purpose">
+          <p class="Topic-purpose">การสนับสนุน</p>
+          <p id="typeText"></p>
+        </div>
+      </div>
+    </div>
+    <div id="toast-container"></div>
+  </div>
+
+  <script src="login.js"></script>
+  <script>
+    // ✅ เพิ่มฟังก์ชัน showToast() เข้ามาในโค้ด
+    function showToast(message, isError = false) {
+      const toastContainer = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      if (isError) {
+        toast.classList.add('error');
+      } else {
+        toast.classList.add('success');
+      }
+      toast.textContent = message;
+      toastContainer.appendChild(toast);
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
+    }
+
+    // ✅ เพิ่ม Event Listener สำหรับการส่งฟอร์ม Login ด้วย fetch()
+    document.getElementById('login-form').addEventListener('submit', function (event) {
+      event.preventDefault(); // ป้องกันไม่ให้ฟอร์มเปลี่ยนหน้าเว็บ
+      const form = event.target;
+      const formData = new FormData(form);
+
+      fetch('login.php', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => {
+          // ต้องตรวจสอบสถานะการตอบกลับ
+          if (!response.ok) {
+            // ถ้า PHP มีปัญหาแต่ไม่ส่ง JSON กลับมา จะจับ error ตรงนี้
+            return response.text().then(text => { throw new Error(text) });
+          }
+          return response.json(); // ✅ ต้องเรียกใช้ .json() เพื่อรับข้อมูล JSON
+        })
+        .then(data => {
+          if (data.status === 'success') {
+            showToast(data.message, false); // แสดง Toast สีเขียว
+            setTimeout(() => {
+              // เปลี่ยนหน้าหลังจากแสดง Toast สักครู่
+              window.location.href = 'https://autochem.42web.io/chapter2.html';
+            }, 1000);
+          } else {
+            showToast(data.message, true); // แสดง Toast สีแดง
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          showToast("เกิดข้อผิดพลาดในการส่งข้อมูล", true);
+        });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning & Lewis Studio</title>
+    <link rel="stylesheet" href="CH1.css" />
+    <link rel="icon" type="image/png" href="img/Logoweb.png">
+</head>
+
+<body>
+    <!-- ===== Page CH2: Learning ===== -->
+    <div id="page-ch2" class="page active">
+        <!-- HEADER & NAVBAR from CH2.html -->
+        <header>
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <h2 class="logo-text">Learning</h2>
+                </div>
+                <button class="hamburger" id="hamburger">&#9776;</button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="CH1.html" class="nav-link">Learning</a></li>
+                    <li class="nav-item"><a href="chapter2.html" class="nav-link">Workspace</a></li>
+                    <li class="nav-item"><a href="Quiz.html" class="nav-link">Quiz</a></li>
+                    <li class="nav-item"><a href="logout.php" class="nav-link">Logout</a></li>
+                    <li class="nav-item">
+                        <a href="User.html" class="nav-link">
+                            <img src="img/default.png" alt="profile" class="profile-img">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="app">
+            <div class="grid">
+                <aside class="card controls">
+                    <h3>เลือกชนิดพันธะ</h3>
+                    <div class="bond-list">
+                        <button class="bond-btn active" data-bond="ionic"><strong>Ionic</strong>
+                            <div class="small">การย้ายอิเล็กตรอนและประจุ</div>
+                        </button>
+                        <button class="bond-btn" data-bond="covalent"><strong>Covalent</strong>
+                            <div class="small">การแชร์อิเล็กตรอน</div>
+                        </button>
+                        <button class="bond-btn" data-bond="metallic"><strong>Metallic</strong>
+                            <div class="small">อิเล็กตรอนเคลื่อนที่เป็นกลุ่ม</div>
+                        </button>
+                        <button class="bond-btn" data-bond="hydrogen"><strong>Hydrogen</strong>
+                            <div class="small">พันธะอ่อนระหว่าง H และเคมีไฟฟ้าสูง</div>
+                        </button>
+                    </div>
+
+                    <div style="margin-top:12px">
+                        <h3>คำอธิบาย</h3>
+                        <div id="desc" class="caption">Ionic — อิเล็กตรอนย้ายจากโลหะไปหาอโลหะ ทำให้เกิดประจุบวกและลบ
+                        </div>
+                    </div>
+                    <div class="next-button-container">
+                        <button class="btn primary" id="nextPageBtn">ไปหน้าถัดไป</button>
+                    </div>
+                </aside>
+
+                <main class="viewer card">
+                    <div class="stage" id="stage-ch2">
+                        <svg viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet" id="scene-ch2">
+                            <g id="ionic" class="atom-group">
+                                <g transform="translate(240,280)" class="atom" id="ion-left">
+                                    <circle class="nucleus" r="154" cx="0" cy="0" fill="#ffedd5"></circle>
+                                    <text x="0" y="6" text-anchor="middle" class="label" font-size="24">Na⁺</text>
+                                    <g id="ion-e" style="transform-origin:240px 280px">
+                                        <circle class="electron-1-0" r="6" cx="-180" cy="0"></circle>
+                                        <circle class="line_circle" r="47" cx="0" cy="0"></circle>
+                                        <circle class="electron-1-1" r="4" cx="37" cy="-30"></circle>
+                                        <circle class="electron-1-1" r="4" cx="-32" cy="35"></circle>
+                                        <circle class="line_circle" r="130" cx="0" cy="0"></circle>
+                                        <circle class="electron-1-2" r="4.5" cx="121" cy="-50"></circle>
+                                        <circle class="electron-1-2" r="4.5" cx="120" cy="50"></circle>
+                                        <circle class="electron-1-2" r="4.5" cx="-120" cy="-50"></circle>
+                                        <circle class="electron-1-2" r="4.5" cx="-120" cy="48"></circle>
+                                        <circle class="electron-1-2" r="4.5" cx="-52" cy="120"></circle>
+                                        <circle class="electron-1-2" r="4.5" cx="50" cy="120"></circle>
+                                        <circle class="electron-1-2" r="4.5" cx="-50" cy="-120"></circle>
+                                        <circle class="electron-1-2" r="4.5" cx="50" cy="-120"></circle>
+                                    </g>
+                                </g>
+
+                                <g transform="translate(640,280)" class="atom" id="ion-right">
+                                    <circle class="nucleus" r="200" cx="80" cy="0" fill="#dcfce7"></circle>
+                                    <text x="80" y="6" text-anchor="middle" class="label" font-size="28">Cl⁻</text>
+                                    <g id="cl-shell">
+                                        <circle class="line_circle" r="47" cx="80" cy="0"></circle>
+                                        <circle class="electron-2-1" r="4" cx="117" cy="-30"></circle>
+                                        <circle class="electron-2-1" r="4" cx="48" cy="35"></circle>
+                                        <circle class="line_circle" r="130" cx="80" cy="0"></circle>
+                                        <circle class="electron-2-2" r="4.5" cx="201" cy="-50"></circle>
+                                        <circle class="electron-2-2" r="4.5" cx="200" cy="50"></circle>
+                                        <circle class="electron-2-2" r="4.5" cx="-40" cy="-50"></circle>
+                                        <circle class="electron-2-2" r="4.5" cx="-40" cy="48"></circle>
+                                        <circle class="electron-2-2" r="4.5" cx="28" cy="120"></circle>
+                                        <circle class="electron-2-2" r="4.5" cx="130" cy="120"></circle>
+                                        <circle class="electron-2-2" r="4.5" cx="30" cy="-120"></circle>
+                                        <circle class="electron-2-2" r="4.5" cx="130" cy="-120"></circle>
+                                        <circle class="electron-2-3" r="6" cx="263" cy="-30"></circle>
+                                        <circle class="electron-2-3" r="6" cx="260" cy="30"></circle>
+                                        <circle class="electron-2-3" r="6" cx="-100" cy="-30"></circle>
+                                        <circle class="electron-2-3" r="6" cx="-100" cy="30"></circle>
+                                        <circle class="electron-2-3" r="6" cx="30" cy="178"></circle>
+                                        <circle class="electron-2-3" r="6" cx="110" cy="180"></circle>
+                                        <circle class="electron-2-3" r="6" cx="110" cy="-180"></circle>
+                                    </g>
+                                </g>
+
+                                <text id="ion-left-charge" x="200" y="210" fill="var(--muted)" font-size="20"></text>
+                                <text id="ion-right-charge" x="700" y="210" fill="var(--muted)" font-size="20"></text>
+                            </g>
+
+                            <g id="covalent" class="atom-group" style="display:none">
+                                <g transform="translate(400,280)" id="cov-left" class="atom">
+                                    <circle class="line_circle" r="160" cx="-60" cy="0" fill="#fef3c7"></circle>
+                                    <text x="-60" y="6" text-anchor="middle" class="label" font-size="24">H</text>
+                                </g>
+                                <g transform="translate(400,280)" id="cov-right" class="atom">
+                                    <circle class="line_circle" r="160" cx="190" cy="0" fill="#fef3c7"></circle>
+                                    <text x="190" y="6" text-anchor="middle" class="label" font-size="24">H</text>
+                                </g>
+                                <circle class="electron-3-1" cx="460" cy="260" r="9" id="cov-e1"></circle>
+                                <circle class="electron-3-2" cx="460" cy="300" r="9" id="cov-e2"></circle>
+                            </g>
+
+                            <g id="metallic" class="atom-group" style="display:none">
+                                <g id="metal-lattice" transform="translate(100,60)"></g>
+                                <g id="metal-electrons"></g>
+                            </g>
+
+                            <g id="hydrogen" class="atom-group" style="display:none">
+                                <circle class="oxygen" cx="300" cy="200" r="50" />
+                                <circle class="hydrogen" cx="250" cy="260" r="30" />
+                                <circle class="hydrogen" cx="350" cy="260" r="30" />
+                                <circle class="oxygen" cx="750" cy="200" r="50" />
+                                <circle class="hydrogen" cx="700" cy="260" r="30" />
+                                <circle class="hydrogen" cx="800" cy="260" r="30" />
+                                <circle class="oxygen" cx="525" cy="350" r="50" />
+                                <circle class="hydrogen" cx="475" cy="410" r="30" />
+                                <circle class="hydrogen" cx="575" cy="410" r="30" />
+                                <line class="hbond" id="hb1" x1="380" y1="260" x2="475" y2="325" />
+                                <line class="hbond" id="hb2" x1="670" y1="260" x2="575" y2="325" />
+                                <text x="125" y="220">Covalent bond</text>
+                                <text x="430" y="280">Hydrogen bond</text>
+                                <text x="292" y="210" class="label" font-size="24">O</text>
+                                <text x="245" y="265">H</text>
+                                <text x="345" y="265">H</text>
+                                <text x="745" y="210" class="label" font-size="24">O</text>
+                                <text x="695" y="265">H</text>
+                                <text x="795" y="265">H</text>
+                                <text x="515" y="355" class="label" font-size="24">O</text>
+                                <text x="570" y="420">H</text>
+                                <text x="470" y="420">H</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="caption" id="info">จาก Na มีอิเล็กตรอนวงนอกสุด 1 ตัว ได้ขยับไปหา Cl กลายเป็น Na⁺, Cl⁻ จึงเกิดแรงดึงดูดไฟฟ้าสถิตระหว่างประจุตรงข้าม</div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Page CH3: Lewis Studio ===== -->
+    <div id="page-ch3" class="page">
+        <header>
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <h2 class="logo-text">Learning</h2>
+                </div>
+                <button class="hamburger" id="hamburger">&#9776;</button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="CH1.html" class="nav-link">Learning</a></li>
+                    <li class="nav-item"><a href="chapter2.html" class="nav-link">Workspace</a></li>
+                    <li class="nav-item"><a href="Quiz.html" class="nav-link">Quiz</a></li>
+                    <li class="nav-item"><a href="logout.php" class="nav-link">Logout</a></li>
+                    <li class="nav-item">
+                        <a href="User.html" class="nav-link">
+                            <img src="img/default.png" alt="profile" class="profile-img">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="wrap">
+            <section class="hero">
+                <div class="heroMain card">
+
+                    <div class="hd">
+                        <h2>เรียนรู้โครงสร้างลิวอิส (Lewis Structure)</h2>
+                        <div class="back-button-container" style="padding: 24px 2vw;">
+                            <button class="btn" id="backBtn" style="padding: 8px 16px; font-size: 0.9rem;">◀ ย้อนกลับ</button>
+                        </div>
+                    </div>
+
+                    <div class="bd">
+                        <div class="stage" id="lewisStage">
+                            <svg viewBox="0 0 900 360" id="lewisSvgStage" aria-label="เวทีสาธิต H2O">
+                                <defs>
+                                    <radialGradient id="gDot" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="#ffffff" />
+                                        <stop offset="100%" stop-color="#9affff" />
+                                    </radialGradient>
+                                </defs>
+                                <g id="lewisScene"></g>
+                            </svg>
+                            <div class="hint" id="lewisHint">(เล่นอัตโนมัติ) เราจะนับอิเล็กตรอนเวเลนซ์ วาดพันธะ
+                                และตรวจสอบอ็อกเตต
+                            </div>
+                            <div class="confetti" id="lewisConfetti"></div>
+                        </div>
+                    </div>
+                </div>
+                <aside class="heroSide card">
+                    <div class="hd">
+                        <h2>ตัวอย่างที่กำลังเล่น</h2>
+                    </div>
+                    <div class="bd">
+                        <div class="inlineStat"><span class="led" id="lewisLedStep"></span>
+                            <div>ขั้นตอน: <b id="lewisStepName">เตรียมอะตอม</b></div>
+                        </div>
+                        <div class="inlineStat"><span class="led" id="lewisLedVal"></span>
+                            <div>อิเล็กตรอนเวเลนซ์รวม: <b id="lewisValenceCount">—</b></div>
+                        </div>
+                        <div class="inlineStat"><span class="led" id="lewisLedOctet"></span>
+                            <div>อ็อกเตตครบหรือไม่: <b id="lewisOctetStatus">—</b></div>
+                        </div>
+                        <div class="controls">
+                            <button class="sbtn" id="lewisBtnPrev">◀ ย้อน animation</button>
+                            <button class="sbtn" id="lewisBtnNext">animation ถัดไป ▶</button>
+                            <!-- <button class="sbtn" id="lewisBtnSlow">⏱ ช้า</button>
+                            <button class="sbtn" id="lewisBtnFast">⚡ เร็ว</button> -->
+                        </div>
+                        <p class="tiny">Tip: กด "ถัดไป" เพื่อข้ามทีละขั้น</p>
+                    </div>
+                    <button id="lewisPlayBtn" class="btn" title="เล่นอนิเมชันใหม่">▶ เล่นตัวอย่างอีกครั้ง</button>
+                </aside>
+            </section>
+
+            <section class="grid" id="panes">
+                <div id="pane-tutorial" class="card">
+                    <div class="hd">
+                        <h2>อนิเมชัน: วาดลิวอิสของ H₂O</h2>
+                    </div>
+                    <div class="bd">
+                        <ol style="margin:0 0 8px 18px; color:#cbe1ff">
+                            <li>นับอิเล็กตรอนเวเลนซ์ทั้งหมด</li>
+                            <li>เชื่อมอะตอมด้วยพันธะเดี่ยว</li>
+                            <li>เติมคู่อิเล็กตรอนเดี่ยวให้ครบอ็อกเตต</li>
+                            <li>ถ้าขาด ให้ลองเพิ่มพันธะคู่/สาม</li>
+                            <li>ตรวจสอบประจุฟอร์มัล</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div id="pane-game" class="card" style="display:none">
+                    <div class="hd">
+                        <h2>เกมฝึกวาดลิวอิส</h2>
+                        <div class="score">คะแนน: <span id="lewisScore">0</span></div>
+                    </div>
+                    <div class="bd">
+                        <div class="gameBar">
+                            <label>เลือกสาร:
+                                <select id="lewisMoleculeSelect">
+                                    <option value="H2O">H₂O</option>
+                                    <option value="CO2">CO₂</option>
+                                    <option value="NH3">NH₃</option>
+                                    <option value="CH4">CH₄</option>
+                                    <option value="BF3">BF₃ (ยกเว้นอ็อกเตต)</option>
+                                </select>
+                            </label>
+                            <button class="sbtn" id="lewisBtnResetGame">เริ่มรอบใหม่</button>
+                            <div class="inlineStat">อิเล็กตรอนที่ใช้: <b id="lewisUsedElec">0</b> / <b
+                                    id="lewisTotalElec">0</b></div>
+                            <div class="inlineStat">ตรวจอ็อกเตต: <span class="led" id="lewisLedGameOctet"></span></div>
+                            <div class="inlineStat">ประจุรวม: <b id="lewisNetCharge">0</b></div>
+                        </div>
+
+                        <div class="stage" style="height:400px">
+                            <svg viewBox="0 0 900 400" id="lewisGameSvg">
+                                <g id="lewisGScene"></g>
+                            </svg>
+                            <div class="hint" id="lewisGameHint">วางคู่โดดเดี่ยวด้วยปุ่ม + รอบอะตอม
+                                และคลิกเส้นพันธะเพื่อสลับเดี่ยว⇄คู่⇄สาม</div>
+                        </div>
+
+                        <div class="controls">
+                            <button class="sbtn" id="lewisBtnHint">💡 ขอคำヒント</button>
+                            <button class="sbtn" id="lewisBtnCheck">✅ ตรวจคำตอบ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pane-about" class="card" style="display:none">
+                    <div class="hd">
+                        <h2>สรุปขั้นตอน & สูตรคำนวณ</h2>
+                    </div>
+                    <div class="bd">
+                        <ul style="margin:0 0 10px 18px; color:#cbe1ff">
+                            <li><b>เวเลนซ์รวม</b> = ผลบวกเวเลนซ์ของอะตอมทุกตัว ± ประจุ</li>
+                            <li><b>อิเล็กตรอนที่ใช้</b> = 2×(จำนวนพันธะ) + 2×(จำนวนคู่โดดเดี่ยว)</li>
+                            <li><b>อ็อกเตตครบ?</b> H = 2, B/Be บางครั้งยอมต่ำกว่า 8, ส่วนที่เหลือเล็ง 8</li>
+                            <li><b>ประจุฟอร์มัล</b> = เวเลนซ์ − (อิเล็กตรอนโดดเดี่ยว + ½×อิเล็กตรอนพันธะ)</li>
+                        </ul>
+                        <p class="tiny">หมายเหตุ: โอโซน, ไนเตรต ฯลฯ มีเรโซแนนซ์ —
+                            เกมนี้เน้นโมเลกุลง่ายเพื่อฝึกหลักการก่อน
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <!-- <footer>
+                ทำด้วย ❤ เพื่อการเรียนรู้เคมี
+            </footer> -->
+        </div>
+        <div class="toast" id="lewisToast"></div>
+    </div>
+
+    <script src="CH1.js"></script>
+</body>
+
+</html>

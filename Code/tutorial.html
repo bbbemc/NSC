@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Quiz</title>
+    <link rel="stylesheet" href="chapter3.css">
+    <link rel="icon" type="image/png" href="img/Logoweb.png">
+
+    <style>
+        #tutorialOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+        }
+
+        @keyframes smoothZoomIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -60%) scale(0.85);
+                filter: blur(6px);
+            }
+
+            60% {
+                opacity: 1;
+                transform: translate(-50%, -52%) scale(1.05);
+                filter: blur(0);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            20%,
+            60% {
+                transform: translateY(-3px);
+            }
+
+            40%,
+            80% {
+                transform: translateY(3px);
+            }
+        }
+
+        .shake {
+            animation: shake 0.4s ease;
+            transition: none !important;
+            will-change: transform;
+        }
+
+        #centerImage {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            z-index: 2100;
+            border-radius: 12px;
+
+            /* 3 animation: ซูมเข้า → เงาดำจางๆ → เงาสีวน */
+            animation:
+                smoothZoomIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+                fadeShadow 1s ease forwards,
+                imageShadowLoop 15s linear infinite;
+
+            /* delay: เริ่มซูมทันที, เงาดำเริ่มตอน 1.2s, เงาสีวนเริ่มตอน 2.2s */
+            animation-delay: 0s, 1.2s, 1.55s;
+        }
+
+        @keyframes fadeShadow {
+            0% {
+                box-shadow: none;
+            }
+
+            100% {
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        #highlightBox {
+            position: absolute;
+            border: 3px solid yellow;
+            border-radius: 8px;
+            box-shadow: 0 0 10px yellow;
+            z-index: 2102;
+            pointer-events: none;
+        }
+
+        #tooltip {
+            position: fixed;
+            background: rgb(51, 51, 51);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 9999;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+
+        #tooltip p {
+            margin: 0;
+            color: #fcfcfc;
+        }
+
+        #tooltip button {
+            margin-top: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        @keyframes imageShadowLoop {
+            0% {
+                box-shadow:
+                    0 10px 30px rgba(102, 126, 234, 0.4),
+                    /* ocean */
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+
+            20% {
+                box-shadow:
+                    0 10px 30px rgba(17, 153, 142, 0.4),
+                    /* emerald */
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+
+            40% {
+                box-shadow:
+                    0 10px 30px rgba(240, 147, 251, 0.4),
+                    /* sunset */
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+
+            60% {
+                box-shadow:
+                    0 10px 30px rgba(247, 151, 30, 0.4),
+                    /* gold */
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            }
+
+            80% {
+                box-shadow:
+                    0 10px 30px rgba(139, 92, 246, 0.4),
+                    /* purple */
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+
+            100% {
+                box-shadow:
+                    0 10px 30px rgba(102, 126, 234, 0.4),
+                    /* ocean (กลับจุดเริ่ม) */
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        .tutorial-btn {
+            background: linear-gradient(to bottom, #2a2a2a 0%, #1c1c1c 100%);
+            color: #d1d1d1;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px 28px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow:
+                inset 0 2px 4px rgba(0, 0, 0, 0.7),
+                inset 0 -2px 4px rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
+        }
+
+        .tutorial-btn:hover {
+            background: linear-gradient(to bottom, #242424 0%, #161616 100%);
+            color: #ffffff;
+        }
+
+        #highlightBox,
+        #tooltip {
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            /* ลบ transform ออก */
+        }
+
+        .visible {
+            opacity: 1 !important;
+            /* เอา transform ออก ให้ใช้ position/top/left จัดตำแหน่งแทน */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-logo">
+                <h2 class="logo-text">Tutorial</h2>
+            </div>
+            <button class="hamburger" id="hamburger">&#9776;</button>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item"><a href="chapter1.html" class="nav-link">Learning</a></li>
+                <li class="nav-item"><a href="chapter2.html" class="nav-link">Workspace</a></li>
+                <li class="nav-item"><a href="tutorial.html" class="nav-link">Quiz</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="tutorialOverlay">
+        <img src="img/tutorial.png" alt="photo" id="centerImage">
+        <div id="highlightBox"></div>
+        <div id="tooltip">
+            <p id="tooltipText"></p>
+            <div class="button-group">
+                <button id="nextStepBtn" class="tutorial-btn">Next</button>
+                <button id="skipBtn" class="tutorial-btn">Skip</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const steps = [
+            { area: { top: 48, left: 0, width: 35, height: 12 }, text: "ชื่อของสาร (Name of substance)" },
+            { area: { top: 51.5, left: 7, width: 80, height: 4 }, text: "คำถาม (question)" },
+            { area: { top: 61, left: 7, width: 85, height: 23 }, text: "ตัวเลือกคำตอบ (Answer choices)" },
+            { area: { top: 88, left: 7, width: 25, height: 5 }, text: "ส่งคำตอบ (Send answer)" }
+        ];
+
+        let isShaking = false;
+        const highlightBox = document.getElementById('highlightBox');
+        const tooltip = document.getElementById('tooltip');
+        const tooltipText = document.getElementById('tooltipText');
+        const centerImage = document.getElementById('centerImage');
+        const nextStepBtn = document.getElementById('nextStepBtn');
+
+        let currentStep = 0;
+        let isFirstLoad = true;
+
+        function triggerShake() {
+            if (isShaking) return;
+            isShaking = true;
+            highlightBox.classList.remove('shake');
+            void highlightBox.offsetWidth; // รีสตาร์ท animation
+            highlightBox.classList.add('shake');
+            highlightBox.addEventListener('animationend', () => {
+                highlightBox.classList.remove('shake');
+                isShaking = false;
+            }, { once: true });
+        }
+
+        function showStep(i) {
+            const step = steps[i];
+            const imgRect = centerImage.getBoundingClientRect();
+            const boxTop = imgRect.top + (step.area.top / 100) * imgRect.height - 5;
+            const boxLeft = imgRect.left + (step.area.left / 100) * imgRect.width - 5;
+            const boxWidth = (step.area.width / 100) * imgRect.width + 10;
+            const boxHeight = (step.area.height / 100) * imgRect.height + 10;
+
+            highlightBox.style.top = boxTop + "px";
+            highlightBox.style.left = boxLeft + "px";
+            highlightBox.style.width = boxWidth + "px";
+            highlightBox.style.height = boxHeight + "px";
+
+            tooltipText.textContent = step.text;
+            if (window.innerWidth > 480) {
+                tooltip.style.top = (boxTop - tooltip.offsetHeight - 10) + "px";
+                tooltip.style.left = boxLeft + "px";
+            }
+
+            if (isFirstLoad) {
+                function onAnimationEnd() {
+                    highlightBox.classList.add('visible');
+                    tooltip.classList.add('visible');
+                    centerImage.removeEventListener('animationend', onAnimationEnd);
+                    isFirstLoad = false;
+                }
+                if (!centerImage.complete) {
+                    centerImage.addEventListener('load', () => {
+                        centerImage.addEventListener('animationend', onAnimationEnd);
+                    });
+                } else {
+                    centerImage.addEventListener('animationend', onAnimationEnd);
+                }
+            } else {
+                highlightBox.classList.add('visible');
+                tooltip.classList.add('visible');
+                requestAnimationFrame(() => requestAnimationFrame(triggerShake));
+            }
+        }
+
+        nextStepBtn.addEventListener('click', () => {
+            currentStep++;
+            if (currentStep < steps.length) {
+                showStep(currentStep);
+            } else {
+                window.location.href = "chapter3.html";
+            }
+        });
+
+        window.addEventListener('load', () => showStep(currentStep));
+        window.addEventListener('resize', () => showStep(currentStep));
+
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+
+        document.getElementById('skipBtn').addEventListener('click', () => {
+            window.location.href = "chapter3.html";
+        });
+    </script>
+</body>
+
+</html>

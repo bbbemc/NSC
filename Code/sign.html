@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chemical-bonds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ฟอนต์ -->
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+
+    <!-- ✅ Font Awesome (แก้แล้ว) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        referrerpolicy="no-referrer" />
+
+    <!-- สไตล์หลัก -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="img/Logoweb.png">
+</head>
+
+<body>
+    <div class="background-grid"></div>
+    <div class="container">
+        <div class="left-side">
+            <p class="NameTopic shiny-text">Automatic Chemical<br>Bond</p>
+
+        </div>
+        <div class="right-side">
+            <p id="Sign-Up">Sign Up</p>
+            <form action="register.php" method="POST">
+                <div class="FORM">
+                    <div class="input-group">
+                        <img src="img/icon-body.svg" class="icon-User" alt="user icon">
+                        <input type="text" id="Username" name="Username" placeholder="ENTER YOUR NAME" required />
+                    </div>
+
+                    <div class="input-group">
+                        <img src="img/icon-email.svg" class="icon-email" alt="email icon">
+                        <input type="email" name="EMAIL" placeholder="ENTER YOUR EMAIL" required />
+                    </div>
+
+                    <div class="input-group">
+                        <img src="img/icon-log.svg" class="icon-password" alt="password icon">
+                        <input type="password" id="Password" name="Password" placeholder="ENTER YOUR PASSWORD"
+                            required />
+                        <i class="fa fa-eye toggle-password" data-target="Password"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <img src="img/icon-log.svg" class="icon-password" alt="password icon">
+                        <input type="password" id="ConfirmPassword" name="confirm_password"
+                            placeholder="CONFIRM YOUR PASSWORD" required />
+                        <i class="fa fa-eye toggle-password" data-target="ConfirmPassword"></i>
+                    </div>
+                    <p id="text-Already">
+                        <a href="index.html" style="color: inherit; text-decoration: none; cursor: pointer;">
+                            Already have an account?
+                        </a>
+                    </p>
+                </div>
+
+
+                <div class="wrapper">
+                    <button type="submit" class="button-Continue">Continue</button>
+                </div>
+            </form>
+
+            <div class="center-site">
+                <div class="purpose">
+                    <p class="Topic-purpose">การสนับสนุน</p>
+                    <p id="typeText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="style.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html manifest_no_use="gen3D.manifest1">
+
+<head>
+    <meta charset="utf-8">
+    <title>Chem_4</title>
+
+    <script src="Kekule.js-master/demos/libs/Three.js"></script>
+    <script src="Kekule.js-master/demos/libs/raphael-min.2.0.1.js"></script>
+    <script src="Kekule.js-master/demos/libs/kekule/kekule.js?modules=calculation,chemWidget,openbabel"></script>
+    <link rel="stylesheet" type="text/css" href="Kekule.js-master/demos/libs/kekule/themes/default/kekule.css" />
+    <link rel="icon" type="image/png" href="img/Logoweb.png">
+
+    <link rel="stylesheet" href="chapter2.css">
+    <script src="chapter2.js"></script>
+
+    <script id="molSrc" type="chemical/x-kekule-json">
+	{"id":"m1","info":{"generator":"ChemDraw","date":{"__type__":"date","date":"Sat, 05 Sep 2015 11:46:28 GMT"},"__type__":"object"},"renderOptions":{"expanded":true,"__type__":"object"},"coord2D":{"x":12.375,"y":37.3811,"__type__":"object"},"charge":0,"parity":null,"ctab":{"nodes":[{"__type__":"Kekule.Atom","id":"a4","coord2D":{"x":0.7958,"y":0.4315,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"C"},{"__type__":"Kekule.Atom","id":"a11","coord2D":{"x":0.0117,"y":0.1764,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"N"},{"__type__":"Kekule.Atom","id":"a5","coord2D":{"x":0.7958,"y":1.2565,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"C"},{"__type__":"Kekule.Atom","id":"a3","coord2D":{"x":1.5115,"y":0.0175,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"N"},{"__type__":"Kekule.Atom","id":"a14","coord2D":{"x":0.0117,"y":-1.4648,"__type__":"object"},"charge":0,"parity":0,"isotopeId":"C"},{"__type__":"Kekule.Atom","id":"a7","coord2D":{"x":-0.4738,"y":0.8439,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"C"},{"__type__":"Kekule.Atom","id":"a6","coord2D":{"x":1.5115,"y":1.6689,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"C"},{"__type__":"Kekule.Atom","id":"a8","coord2D":{"x":0.0117,"y":1.5115,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"N"},{"__type__":"Kekule.Atom","id":"a2","coord2D":{"x":2.2257,"y":0.4315,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"C"},{"__type__":"Kekule.Atom","id":"a15","coord2D":{"x":-1.1048,"y":-1.0509,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"O"},{"__type__":"Kekule.Atom","id":"a13","coord2D":{"x":-0.4095,"y":-1.9488,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"C"},{"__type__":"Kekule.Atom","id":"a21","coord2D":{"x":0.0117,"y":-2.1732,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"H"},{"__type__":"Kekule.Atom","id":"a1","coord2D":{"x":2.2257,"y":1.2565,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"N"},{"__type__":"Kekule.Atom","id":"a9","coord2D":{"x":1.5115,"y":2.4939,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"O"},{"__type__":"Kekule.Atom","id":"a10","coord2D":{"x":2.9428,"y":0.0175,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"N"},{"__type__":"Kekule.Atom","id":"a16","coord2D":{"x":-2.2272,"y":-1.4648,"__type__":"object"},"charge":0,"parity":0,"isotopeId":"C"},{"__type__":"Kekule.Atom","id":"a12","coord2D":{"x":-1.7972,"y":-1.9488,"__type__":"object"},"charge":0,"parity":0,"isotopeId":"C"},{"__type__":"Kekule.Atom","id":"a19","coord2D":{"x":-0.4095,"y":-1.5231,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"H"},{"__type__":"Kekule.Atom","id":"a17","coord2D":{"x":-0.4095,"y":-2.4939,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"H"},{"__type__":"Kekule.Atom","id":"a22","coord2D":{"x":-2.2272,"y":-0.8031,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"C"},{"__type__":"Kekule.Atom","id":"a23","coord2D":{"x":-2.2272,"y":-2.1732,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"H"},{"__type__":"Kekule.Atom","id":"a18","coord2D":{"x":-1.7972,"y":-2.4939,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"O"},{"__type__":"Kekule.Atom","id":"a20","coord2D":{"x":-1.7972,"y":-1.5231,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"H"},{"__type__":"Kekule.Atom","id":"a24","coord2D":{"x":-2.9428,"y":-0.3892,"__type__":"object"},"charge":0,"parity":null,"isotopeId":"O"}],"anchorNodes":[],"connectors":[{"__type__":"Kekule.Bond","id":"b25","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":3,"isInAromaticRing":true,"connectedNodes":[0,1]},{"__type__":"Kekule.Bond","id":"b4","parity":null,"bondType":"covalent","bondOrder":2,"electronCount":3,"isInAromaticRing":true,"connectedNodes":[0,2]},{"__type__":"Kekule.Bond","id":"b3","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":3,"isInAromaticRing":true,"connectedNodes":[0,3]},{"__type__":"Kekule.Bond","id":"b23","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[1,4]},{"__type__":"Kekule.Bond","id":"b26","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":3,"isInAromaticRing":true,"connectedNodes":[1,5]},{"__type__":"Kekule.Bond","id":"b5","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":3,"isInAromaticRing":true,"connectedNodes":[2,6]},{"__type__":"Kekule.Bond","id":"b8","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":3,"isInAromaticRing":true,"connectedNodes":[2,7]},{"__type__":"Kekule.Bond","id":"b2","parity":null,"bondType":"covalent","bondOrder":2,"electronCount":3,"isInAromaticRing":true,"connectedNodes":[3,8]},{"__type__":"Kekule.Bond","id":"b13","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[4,9]},{"__type__":"Kekule.Bond","id":"b12","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[4,10]},{"__type__":"Kekule.Bond","id":"b20","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[4,11]},{"__type__":"Kekule.Bond","id":"b7","parity":null,"bondType":"covalent","bondOrder":2,"electronCount":3,"isInAromaticRing":true,"connectedNodes":[5,7]},{"__type__":"Kekule.Bond","id":"b6","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":3,"isInAromaticRing":true,"connectedNodes":[6,12]},{"__type__":"Kekule.Bond","id":"b9","bondType":"covalent","bondOrder":2,"electronCount":4,"isInAromaticRing":false,"connectedNodes":[6,13]},{"__type__":"Kekule.Bond","id":"b1","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":3,"isInAromaticRing":true,"connectedNodes":[8,12]},{"__type__":"Kekule.Bond","id":"b10","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[8,14]},{"__type__":"Kekule.Bond","id":"b14","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[9,15]},{"__type__":"Kekule.Bond","id":"b11","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[10,16]},{"__type__":"Kekule.Bond","id":"b18","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[10,17]},{"__type__":"Kekule.Bond","id":"b16","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[10,18]},{"__type__":"Kekule.Bond","id":"b15","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[15,16]},{"__type__":"Kekule.Bond","id":"b21","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[15,19]},{"__type__":"Kekule.Bond","id":"b22","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[15,20]},{"__type__":"Kekule.Bond","id":"b17","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[16,21]},{"__type__":"Kekule.Bond","id":"b19","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[16,22]},{"__type__":"Kekule.Bond","id":"b24","parity":null,"bondType":"covalent","bondOrder":1,"electronCount":2,"isInAromaticRing":false,"connectedNodes":[19,23]}],"__type__":"Kekule.StructureConnectionTable"},"name":"Untitled Document-1","__type__":"Kekule.Molecule"}
+	</script>
+
+</head>
+
+<body>
+    <div id="atomTooltip" style="position:absolute; background:rgba(0,0,0,0.7); color:white; padding:4px;
+            border-radius:4px; font-size:12px; display:none; pointer-events:none;">
+    </div>
+
+    <div id="container_2">
+        <div id="tab_menu">
+            <h1 id="text">
+                Workspace
+                <img id="logo" src="img-3Gen/Logo.png">
+            </h1>
+        </div>
+        <!-- แสดงข้อความหรือสถานะ -->
+        <div id="state"></div>
+
+        <div id="right">
+            <div id="spawn">
+                <li>
+                    <a id="text_more" href="#">MORE <img id="opentab" src="img-3Gen/arrow-outlined.png"> </a>
+                    <ul class="dropdown">
+                        <li><a href="CH1.html">Learning</a></li>
+                        <li><a href="chapter2.html">Workspace</a></li>
+                        <li><a href="Quiz.html">Quiz</a></li>
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
+                </li>
+            </div>
+
+            <div id="profile_view">
+                <a href="User.html"><img id="profile_img" src="img/default.png"></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="container">
+        <div id="page2D">
+            <!-- กล่องแก้ไขวาดโครงสร้างโมเลกุลแบบ 2D อ้างอิงกับ Kekule.Editor.Composer -->
+            <div id="composer" data-widget="Kekule.Editor.Composer" data-chem-obj="url(#molSrc)"
+                data-predefined-setting="molOnly"></div>
+        </div>
+
+        <div id="page3D">
+            <!-- แสดงโมเลกุล 3D ด้วยกล้อง หมุนได้ อ้างอิงกับ Kekule.ChemWidget.Viewer3D -->
+            <div id="chemViewer" data-widget="Kekule.ChemWidget.Viewer3D" data-predefined-setting="fullFunc"
+                data-toolbar-evoke-modes="[0]" data-toolbar-pos="1" data-toolbar-margin-horizontal="0"
+                data-toolbar-margin-vertical="0"></div>
+        </div>
+    </div>
+</body>
+
+</html>

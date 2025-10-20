@@ -1,0 +1,375 @@
+/* =============== RESET & BOX-SIZING =============== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =============== BODY & SCROLL CONTAINER =============== */
+body {
+    /* background: linear-gradient(to bottom, #050510, #0D0D27, #050510); */
+    background: #0e0510;
+    color: white;
+    font-family: 'Alegreya', serif;
+    height: 100vh;
+}
+
+.scroll-container {
+    display: flex;
+    overflow-x: auto;
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+
+    /* ซ่อน scrollbar ทุกเบราว์เซอร์ */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari/Webkit */
+}
+
+/* =============== CARD STYLES =============== */
+.card {
+    flex: 0 0 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
+    padding: 60px;
+    background: #1b1b2f;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.card h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.card p,
+.card ol {
+    font-size: 1.125rem;
+    color: #ccc;
+    max-width: 700px;
+    line-height: 1.6;
+}
+
+/* =============== ARROW BUTTONS =============== */
+.arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 8px 12px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background 0.3s;
+}
+
+.arrow:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.arrow.left {
+    left: 10px;
+}
+
+.arrow.right {
+    right: 10px;
+}
+
+/* =============== NAVBAR =============== */
+/* Navbar */
+header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgb(255, 255, 255);
+    backdrop-filter: blur(12px);
+    /* <-- เบลอพื้นหลัง */
+    box-shadow: 0 3px 30px rgb(255, 255, 255);
+    /* เงาด้านล่าง */
+    z-index: 10;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* 🔧 จัดให้แนวตั้งอยู่กลางพอดี */
+    padding: 0 20px;
+    height: 70px;
+    /* กำหนดความสูงให้แน่นอน จะได้จัดได้ตรง */
+    background-color: #660f0f;
+    background: linear-gradient(to bottom, #ffffff, #e2e2e2);
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu {
+    list-style: none;
+    /* <-- ตรงนี้มีอยู่แล้ว OK */
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    gap: 20px;
+    /* เพิ่มระยะห่างเมนูแทน margin-left */
+}
+
+.nav-item {
+    font-size: 18px;
+    margin-left: 0;
+    /*ใส่ระยะห่างแต่ละตัวในด้านซ้าย 20px*/
+}
+
+.nav-link {
+    text-decoration: none;
+    /*ลบขีดเส้นใต้ลิ้งออก*/
+    color: #333;
+    /*สีตัวอักษร*/
+    font-weight: bold;
+    /*ข้อความหนา*/
+    transition: color 0.5s;
+    /**/
+}
+
+.nav-link:hover {
+    /*hover = เฉพาะตอนเอาเม้าส์ไปชี้*/
+    color: #d2691e;
+    /*เม้าส์ชี้แล้วเปลี่ยนสี*/
+}
+
+.profile-img {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    transition: transform 0.3s;
+}
+
+.profile-img:hover {
+    transform: scale(1.1);
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 3vw;
+    line-height: 1;
+    padding: 8px 0;
+    color: #000000;
+}
+
+.hamburger {
+    display: none;
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+}
+
+/* สำหรับจอเล็ก */
+@media screen and (max-width: 768px) {
+    nav.navbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        position: relative;
+    }
+
+    .nav-logo {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .hamburger {
+        display: block;
+        position: absolute;
+        top: 12px;
+        right: 10%;
+        z-index: 20;
+    }
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #ccc;
+        margin-top: 12px;
+        padding: 12px 0;
+        border-top: 1px solid #999;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-item {
+        margin: 8px 20px;
+    }
+}
+
+/* ... รวม reset/scroll-container/arrow ฯลฯ ตามเดิม ... */
+/* ปรับ .card ให้วาง .box กึ่งกลาง */
+.card {
+    flex: 0 0 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    justify-content: center;
+    /* กึ่งกลางแนวนอน */
+    align-items: center;
+    /* กึ่งกลางแนวตั้ง */
+    background: linear-gradient(to bottom, #0e0510, #2a2a5f, #0e0510);
+}
+
+/* สไตล์กล่องเนื้อหา */
+.box {
+    /* จากเดิม width:80% */
+    width: calc(100% - 32px);
+    /* ลบ padding 16px ทั้งสองข้าง */
+    max-width: none;
+    /* ปลดข้อจำกัด max-width */
+    margin: 0 16px;
+    /* เว้นขอบซ้าย‑ขวาแค่ 16px */
+    background: rgba(27, 27, 47, 0.8);
+    border: 1px solid rgba(26, 3, 56, 1);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 0 40px rgba(57, 30, 93, 0.874);
+}
+
+/* หัวข้อเรืองแสงสีขาว */
+.box h2 {
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-shadow:
+        0 0 32px rgba(255, 255, 255, 0.8),
+        0 0 64px rgba(255, 255, 255, 0.6);
+}
+
+/* ย่อหน้าในกล่อง */
+.box p {
+    font-size: 1.125rem;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.course-content {
+    /* ย่อหน้าบรรทัดแรกเข้า 2em (ปรับตามชอบ) */
+    text-indent: 2em;
+}
+
+/* ===== บังคับเลย์เอาต์มือถือให้เป็นแนวตั้ง ===== */
+@media (max-width: 768px) {
+    .scroll-container {
+        padding-top: 70px;
+        /* ดันการ์ดลงมา */
+        flex-direction: column;
+        /* จัดไอเท็มเหลือบรรทัดเดียวแนวตั้ง */
+        overflow-x: hidden;
+        /*เว้นระหว่าง .card แต่ละอัน 20px */
+        gap: 80px;
+        /* ปิดเลื่อนข้าง */
+        overflow-y: auto;
+        /* เปิดเลื่อนได้เฉพาะขึ้น‑ลง */
+        scroll-snap-type: y mandatory;
+        /* Snap แนวตั้ง */
+        height: auto;
+        /* ยืดตามเนื้อหา */
+    }
+
+    .scroll-container::-webkit-scrollbar {
+        display: block;
+        /* หรือจะซ่อนก็ได้ */
+    }
+
+    .card {
+        margin-bottom: 80px;   /* <-- เว้นล่างระหว่าง .card แต่ละอัน */
+        flex: 0 0 auto;
+        /* ความสูงไม่บังคับเต็มจอแล้ว */
+        min-height: 100vh;
+        /* จะให้แต่ละการ์ดเต็มจอแนวตั้งก็ใส่ */
+        width: 100%;
+        scroll-snap-align: start;
+        padding: 40px 0;
+        /* จะเว้นบน‑ล่างพอเหมาะ */
+        background: linear-gradient(to bottom, #0e0510, #1d1d45, #0e0510);
+    }
+
+    /* ซ่อนปุ่มลูกศรข้างขอบบนมือถือ (เพราะไม่จำเป็น) */
+    .arrow.left,
+    .arrow.right {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .scroll-container {
+        /* ให้เลื่อนแนวตั้งได้ พร้อมแสดง scrollbar */
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        /* Firefox */
+        scrollbar-width: auto;
+        /* IE/Edge */
+        -ms-overflow-style: auto;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+        /* ให้แสดง scrollbar บน Webkit (Chrome/Safari) */
+        display: block;
+        width: 6px;
+        /* ความกว้างของ scrollbar */
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb {
+        /* สีของตัวเลื่อน */
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    .scroll-container::-webkit-scrollbar-track {
+        /* สีรางเลื่อน */
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* ซ่อนปุ่มลูกศรขอบจอ (เพราะบนมือถือใช้ scroll ธรรมดา) */
+    .arrow.left,
+    .arrow.right {
+        display: none;
+    }
+}
+
+/* เฉพาะ Desktop: ลดความกว้างของ .box มาอยู่ตรงกลาง */
+@media (min-width: 769px) {
+    .box {
+        width: 80%;
+        /* ปรับให้เล็กลงจาก fullscreen */
+        max-width: 800px;
+        /* สูงสุดไม่เกิน 800px */
+        margin: 0 auto;
+        /* กึ่งกลางแนวนอน */
+    }
+}

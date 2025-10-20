@@ -1,0 +1,369 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Alegreya", serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #181818;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.background-grid {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: grid;
+  gap: 1px;
+  z-index: -1;
+  background-color: #181818;
+}
+
+.background-grid .block {
+  width: 25px;
+  height: 25px;
+  background-color: #282828;
+}
+
+
+/* ตัวจัด layout หลัก */
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.shiny-text {
+    display: inline-block;
+    background: linear-gradient(34deg, #fcfcfc, rgb(255, 255, 255), rgb(255, 255, 255), rgb(233, 210, 76), rgb(255, 255, 255), rgb(255, 255, 255), #ffffff);
+    background-size: 300% 100%;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shinyMove 8s linear infinite;
+}
+
+@keyframes shinyMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+.input-group {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+#email-status {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.NameTopic {
+    font-size: 44px;
+    color: rgb(0, 0, 0);
+}
+
+/* ด้านซ้าย */
+.left-side {
+    flex: 1 1 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ด้านขวา */
+.right-side {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    gap: 10px;
+    margin-left: 5%;
+    color: #d4d4d4;
+}
+
+/* หัว Sign Up */
+#Sign-Up {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* กล่องฟอร์ม */
+.FORM {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+/* input และไอคอน */
+.FORM input {
+    width: 310px;
+    padding: 10px 40px 10px 40px;
+    /* padding บน-ล่าง 10px, ซ้าย 40px เผื่อไอคอน */
+    font-size: 16px;
+    border: none;
+    border-bottom: 1.5px solid rgb(255, 255, 255);
+    outline: none;
+    text-align: left;
+    background: transparent;
+    color: #d4d4d4;
+}
+
+/* ปรับ icon ให้อยู่ติด input ด้วย position */
+.FORM img {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    /* ป้องกันการบัง input */
+}
+
+.FORM input[type="password"] {
+    padding-right: 40px;
+    /* เผื่อพื้นที่ให้ไอคอนตา */
+}
+
+
+/* ปุ่มส่ง */
+.wrapper {
+    margin-top: 30px;
+}
+
+.button-Continue {
+    padding: 10px 20px;
+    color: white;
+    border: 1.5px solid #d4d4d4;
+    border-radius: 4px;
+    cursor: pointer;
+    background: linear-gradient(to right, rgb(29, 29, 29), rgb(70, 70, 70), rgb(87, 87, 87), rgb(209, 209, 209));
+    background-size: 300% 300%;
+    transition: all 0.3s ease;
+}
+
+.button-Continue:hover {
+    transform: scale(1.1);
+    animation: gradientbutton-Continue 8s ease infinite;
+}
+
+@keyframes gradientbutton-Continue {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ข้อความ already */
+#text-Already {
+    margin-top: 15px;
+    font-size: 15px;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#text-Already:hover {
+    color: #07eff7;
+}
+
+.center-site {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.purpose {
+    text-align: center;
+    font-weight: bold;
+}
+
+.Topic-purpose {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.Topic-purpose::after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 4px;
+    background: linear-gradient(to right, rgb(255, 255, 255), rgb(0, 0, 0));
+    width: 100%;
+    max-width: 250px;
+    margin-top: 6px;
+    border-radius: 100px;
+    transition: width 1.5s ease;
+    bottom: -5px;
+    left: 0;
+}
+
+.Topic-purpose:hover::after {
+    width: 0%;
+}
+
+#typeText {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1.6;
+    white-space: pre-line;
+    /* ให้รองรับ \n เป็นขึ้นบรรทัดใหม่ */
+    margin-top: 20px;
+    margin-left: 20px;
+    max-width: 90%;
+}
+
+input::-ms-reveal,
+/* สำหรับ Microsoft Edge */
+input::-webkit-credentials-auto-fill-button,
+/* ป้องกันบางฟอร์ม */
+input::-webkit-password-toggle-button {
+    display: none;
+}
+
+input[type="ConfirmPassword"] {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* ตำแหน่งลูกตาเอง */
+.toggle-password {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #d4d4d4;
+    font-size: 18px;
+    z-index: 2;
+}
+
+.glow-letter {
+  transition: color 0.3s ease;
+  display: inline-block;
+  color: white;
+  cursor: default;
+  white-space: pre;
+}
+.glow-letter.hover-glow {
+    color: #ffbd06;
+  text-shadow: 0 0 10px #f77b07;
+  transform: scale(1.2);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.background-grid .block {
+  width: 25px;
+  height: 25px;
+  background-color: #282828;
+  transition: background-color 0.2s ease;
+  pointer-events: none;
+}
+
+.background-grid .block.locked {
+    background-color: #b83d3d;; /* หรือสีอื่นที่คุณต้องการ */
+}
+
+.background-grid .block.hovered {
+  background-color: #b83d3d;
+}
+
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .left-side,
+    .right-side {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+
+    .NameTopic {
+        font-size: 28px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+
+
+}
+
+@media screen and (min-width: 769px) {
+
+    .left-side {
+        justify-content: flex-start;
+        padding-left: 50px;
+    }
+
+    .right-side {
+        margin-left: 5%;
+        /* ปรับได้ตามต้องการ */
+    }
+
+    .NameTopic {
+        text-align: left;
+        position: absolute;
+        top: 40px;
+        left: 40px;
+    }
+
+}
+
+
+@media screen and (max-width: 480px) {
+    .right-side {
+        padding-top: 40px;
+        /* บนอุปกรณ์จอเล็กมาก */
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1366px) {}
