@@ -1,8 +1,6 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: https://autochem.42web.io/?i=1");
 session_start();
-// The path to 'db.php' assumes this file is in the parent directory of 'api'.
-// If not, adjust the path accordingly.
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -10,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Check Content-Type to handle both standard POST and JSON POST
 $inputData = $_POST;
 if (strpos($_SERVER['CONTENT_TYPE'] ?? '', 'application/json') !== false) {
     $inputData = json_decode(file_get_contents('php://input'), true);
@@ -19,14 +16,12 @@ if (strpos($_SERVER['CONTENT_TYPE'] ?? '', 'application/json') !== false) {
 $email = $inputData['email'] ?? '';
 $password = $inputData['Password'] ?? '';
 
-// ตรวจสอบว่าตัวแปร $pdo ถูกกำหนดค่าจาก db.php แล้วหรือไม่
 if (!isset($pdo)) {
     header('Content-Type: application/json');
     echo json_encode(["status" => "error", "message" => "❌ เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล: ตัวแปร PDO ไม่ถูกกำหนด"]);
     exit;
 }
 
-// Using PDO to prepare and execute the query
 $stmt = $pdo->prepare("SELECT id, password, name, theme FROM users WHERE email = ?");
 $stmt->execute([$email]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -39,7 +34,7 @@ if ($user) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['email'] = $email;
         $_SESSION['name'] = $user['name'];
-        $_SESSION['theme'] = $user['theme'];  // ✅ เก็บธีมของ user
+        $_SESSION['theme'] = $user['theme'];
 
         echo json_encode([
             "status" => "success",
@@ -57,5 +52,4 @@ if ($user) {
         "message" => "❌ ไม่พบผู้ใช้ในระบบ"
     ]);
 }
-
 exit;
