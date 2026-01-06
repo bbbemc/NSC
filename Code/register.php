@@ -1,17 +1,14 @@
 <?php
-// register.php (mysqli version) - ใช้เมื่อ db.php สร้าง $conn เป็น mysqli object
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include __DIR__ . '/db.php'; // FIX: ใช้ __DIR__ เพื่อให้ path แน่นอน
-
+include __DIR__ . '/db.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name     = trim($_POST["Username"] ?? '');
     $email    = trim($_POST["EMAIL"] ?? '');
     $password = $_POST["Password"] ?? '';
     $confirm  = $_POST["confirm_password"] ?? '';
-
     if ($password !== $confirm) {
         echo "<script>
                 alert('❌ รหัสผ่านไม่ตรงกัน!');
@@ -20,13 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    // ตรวจว่ามีการเชื่อมต่อ mysqli หรือไม่
     if (!isset($conn) || !($conn instanceof mysqli)) {
         error_log('No mysqli $conn available in register.php');
         die('Internal server error');
     }
 
-    // ตรวจชื่อซ้ำ
     $checkName = $conn->prepare("SELECT id FROM users WHERE name = ?");
     if (!$checkName) {
         error_log('Prepare failed (checkName): ' . $conn->error);
@@ -44,8 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
     $checkName->close();
-
-    // ตรวจ email ซ้ำ
     $checkEmail = $conn->prepare("SELECT id FROM users WHERE email = ?");
     if (!$checkEmail) {
         error_log('Prepare failed (checkEmail): ' . $conn->error);
@@ -63,11 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
     $checkEmail->close();
-
-    // เข้ารหัสรหัสผ่าน
     $hashed = password_hash($password, PASSWORD_DEFAULT);
-
-    // เพิ่มผู้ใช้ใหม่
     $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
     if (!$stmt) {
         error_log('Prepare failed (insert): ' . $conn->error);
@@ -81,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     } else {
         error_log('Register insert failed: ' . $stmt->error);
-        $stmt->close();
+        $stmt->close();    
         echo "<script>
                 alert('❌ เกิดข้อผิดพลาดในการลงทะเบียน!');
                 setTimeout(() => { window.location.href = 'sign.html'; }, 1000);
